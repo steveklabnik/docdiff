@@ -19,9 +19,9 @@
 <div class="error-described error-unused">
 <h2 id="E0001" class="section-header"><a href=
 "#E0001">E0001</a></h2>
-<h4 id='note-this-error-code-is-no-longer-emitted-by-the-compiler'
-class='section-header'><a href=
-'#note-this-error-code-is-no-longer-emitted-by-the-compiler'>Note:
+<h4 id="note-this-error-code-is-no-longer-emitted-by-the-compiler"
+class="section-header"><a href=
+"#note-this-error-code-is-no-longer-emitted-by-the-compiler">Note:
 this error code is no longer emitted by the compiler.</a></h4>
 <p>This error suggests that the expression arm corresponding to the
 noted pattern will never be reached as for all possible values of
@@ -56,9 +56,9 @@ superfluous arms.</p>
 <h2 id="E0002" class="section-header"><a href=
 "#E0002">E0002</a></h2>
 <h4 id=
-'note-this-error-code-is-no-longer-emitted-by-the-compiler-1'
-class='section-header'><a href=
-'#note-this-error-code-is-no-longer-emitted-by-the-compiler-1'>Note:
+"note-this-error-code-is-no-longer-emitted-by-the-compiler-1"
+class="section-header"><a href=
+"#note-this-error-code-is-no-longer-emitted-by-the-compiler-1">Note:
 this error code is no longer emitted by the compiler.</a></h4>
 <p>This error indicates that an empty match expression is invalid
 because the type it is matching on is non-empty (there exist values
@@ -94,9 +94,9 @@ the following will work:</p>
 <h2 id="E0003" class="section-header"><a href=
 "#E0003">E0003</a></h2>
 <h4 id=
-'note-this-error-code-is-no-longer-emitted-by-the-compiler-2'
-class='section-header'><a href=
-'#note-this-error-code-is-no-longer-emitted-by-the-compiler-2'>Note:
+"note-this-error-code-is-no-longer-emitted-by-the-compiler-2"
+class="section-header"><a href=
+"#note-this-error-code-is-no-longer-emitted-by-the-compiler-2">Note:
 this error code is no longer emitted by the compiler.</a></h4>
 <p>Not-a-Number (NaN) values cannot be compared for equality and
 hence can never match the input to a match expression. So, the
@@ -773,8 +773,7 @@ href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20trait_obj%3A%20%26SomeTrait%20%3D%20...%3B%0A%0A%2F%2F%20This%20tries%20to%20implicitly%20dereference%20to%20create%20an%20unsized%20local%20variable.%0Alet%20%26invalid%20%3D%20trait_obj%3B%0A%0A%2F%2F%20You%20can%20call%20methods%20without%20binding%20to%20the%20value%20being%20pointed%20at.%0Atrait_obj.method_one()%3B%0Atrait_obj.method_two()%3B%0A%7D">Run</a></pre>
 <p>You can read more about trait objects in the Trait Object
 section of the Reference:</p>
-<p><a href=
-"https://doc.rust-lang.org/reference.html#trait-objects">https://doc.rust-lang.org/reference.html#trait-objects</a></p>
+<p>https://doc.rust-lang.org/reference.html#trait-objects</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0034" class="section-header"><a href=
@@ -1039,8 +1038,8 @@ are collectively termed as 'object safety' rules.</p>
 <p>Attempting to create a trait object for a non object-safe trait
 will trigger this error.</p>
 <p>There are various rules:</p>
-<h3 id='the-trait-cannot-require-self-sized' class=
-'section-header'><a href='#the-trait-cannot-require-self-sized'>The
+<h3 id="the-trait-cannot-require-self-sized" class=
+"section-header"><a href="#the-trait-cannot-require-self-sized">The
 trait cannot require <code>Self: Sized</code></a></h3>
 <p>When <code>Trait</code> is treated as a type, the type does not
 implement the special <code>Sized</code> trait, because the type
@@ -1060,9 +1059,9 @@ not be <code>Sized</code>.</p>
 the trait should not be used as a trait object. If the trait comes
 from your own crate, consider removing this restriction.</p>
 <h3 id=
-'method-references-the-self-type-in-its-arguments-or-return-type'
-class='section-header'><a href=
-'#method-references-the-self-type-in-its-arguments-or-return-type'>Method
+"method-references-the-self-type-in-its-arguments-or-return-type"
+class="section-header"><a href=
+"#method-references-the-self-type-in-its-arguments-or-return-type">Method
 references the <code>Self</code> type in its arguments or return
 type</a></h3>
 <p>This happens when a trait has a method like the following:</p>
@@ -1142,8 +1141,8 @@ object, but you will now be allowed to make a trait object, and
 that will be able to call any object-safe methods. With such a
 bound, one can still call <code>foo()</code> on types implementing
 that trait that aren't behind trait objects.</p>
-<h3 id='method-has-generic-type-parameters' class='section-header'>
-<a href='#method-has-generic-type-parameters'>Method has generic
+<h3 id="method-has-generic-type-parameters" class="section-header">
+<a href="#method-has-generic-type-parameters">Method has generic
 type parameters</a></h3>
 <p>As mentioned before, trait objects contain pointers to method
 tables. So, if we have:</p>
@@ -1288,8 +1287,8 @@ with another trait object (e.g. if <code>T: OtherTrait</code>, use
 <code>on: Box&lt;OtherTrait&gt;</code>). If the number of types you
 intend to feed to this method is limited, consider manually listing
 out the methods of different types.</p>
-<h3 id='method-has-no-receiver' class='section-header'><a href=
-'#method-has-no-receiver'>Method has no receiver</a></h3>
+<h3 id="method-has-no-receiver" class="section-header"><a href=
+"#method-has-no-receiver">Method has no receiver</a></h3>
 <p>Methods that do not take a <code>self</code> parameter can't be
 called since there won't be a way to get a pointer to the method
 table for them.</p>
@@ -1313,9 +1312,9 @@ generally make this compile.</p>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Atrait%20Foo%20%7B%0A%20%20%20%20fn%20foo()%20-%3E%20u8%20where%20Self%3A%20Sized%3B%0A%7D%0A%7D">Run</a></pre>
 <h3 id=
-'the-trait-cannot-use-self-as-a-type-parameter-in-the-supertrait-listing'
-class='section-header'><a href=
-'#the-trait-cannot-use-self-as-a-type-parameter-in-the-supertrait-listing'>
+"the-trait-cannot-use-self-as-a-type-parameter-in-the-supertrait-listing"
+class="section-header"><a href=
+"#the-trait-cannot-use-self-as-a-type-parameter-in-the-supertrait-listing">
 The trait cannot use <code>Self</code> as a type parameter in the
 supertrait listing</a></h3>
 <p>This is similar to the second sub-error, but subtler. It happens
@@ -1974,9 +1973,8 @@ value being returned.</p>
 expression. An lvalue expression represents a memory location and
 can be a variable (with optional namespacing), a dereference, an
 indexing expression or a field reference.</p>
-<p>More details can be found here: <a href=
-"https://doc.rust-lang.org/reference.html#lvalues-rvalues-and-temporaries">
-https://doc.rust-lang.org/reference.html#lvalues-rvalues-and-temporaries</a></p>
+<p>More details can be found here:
+https://doc.rust-lang.org/reference.html#lvalues-rvalues-and-temporaries</p>
 <p>Now, we can go further. Here are some erroneous code
 examples:</p>
 <pre class="rust rust-example-rendered">
@@ -2107,8 +2105,7 @@ be arbitrarily large (since we would be able to nest
 <pre><code class=
 "language-plain">size of `ListNode` = 1 byte for `head`
                    + 1 byte for the discriminant of the `Option`
-                   + size of `ListNode`
-</code></pre>
+                   + size of `ListNode`</code></pre>
 <p>One way to fix this is by wrapping <code>ListNode</code> in a
 <code>Box</code>, like so:</p>
 <pre class="rust rust-example-rendered">
@@ -2299,8 +2296,7 @@ to induce this error. For example:</p>
 <p>Ensure that the expressions given can be evaluated as the
 desired integer type. See the FFI section of the Reference for more
 information about using a custom integer type:</p>
-<p><a href=
-"https://doc.rust-lang.org/reference.html#ffi-attributes">https://doc.rust-lang.org/reference.html#ffi-attributes</a></p>
+<p>https://doc.rust-lang.org/reference.html#ffi-attributes</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0081" class="section-header"><a href=
@@ -2849,7 +2845,7 @@ with an elided output lifetime must either have</p>
 <ul>
 <li>exactly one input lifetime</li>
 <li>or, multiple input lifetimes, but the function must also be a
-method with a <code>&amp;self</code> or <code>&amp;mut self</code>
+method with a<code>&amp;self</code> or <code>&amp;mut self</code>
 receiver</li>
 </ul>
 <p>In the first case, the output lifetime is inferred to be the
@@ -3001,10 +2997,10 @@ href="https://play.rust-lang.org/?code=fn%20main()%20%7B%0Aimpl%20Vec%3Cu8%3E%20
 <p>To fix this problem, you can do either of these things:</p>
 <ul>
 <li>define a trait that has the desired associated
-functions/types/constants and implement the trait for the type in
+functions/types/constants andimplement the trait for the type in
 question</li>
 <li>define a new type wrapping the type and define an
-implementation on the new type</li>
+implementation on the newtype</li>
 </ul>
 <p>Note that using the <code>type</code> keyword does not work here
 because <code>type</code> only introduces a type alias:</p>
@@ -3028,7 +3024,7 @@ a foreign trait (a trait defined in another crate) where</p>
 <ul>
 <li>the type that is implementing the trait is foreign</li>
 <li>all of the parameters being passed to the trait (if there are
-any) are also foreign.</li>
+any) are alsoforeign.</li>
 </ul>
 <p>Here's one example of this error:</p>
 <pre class="rust rust-example-rendered">
@@ -3452,8 +3448,8 @@ with type parameters.</p>
 "https://play.rust-lang.org/?code=%23!%5Bfeature(start)%5D%0A%0Afn%20main()%20%7B%0A%23%5Bstart%5D%0Afn%20f%3CT%3E()%20%7B%7D%0A%7D&amp;version=nightly">Run</a></pre>
 <p>It is not possible to declare type parameters on a function that
 has the <code>start</code> attribute. Such a function must have the
-following type signature (for more information: <a href=
-"http://doc.rust-lang.org/stable/book/no-stdlib.html">http://doc.rust-lang.org/stable/book/no-stdlib.html</a>):</p>
+following type signature (for more information:
+http://doc.rust-lang.org/stable/book/no-stdlib.html):</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">fn</span>(<span class=
 "ident">isize</span>, <span class="kw-2">*</span><span class=
@@ -3514,8 +3510,7 @@ For instance:</p>
 "ident">f</span>(); } <span class="comment">// ok!</span>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=unsafe%20fn%20f()%20%7B%20return%3B%20%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20unsafe%20%7B%20f()%3B%20%7D%20%2F%2F%20ok!%0A%7D%0A">Run</a></pre>
-<p>See also <a href=
-"https://doc.rust-lang.org/book/unsafe.html">https://doc.rust-lang.org/book/unsafe.html</a></p>
+<p>See also https://doc.rust-lang.org/book/unsafe.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0136" class="section-header"><a href=
@@ -3774,16 +3769,15 @@ you do not need to provide them yourself.</p>
 "ident">no_std</span>]</span><a class="test-arrow" target="_blank"
 href=
 "https://play.rust-lang.org/?code=%23!%5Bno_std%5D%0Afn%20main()%20%7B%0A%7D">Run</a></pre>
-<p>See also <a href=
-"https://doc.rust-lang.org/book/no-stdlib.html">https://doc.rust-lang.org/book/no-stdlib.html</a></p>
+<p>See also https://doc.rust-lang.org/book/no-stdlib.html</p>
 </div>
 <div class="error-described error-unused">
 <h2 id="E0154" class="section-header"><a href=
 "#E0154">E0154</a></h2>
 <h2 id=
-'note-this-error-code-is-no-longer-emitted-by-the-compiler-3'
-class='section-header'><a href=
-'#note-this-error-code-is-no-longer-emitted-by-the-compiler-3'>Note:
+"note-this-error-code-is-no-longer-emitted-by-the-compiler-3"
+class="section-header"><a href=
+"#note-this-error-code-is-no-longer-emitted-by-the-compiler-3">Note:
 this error code is no longer emitted by the compiler.</a></h2>
 <p>Imports (<code>use</code> statements) are not allowed after
 non-item statements, such as variable declarations and expression
@@ -3819,8 +3813,7 @@ function, or file.</p>
 <p>See the Declaration Statements section of the reference for more
 information about what constitutes an Item declaration and what
 does not:</p>
-<p><a href=
-"https://doc.rust-lang.org/reference.html#statements">https://doc.rust-lang.org/reference.html#statements</a></p>
+<p>https://doc.rust-lang.org/reference.html#statements</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0158" class="section-header"><a href=
@@ -4651,8 +4644,8 @@ must meet at least one of the following criteria:</p>
 <li>for a trait impl, it appears in the trait reference</li>
 <li>it is bound as an associated type</li>
 </ul>
-<h3 id='error-example-1' class='section-header'><a href=
-'#error-example-1'>Error example 1</a></h3>
+<h3 id="error-example-1" class="section-header"><a href=
+"#error-example-1">Error example 1</a></h3>
 <p>Suppose we have a struct <code>Foo</code> and we would like to
 define some methods for it. The following definition leads to a
 compiler error:</p>
@@ -4700,8 +4693,8 @@ can fix the error by moving the type parameter from the
     }
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Astruct%20Foo%3B%0A%0A%2F%2F%20Move%20the%20type%20parameter%20from%20the%20impl%20to%20the%20method%0Aimpl%20Foo%20%7B%0A%20%20%20%20fn%20get%3CT%3A%20Default%3E(%26self)%20-%3E%20T%20%7B%0A%20%20%20%20%20%20%20%20%3CT%20as%20Default%3E%3A%3Adefault()%0A%20%20%20%20%7D%0A%7D%0A%7D">Run</a></pre>
-<h3 id='error-example-2' class='section-header'><a href=
-'#error-example-2'>Error example 2</a></h3>
+<h3 id="error-example-2" class="section-header"><a href=
+"#error-example-2">Error example 2</a></h3>
 <p>As another example, suppose we have a <code>Maker</code> trait
 and want to establish a type <code>FooMaker</code> that makes
 <code>Foo</code>s:</p>
@@ -4852,8 +4845,8 @@ parameter into <code>FooMaker</code>, like so:</p>
     }
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0A%2F%2F%20Use%20a%20type%20parameter%20instead%20of%20an%20associated%20type%20here%0Atrait%20Maker%3CItem%3E%20%7B%0A%20%20%20%20fn%20make(%26mut%20self)%20-%3E%20Item%3B%0A%7D%0A%0Astruct%20Foo%3CT%3E%20%7B%0A%20%20%20%20foo%3A%20T%0A%7D%0A%0Astruct%20FooMaker%3B%0A%0Aimpl%3CT%3A%20Default%3E%20Maker%3CFoo%3CT%3E%3E%20for%20FooMaker%20%7B%0A%20%20%20%20fn%20make(%26mut%20self)%20-%3E%20Foo%3CT%3E%20%7B%0A%20%20%20%20%20%20%20%20Foo%20%7B%20foo%3A%20%3CT%20as%20Default%3E%3A%3Adefault()%20%7D%0A%20%20%20%20%7D%0A%7D%0A%7D">Run</a></pre>
-<h3 id='additional-information' class='section-header'><a href=
-'#additional-information'>Additional information</a></h3>
+<h3 id="additional-information" class="section-header"><a href=
+"#additional-information">Additional information</a></h3>
 <p>For more information, please see <a href=
 "https://github.com/rust-lang/rfcs/blob/master/text/0447-no-unused-impl-parameters.md">
 RFC 447</a>.</p>
@@ -5403,9 +5396,9 @@ parameters, but is supplied with two in the definition of
 <h2 id="E0251" class="section-header"><a href=
 "#E0251">E0251</a></h2>
 <h2 id=
-'note-this-error-code-is-no-longer-emitted-by-the-compiler-4'
-class='section-header'><a href=
-'#note-this-error-code-is-no-longer-emitted-by-the-compiler-4'>Note:
+"note-this-error-code-is-no-longer-emitted-by-the-compiler-4"
+class="section-header"><a href=
+"#note-this-error-code-is-no-longer-emitted-by-the-compiler-4">Note:
 this error code is no longer emitted by the compiler.</a></h2>
 <p>Two items of the same name cannot be imported without rebinding
 one of the items under a new local name.</p>
@@ -5631,9 +5624,9 @@ defined in the module.</p>
 <h2 id="E0256" class="section-header"><a href=
 "#E0256">E0256</a></h2>
 <h2 id=
-'note-this-error-code-is-no-longer-emitted-by-the-compiler-5'
-class='section-header'><a href=
-'#note-this-error-code-is-no-longer-emitted-by-the-compiler-5'>Note:
+"note-this-error-code-is-no-longer-emitted-by-the-compiler-5"
+class="section-header"><a href=
+"#note-this-error-code-is-no-longer-emitted-by-the-compiler-5">Note:
 this error code is no longer emitted by the compiler.</a></h2>
 <p>You can't import a type or module when the name of the item
 being imported is the same as another type or submodule defined in
@@ -5717,8 +5710,7 @@ crate's name.</p>
 <p>See the Declaration Statements section of the reference for more
 information about what constitutes an Item declaration and what
 does not:</p>
-<p><a href=
-"https://doc.rust-lang.org/reference.html#statements">https://doc.rust-lang.org/reference.html#statements</a></p>
+<p>https://doc.rust-lang.org/reference.html#statements</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0261" class="section-header"><a href=
@@ -6820,8 +6812,7 @@ rewritten without sub-bindings.</p>
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Amatch%20Some(%22hi%22.to_string())%20%7B%0A%20%20%20%20Some(ref%20s)%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20let%20op_string_ref%20%3D%20%26Some(s)%3B%0A%20%20%20%20%20%20%20%20%2F%2F%20...%0A%20%20%20%20%7D%2C%0A%20%20%20%20None%20%3D%3E%20%7B%7D%2C%0A%7D%0A%7D">Run</a></pre>
 <p>The <code>op_string_ref</code> binding has type
 <code>&amp;Option&lt;&amp;String&gt;</code> in both cases.</p>
-<p>See also <a href=
-"https://github.com/rust-lang/rust/issues/14587">https://github.com/rust-lang/rust/issues/14587</a></p>
+<p>See also https://github.com/rust-lang/rust/issues/14587</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0308" class="section-header"><a href=
@@ -7494,8 +7485,7 @@ you are re-exporting are themselves marked with
 "https://play.rust-lang.org/?code=mod%20foo%20%7B%0A%20%20%20%20pub%20const%20X%3A%20u32%20%3D%201%3B%0A%7D%0A%0Apub%20use%20foo%3A%3AX%3B%0A%0Afn%20main()%20%7B%7D%0A">Run</a></pre>
 <p>See the 'Use Declarations' section of the reference for more
 information on this topic:</p>
-<p><a href=
-"https://doc.rust-lang.org/reference.html#use-declarations">https://doc.rust-lang.org/reference.html#use-declarations</a></p>
+<p>https://doc.rust-lang.org/reference.html#use-declarations</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0365" class="section-header"><a href=
@@ -7539,8 +7529,7 @@ you are re-exporting is itself marked with <code>pub</code>:</p>
 "https://play.rust-lang.org/?code=pub%20mod%20foo%20%7B%0A%20%20%20%20pub%20const%20X%3A%20u32%20%3D%201%3B%0A%7D%0A%0Apub%20use%20foo%20as%20foo2%3B%0A%0Afn%20main()%20%7B%7D%0A">Run</a></pre>
 <p>See the 'Use Declarations' section of the reference for more
 information on this topic:</p>
-<p><a href=
-"https://doc.rust-lang.org/reference.html#use-declarations">https://doc.rust-lang.org/reference.html#use-declarations</a></p>
+<p>https://doc.rust-lang.org/reference.html#use-declarations</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0366" class="section-header"><a href=
@@ -8343,8 +8332,7 @@ one writer or multiple readers can access the data at any one
 time.</p>
 <p>If you wish to learn more about ownership in Rust, start with
 the chapter in the Book:</p>
-<p><a href=
-"https://doc.rust-lang.org/book/ownership.html">https://doc.rust-lang.org/book/ownership.html</a></p>
+<p>https://doc.rust-lang.org/book/ownership.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0383" class="section-header"><a href=
@@ -8565,8 +8553,7 @@ be redefined as below:</p>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Acell%3A%3ACell%3B%0A%0Afn%20foo%3CF%3A%20Fn()%3E(f%3A%20F)%20%7B%20%7D%0A%0Afn%20mutable()%20%7B%0A%20%20%20%20let%20x%20%3D%20Cell%3A%3Anew(0u32)%3B%0A%20%20%20%20foo(%7C%7C%20x.set(2))%3B%0A%7D%0A%7D">Run</a></pre>
 <p>You can read more about cell types in the API documentation:</p>
-<p><a href=
-"https://doc.rust-lang.org/std/cell/">https://doc.rust-lang.org/std/cell/</a></p>
+<p>https://doc.rust-lang.org/std/cell/</p>
 </div>
 <div class="error-described error-unused">
 <h2 id="E0388" class="section-header"><a href=
@@ -8799,8 +8786,7 @@ compiler to act as if the struct contained a borrowed reference
 <p>PhantomData can also be used to express information about unused
 type parameters. You can read more about it in the API
 documentation:</p>
-<p><a href=
-"https://doc.rust-lang.org/std/marker/struct.PhantomData.html">https://doc.rust-lang.org/std/marker/struct.PhantomData.html</a></p>
+<p>https://doc.rust-lang.org/std/marker/struct.PhantomData.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0393" class="section-header"><a href=
@@ -10820,8 +10806,8 @@ target="_blank" href=
 <span class="kw">extern</span> {}<a class="test-arrow" target=
 "_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0A%23%5Bcfg_attr(target%3D%22macos%22%2C%20link(name%20%3D%20%22FooCoreServices%22%2C%20kind%20%3D%20%22framework%22))%5D%0Aextern%20%7B%7D%0A%7D">Run</a></pre>
-<p>See more: <a href=
-"https://doc.rust-lang.org/book/conditional-compilation.html">https://doc.rust-lang.org/book/conditional-compilation.html</a></p>
+<p>See more:
+https://doc.rust-lang.org/book/conditional-compilation.html</p>
 </div>
 <div class="error-undescribed error-used">
 <h2 id="E0456" class="section-header"><a href=
@@ -11464,9 +11450,8 @@ code example:</p>
 target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20mut%20i%20%3D%200%3B%0Alet%20mut%20x%20%3D%20%26mut%20i%3B%0Alet%20mut%20a%20%3D%20%26mut%20i%3B%0A%2F%2F%20error%3A%20cannot%20borrow%20%60i%60%20as%20mutable%20more%20than%20once%20at%20a%20time%0A%7D">Run</a></pre>
 <p>Please note that in rust, you can either have many immutable
-references, or one mutable reference. Take a look at <a href=
-"https://doc.rust-lang.org/stable/book/references-and-borrowing.html">
-https://doc.rust-lang.org/stable/book/references-and-borrowing.html</a>
+references, or one mutable reference. Take a look at
+https://doc.rust-lang.org/stable/book/references-and-borrowing.html
 for more information. Example:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -11588,9 +11573,8 @@ the variable, it is not available for use until the closure goes
 out of scope.</p>
 <p>Note that a capture will either move or borrow a variable, but
 in this situation, the closure is borrowing the variable. Take a
-look at <a href=
-"http://rustbyexample.com/fn/closures/capture.html">http://rustbyexample.com/fn/closures/capture.html</a>
-for more information about capturing.</p>
+look at http://rustbyexample.com/fn/closures/capture.html for more
+information about capturing.</p>
 <p>Example of erroneous code:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">fn</span> <span class=
@@ -11751,9 +11735,8 @@ references to the variable before trying to access it mutably:</p>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Afn%20bar(x%3A%20%26mut%20i32)%20%7B%7D%0Afn%20foo(a%3A%20%26mut%20i32)%20%7B%0A%20%20%20%20bar(a)%3B%0A%20%20%20%20let%20ref%20y%20%3D%20a%3B%20%2F%2F%20ok!%0A%7D%0A%7D">Run</a></pre>
 <p>For more information on the rust ownership system, take a look
-at <a href=
-"https://doc.rust-lang.org/stable/book/references-and-borrowing.html">
-https://doc.rust-lang.org/stable/book/references-and-borrowing.html</a>.</p>
+at
+https://doc.rust-lang.org/stable/book/references-and-borrowing.html.</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0503" class="section-header"><a href=
@@ -11840,9 +11823,7 @@ Rust's mutability rules.</p>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0A%20%20%20%20let%20mut%20value%20%3D%203%3B%0A%20%20%20%20%2F%2F%20We%20clone%20%60value%60%2C%20creating%20a%20copy.%0A%20%20%20%20let%20value_cloned%20%3D%20value.clone()%3B%0A%20%20%20%20%2F%2F%20The%20mutable%20borrow%20is%20a%20reference%20to%20%60value%60%20and%0A%20%20%20%20%2F%2F%20not%20to%20%60value_cloned%60...%0A%20%20%20%20let%20_borrow%20%3D%20%26mut%20value%3B%0A%20%20%20%20%2F%2F%20...%20which%20means%20we%20can%20still%20use%20%60value_cloned%60%2C%0A%20%20%20%20let%20_sum%20%3D%20value_cloned%20%2B%201%3B%0A%20%20%20%20%2F%2F%20even%20though%20the%20borrow%20only%20ends%20here.%0A%7D%0A">Run</a></pre>
 <p>You can find more information about borrowing in the rust-book:
-<a href=
-"http://doc.rust-lang.org/stable/book/references-and-borrowing.html">
-http://doc.rust-lang.org/stable/book/references-and-borrowing.html</a></p>
+http://doc.rust-lang.org/stable/book/references-and-borrowing.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0504" class="section-header"><a href=
@@ -12118,9 +12099,7 @@ few different things:</p>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=%23%5Bderive(Clone%2C%20Copy)%5D%20%2F%2F%20implement%20Copy%20trait%0Astruct%20Value%20%7B%7D%0A%0Afn%20eat(val%3A%20Value)%20%7B%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%20Value%7B%7D%3B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20let%20_ref_to_val%3A%20%26Value%20%3D%20%26x%3B%0A%20%20%20%20%20%20%20%20eat(x)%3B%20%2F%2F%20it%20will%20be%20copied%20here.%0A%20%20%20%20%7D%0A%7D%0A">Run</a></pre>
 <p>You can find more information about borrowing in the rust-book:
-<a href=
-"http://doc.rust-lang.org/stable/book/references-and-borrowing.html">
-http://doc.rust-lang.org/stable/book/references-and-borrowing.html</a></p>
+http://doc.rust-lang.org/stable/book/references-and-borrowing.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0506" class="section-header"><a href=
@@ -12434,9 +12413,7 @@ that:</p>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=struct%20TheDarkKnight%3B%0A%0Aimpl%20TheDarkKnight%20%7B%0A%20%20%20%20fn%20nothing_is_true(self)%20%7B%7D%0A%7D%0A%0Astruct%20Batcave%20%7B%0A%20%20%20%20knight%3A%20TheDarkKnight%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20use%20std%3A%3Amem%3B%0A%0A%20%20%20%20let%20mut%20cave%20%3D%20Batcave%20%7B%0A%20%20%20%20%20%20%20%20knight%3A%20TheDarkKnight%0A%20%20%20%20%7D%3B%0A%20%20%20%20let%20borrowed%20%3D%20%26mut%20cave%3B%0A%0A%20%20%20%20borrowed.knight.nothing_is_true()%3B%20%2F%2F%20E0507%0A%20%20%20%20mem%3A%3Areplace(%26mut%20borrowed.knight%2C%20TheDarkKnight).nothing_is_true()%3B%20%2F%2F%20ok!%0A%7D%0A">Run</a></pre>
 <p>You can find more information about borrowing in the rust-book:
-<a href=
-"http://doc.rust-lang.org/stable/book/references-and-borrowing.html">
-http://doc.rust-lang.org/stable/book/references-and-borrowing.html</a></p>
+http://doc.rust-lang.org/stable/book/references-and-borrowing.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0508" class="section-header"><a href=
@@ -13088,8 +13065,8 @@ ok:</p>
 "ident">closure</span>); <span class="comment">// ok!</span>
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=%23%5Bderive(Clone%2C%20Copy)%5D%20%2F%2F%20We%20implement%20%60Clone%60%20and%20%60Copy%60%20traits.%0Astruct%20X%3B%0A%0Afn%20foo%3CT%3E(_%3A%20T)%20%7B%7D%0Afn%20bar%3CT%3A%20Fn(u32)%3E(_%3A%20T)%20%7B%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%20X%3B%0A%20%20%20%20let%20closure%20%3D%20%7C_%7C%20foo(x)%3B%0A%20%20%20%20bar(closure)%3B%20%2F%2F%20ok!%0A%7D%0A">Run</a></pre>
-<p>To understand better how closures work in Rust, read: <a href=
-"https://doc.rust-lang.org/book/closures.html">https://doc.rust-lang.org/book/closures.html</a></p>
+<p>To understand better how closures work in Rust, read:
+https://doc.rust-lang.org/book/closures.html</p>
 </div>
 <div class="error-described error-used">
 <h2 id="E0527" class="section-header"><a href=
@@ -13781,8 +13758,7 @@ zero-sized. This pattern should be rewritten. There are a few
 possible ways to do this:</p>
 <ul>
 <li>change the original fn declaration to match the expected
-signature, and do the cast in the fn body (the prefered
-option)</li>
+signature,and do the cast in the fn body (the prefered option)</li>
 <li>cast the fn item fo a fn pointer before calling transmute, as
 shown here:
 <ul>

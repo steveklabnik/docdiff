@@ -59,8 +59,8 @@ literals, <code>&amp;'static str</code>.</p>
 implementations on the <code>str</code> type. For technical
 reasons, there is additional, separate documentation in <a href=
 "str/index.html">the <code>std::str</code> module</a> as well.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>String literals are string slices:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -78,8 +78,8 @@ reasons, there is additional, separate documentation in <a href=
 <p>They are <code>'static</code> because they're stored directly in
 the final binary, and so will be valid for the <code>'static</code>
 duration.</p>
-<h1 id='representation' class='section-header'><a href=
-'#representation'>Representation</a></h1>
+<h1 id="representation" class="section-header"><a href=
+"#representation">Representation</a></h1>
 <p>A <code>&amp;str</code> is made up of two components: a pointer
 to some bytes, and a length. You can look at these with the
 <a href="#method.as_ptr"><code>.as_ptr</code></a> and <a href=
@@ -158,8 +158,8 @@ normal circumstances. Use <code>.as_slice()</code> instead.</p>
 "primitive.char.html"><code>char</code></a>s or graphemes. In other
 words, it may not be what a human considers the length of the
 string.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -184,8 +184,8 @@ class='invisible'><code>fn <a href='#method.is_empty' class=
 <div class='docblock'>
 <p>Returns <code>true</code> if <code>self</code> has a length of
 zero bytes.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -223,9 +223,9 @@ considered to be boundaries.</span></p>
 <p><span id='is_char_boundary.v' class='invisible'>Returns
 <code>false</code> if <code>index</code> is greater than
 <code>self.len()</code>.</span></p>
-<h1 id='examples-3' class='section-header'><span id=
+<h1 id="examples-3" class="section-header"><span id=
 'is_char_boundary.v' class='invisible'><a href=
-'#examples-3'>Examples</a></span></h1>
+"#examples-3">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'is_char_boundary.v' class='invisible'>
 <span class="kw">let</span> <span class=
@@ -264,8 +264,8 @@ class='invisible'><code>fn <a href='#method.as_bytes' class=
 "primitive.slice.html">]</a></code></span></h4>
 <div class='docblock'>
 <p>Converts a string slice to a byte slice.</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -285,8 +285,8 @@ class='invisible'><code>fn <a href='#method.as_bytes' class=
 <p>As string slices are a slice of bytes, the raw pointer points to
 a <a href="primitive.u8.html"><code>u8</code></a>. This pointer
 will be pointing to the first byte of the string slice.</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -312,8 +312,8 @@ including <code>begin</code> but excluding <code>end</code>.</p>
 <p>To get a mutable string slice instead, see the <a href=
 "#method.slice_mut_unchecked"><code>slice_mut_unchecked</code></a>
 method.</p>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p>Callers of this function are responsible that three
 preconditions are satisfied:</p>
 <ul>
@@ -323,8 +323,8 @@ within the string slice.</li>
 <li><code>begin</code> and <code>end</code> must lie on UTF-8
 sequence boundaries.</li>
 </ul>
-<h1 id='examples-6' class='section-header'><a href=
-'#examples-6'>Examples</a></h1>
+<h1 id="examples-6" class="section-header"><a href=
+"#examples-6">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -375,9 +375,9 @@ slice goes from <code>begin</code> to <code>end</code>, including
 immutable string slice instead, see the <a href=
 "#method.slice_unchecked"><code>slice_unchecked</code></a>
 method.</span></p>
-<h1 id='safety-1' class='section-header'><span id=
+<h1 id="safety-1" class="section-header"><span id=
 'slice_mut_unchecked.v' class='invisible'><a href=
-'#safety-1'>Safety</a></span></h1>
+"#safety-1">Safety</a></span></h1>
 <p><span id='slice_mut_unchecked.v' class='invisible'>Callers of
 this function are responsible that three preconditions are
 satisfied:</span></p>
@@ -421,15 +421,15 @@ string slice.</span></p>
 mutable string slices instead, see the <a href=
 "#method.split_at_mut"><code>split_at_mut</code></a>
 method.</span></p>
-<h1 id='panics' class='section-header'><span id=
+<h1 id="panics" class="section-header"><span id=
 'slice_mut_unchecked.v' class='invisible'><a href=
-'#panics'>Panics</a></span></h1>
+"#panics">Panics</a></span></h1>
 <p><span id='slice_mut_unchecked.v' class='invisible'>Panics if
 <code>mid</code> is not on a UTF-8 code point boundary, or if it is
 beyond the last code point of the string slice.</span></p>
-<h1 id='examples-7' class='section-header'><span id=
+<h1 id="examples-7" class="section-header"><span id=
 'slice_mut_unchecked.v' class='invisible'><a href=
-'#examples-7'>Examples</a></span></h1>
+"#examples-7">Examples</a></span></h1>
 <p><span id='slice_mut_unchecked.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id=
@@ -478,14 +478,14 @@ slice.</span></p>
 <p><span id='split_at_mut.v' class='invisible'>To get immutable
 string slices instead, see the <a href=
 "#method.split_at"><code>split_at</code></a> method.</span></p>
-<h1 id='panics-1' class='section-header'><span id='split_at_mut.v'
-class='invisible'><a href='#panics-1'>Panics</a></span></h1>
+<h1 id="panics-1" class="section-header"><span id='split_at_mut.v'
+class='invisible'><a href="#panics-1">Panics</a></span></h1>
 <p><span id='split_at_mut.v' class='invisible'>Panics if
 <code>mid</code> is not on a UTF-8 code point boundary, or if it is
 beyond the last code point of the string slice.</span></p>
-<h1 id='examples-8' class='section-header'><span id=
+<h1 id="examples-8" class="section-header"><span id=
 'split_at_mut.v' class='invisible'><a href=
-'#examples-8'>Examples</a></span></h1>
+"#examples-8">Examples</a></span></h1>
 <p><span id='split_at_mut.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='split_at_mut.v'
@@ -525,8 +525,8 @@ such an iterator.</p>
 "primitive.char.html"><code>char</code></a> represents a Unicode
 Scalar Value, and may not match your idea of what a 'character' is.
 Iteration over grapheme clusters may be what you actually want.</p>
-<h1 id='examples-9' class='section-header'><a href=
-'#examples-9'>Examples</a></h1>
+<h1 id="examples-9" class="section-header"><a href=
+"#examples-9">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -624,8 +624,8 @@ iterator of both these <a href=
 positions.</p>
 <p>The iterator yields tuples. The position is first, the <a href=
 "primitive.char.html"><code>char</code></a> is second.</p>
-<h1 id='examples-10' class='section-header'><a href=
-'#examples-10'>Examples</a></h1>
+<h1 id="examples-10" class="section-header"><a href=
+"#examples-10">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -706,8 +706,8 @@ target="_blank" href=
 <p>As a string slice consists of a sequence of bytes, we can
 iterate through a string slice by byte. This method returns such an
 iterator.</p>
-<h1 id='examples-11' class='section-header'><a href=
-'#examples-11'>Examples</a></h1>
+<h1 id="examples-11" class="section-header"><a href=
+"#examples-11">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -757,9 +757,9 @@ whitespace.</span></p>
 <p><span id='split_whitespace.v' class='invisible'>'Whitespace' is
 defined according to the terms of the Unicode Derived Core Property
 <code>White_Space</code>.</span></p>
-<h1 id='examples-12' class='section-header'><span id=
+<h1 id="examples-12" class="section-header"><span id=
 'split_whitespace.v' class='invisible'><a href=
-'#examples-12'>Examples</a></span></h1>
+"#examples-12">Examples</a></span></h1>
 <p><span id='split_whitespace.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id=
@@ -829,8 +829,8 @@ target="_blank" href=
 <p>Lines are ended with either a newline (<code>\n</code>) or a
 carriage return with a line feed (<code>\r\n</code>).</p>
 <p>The final line ending is optional.</p>
-<h1 id='examples-13' class='section-header'><a href=
-'#examples-13'>Examples</a></h1>
+<h1 id="examples-13" class="section-header"><a href=
+"#examples-13">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -934,8 +934,8 @@ P&gt;(&amp;'a self, pat: P) -&gt; <a class="primitive" href=
 <p>Returns <code>true</code> if the given pattern matches a
 sub-slice of this string slice.</p>
 <p>Returns <code>false</code> if it does not.</p>
-<h1 id='examples-14' class='section-header'><a href=
-'#examples-14'>Examples</a></h1>
+<h1 id="examples-14" class="section-header"><a href=
+"#examples-14">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -963,8 +963,8 @@ class='invisible'><code>fn <a href='#method.starts_with' class=
 <p>Returns <code>true</code> if the given pattern matches a prefix
 of this string slice.</p>
 <p>Returns <code>false</code> if it does not.</p>
-<h1 id='examples-15' class='section-header'><a href=
-'#examples-15'>Examples</a></h1>
+<h1 id="examples-15" class="section-header"><a href=
+"#examples-15">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -995,8 +995,8 @@ title="trait std::str::pattern::Pattern">Searcher</a>: <a class=
 <p>Returns <code>true</code> if the given pattern matches a suffix
 of this string slice.</p>
 <p>Returns <code>false</code> if it does not.</p>
-<h1 id='examples-16' class='section-header'><a href=
-'#examples-16'>Examples</a></h1>
+<h1 id="examples-16" class="section-header"><a href=
+"#examples-16">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1030,8 +1030,8 @@ pattern doesn't match.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='examples-17' class='section-header'><a href=
-'#examples-17'>Examples</a></h1>
+<h1 id="examples-17" class="section-header"><a href=
+"#examples-17">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1109,8 +1109,8 @@ pattern doesn't match.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='examples-18' class='section-header'><a href=
-'#examples-18'>Examples</a></h1>
+<h1 id="examples-18" class="section-header"><a href=
+"#examples-18">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1175,8 +1175,8 @@ characters matched by a pattern.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines the split.</p>
-<h1 id='iterator-behavior' class='section-header'><a href=
-'#iterator-behavior'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior" class="section-header"><a href=
+"#iterator-behavior">Iterator behavior</a></h1>
 <p>The returned iterator will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
 if the pattern allows a reverse search and forward/reverse search
@@ -1186,8 +1186,8 @@ yields the same elements. This is true for, eg, <a href=
 <p>If the pattern allows a reverse search but its results might
 differ from a forward search, the <a href=
 "#method.rsplit"><code>rsplit</code></a> method can be used.</p>
-<h1 id='examples-19' class='section-header'><a href=
-'#examples-19'>Examples</a></h1>
+<h1 id="examples-19" class="section-header"><a href=
+"#examples-19">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1406,16 +1406,16 @@ order.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines the split.</p>
-<h1 id='iterator-behavior-1' class='section-header'><a href=
-'#iterator-behavior-1'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-1" class="section-header"><a href=
+"#iterator-behavior-1">Iterator behavior</a></h1>
 <p>The returned iterator requires that the pattern supports a
 reverse search, and it will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
 if a forward/reverse search yields the same elements.</p>
 <p>For iterating from the front, the <a href=
 "#method.split"><code>split</code></a> method can be used.</p>
-<h1 id='examples-20' class='section-header'><a href=
-'#examples-20'>Examples</a></h1>
+<h1 id="examples-20" class="section-header"><a href=
+"#examples-20">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1507,8 +1507,8 @@ except that the trailing substring is skipped if empty.</p>
 <p>This method can be used for string data that is
 <em>terminated</em>, rather than <em>separated</em> by a
 pattern.</p>
-<h1 id='iterator-behavior-2' class='section-header'><a href=
-'#iterator-behavior-2'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-2" class="section-header"><a href=
+"#iterator-behavior-2">Iterator behavior</a></h1>
 <p>The returned iterator will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
 if the pattern allows a reverse search and forward/reverse search
@@ -1519,8 +1519,8 @@ yields the same elements. This is true for, eg, <a href=
 differ from a forward search, the <a href=
 "#method.rsplit_terminator"><code>rsplit_terminator</code></a>
 method can be used.</p>
-<h1 id='examples-21' class='section-header'><a href=
-'#examples-21'>Examples</a></h1>
+<h1 id="examples-21" class="section-header"><a href=
+"#examples-21">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1573,16 +1573,16 @@ except that the trailing substring is skipped if empty.</p>
 <p>This method can be used for string data that is
 <em>terminated</em>, rather than <em>separated</em> by a
 pattern.</p>
-<h1 id='iterator-behavior-3' class='section-header'><a href=
-'#iterator-behavior-3'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-3" class="section-header"><a href=
+"#iterator-behavior-3">Iterator behavior</a></h1>
 <p>The returned iterator requires that the pattern supports a
 reverse search, and it will be double ended if a forward/reverse
 search yields the same elements.</p>
 <p>For iterating from the front, the <a href=
 "#method.split_terminator"><code>split_terminator</code></a> method
 can be used.</p>
-<h1 id='examples-22' class='section-header'><a href=
-'#examples-22'>Examples</a></h1>
+<h1 id="examples-22" class="section-header"><a href=
+"#examples-22">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span>: <span class="ident">Vec</span><span class=
@@ -1627,14 +1627,14 @@ string.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines the split.</p>
-<h1 id='iterator-behavior-4' class='section-header'><a href=
-'#iterator-behavior-4'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-4" class="section-header"><a href=
+"#iterator-behavior-4">Iterator behavior</a></h1>
 <p>The returned iterator will not be double ended, because it is
 not efficient to support.</p>
 <p>If the pattern allows a reverse search, the <a href=
 "#method.rsplitn"><code>rsplitn</code></a> method can be used.</p>
-<h1 id='examples-23' class='section-header'><a href=
-'#examples-23'>Examples</a></h1>
+<h1 id="examples-23" class="section-header"><a href=
+"#examples-23">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1723,14 +1723,14 @@ string.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines the split.</p>
-<h1 id='iterator-behavior-5' class='section-header'><a href=
-'#iterator-behavior-5'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-5" class="section-header"><a href=
+"#iterator-behavior-5">Iterator behavior</a></h1>
 <p>The returned iterator will not be double ended, because it is
 not efficient to support.</p>
 <p>For splitting from the front, the <a href=
 "#method.splitn"><code>splitn</code></a> method can be used.</p>
-<h1 id='examples-24' class='section-header'><a href=
-'#examples-24'>Examples</a></h1>
+<h1 id="examples-24" class="section-header"><a href=
+"#examples-24">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1805,8 +1805,8 @@ string slice.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='iterator-behavior-6' class='section-header'><a href=
-'#iterator-behavior-6'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-6" class="section-header"><a href=
+"#iterator-behavior-6">Iterator behavior</a></h1>
 <p>The returned iterator will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
 if the pattern allows a reverse search and forward/reverse search
@@ -1817,8 +1817,8 @@ yields the same elements. This is true for, eg, <a href=
 differ from a forward search, the <a href=
 "#method.rmatches"><code>rmatches</code></a> method can be
 used.</p>
-<h1 id='examples-25' class='section-header'><a href=
-'#examples-25'>Examples</a></h1>
+<h1 id="examples-25" class="section-header"><a href=
+"#examples-25">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1867,16 +1867,16 @@ slice, yielded in reverse order.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='iterator-behavior-7' class='section-header'><a href=
-'#iterator-behavior-7'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-7" class="section-header"><a href=
+"#iterator-behavior-7">Iterator behavior</a></h1>
 <p>The returned iterator requires that the pattern supports a
 reverse search, and it will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
 if a forward/reverse search yields the same elements.</p>
 <p>For iterating from the front, the <a href=
 "#method.matches"><code>matches</code></a> method can be used.</p>
-<h1 id='examples-26' class='section-header'><a href=
-'#examples-26'>Examples</a></h1>
+<h1 id="examples-26" class="section-header"><a href=
+"#examples-26">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -1926,8 +1926,8 @@ returned.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='iterator-behavior-8' class='section-header'><a href=
-'#iterator-behavior-8'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-8" class="section-header"><a href=
+"#iterator-behavior-8">Iterator behavior</a></h1>
 <p>The returned iterator will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
 if the pattern allows a reverse search and forward/reverse search
@@ -1938,8 +1938,8 @@ yields the same elements. This is true for, eg, <a href=
 differ from a forward search, the <a href=
 "#method.rmatch_indices"><code>rmatch_indices</code></a> method can
 be used.</p>
-<h1 id='examples-27' class='section-header'><a href=
-'#examples-27'>Examples</a></h1>
+<h1 id="examples-27" class="section-header"><a href=
+"#examples-27">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2004,8 +2004,8 @@ returned.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='iterator-behavior-9' class='section-header'><a href=
-'#iterator-behavior-9'>Iterator behavior</a></h1>
+<h1 id="iterator-behavior-9" class="section-header"><a href=
+"#iterator-behavior-9">Iterator behavior</a></h1>
 <p>The returned iterator requires that the pattern supports a
 reverse search, and it will be a <a href=
 "iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>
@@ -2013,8 +2013,8 @@ if a forward/reverse search yields the same elements.</p>
 <p>For iterating from the front, the <a href=
 "#method.match_indices"><code>match_indices</code></a> method can
 be used.</p>
-<h1 id='examples-28' class='section-header'><a href=
-'#examples-28'>Examples</a></h1>
+<h1 id="examples-28" class="section-header"><a href=
+"#examples-28">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2063,8 +2063,8 @@ target="_blank" href=
 removed.</p>
 <p>'Whitespace' is defined according to the terms of the Unicode
 Derived Core Property <code>White_Space</code>.</p>
-<h1 id='examples-29' class='section-header'><a href=
-'#examples-29'>Examples</a></h1>
+<h1 id="examples-29" class="section-header"><a href=
+"#examples-29">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2085,14 +2085,14 @@ class='invisible'><code>fn <a href='#method.trim_left' class=
 <p>Returns a string slice with leading whitespace removed.</p>
 <p>'Whitespace' is defined according to the terms of the Unicode
 Derived Core Property <code>White_Space</code>.</p>
-<h1 id='text-directionality' class='section-header'><a href=
-'#text-directionality'>Text directionality</a></h1>
+<h1 id="text-directionality" class="section-header"><a href=
+"#text-directionality">Text directionality</a></h1>
 <p>A string is a sequence of bytes. 'Left' in this context means
 the first position of that byte string; for a language like Arabic
 or Hebrew which are 'right to left' rather than 'left to right',
 this will be the <em>right</em> side, not the left.</p>
-<h1 id='examples-30' class='section-header'><a href=
-'#examples-30'>Examples</a></h1>
+<h1 id="examples-30" class="section-header"><a href=
+"#examples-30">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2134,14 +2134,14 @@ href="primitive.str.html">str</a></code></span></h4>
 <p>Returns a string slice with trailing whitespace removed.</p>
 <p>'Whitespace' is defined according to the terms of the Unicode
 Derived Core Property <code>White_Space</code>.</p>
-<h1 id='text-directionality-1' class='section-header'><a href=
-'#text-directionality-1'>Text directionality</a></h1>
+<h1 id="text-directionality-1" class="section-header"><a href=
+"#text-directionality-1">Text directionality</a></h1>
 <p>A string is a sequence of bytes. 'Right' in this context means
 the last position of that byte string; for a language like Arabic
 or Hebrew which are 'right to left' rather than 'left to right',
 this will be the <em>left</em> side, not the right.</p>
-<h1 id='examples-31' class='section-header'><a href=
-'#examples-31'>Examples</a></h1>
+<h1 id="examples-31" class="section-header"><a href=
+"#examples-31">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2198,8 +2198,8 @@ a pattern repeatedly removed.</p>
 <p>The pattern can be a <a href=
 "primitive.char.html"><code>char</code></a> or a closure that
 determines if a character matches.</p>
-<h1 id='examples-32' class='section-header'><a href=
-'#examples-32'>Examples</a></h1>
+<h1 id="examples-32" class="section-header"><a href=
+"#examples-32">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class=
@@ -2254,14 +2254,14 @@ repeatedly removed.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='text-directionality-2' class='section-header'><a href=
-'#text-directionality-2'>Text directionality</a></h1>
+<h1 id="text-directionality-2" class="section-header"><a href=
+"#text-directionality-2">Text directionality</a></h1>
 <p>A string is a sequence of bytes. 'Left' in this context means
 the first position of that byte string; for a language like Arabic
 or Hebrew which are 'right to left' rather than 'left to right',
 this will be the <em>right</em> side, not the left.</p>
-<h1 id='examples-33' class='section-header'><a href=
-'#examples-33'>Examples</a></h1>
+<h1 id="examples-33" class="section-header"><a href=
+"#examples-33">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class=
@@ -2307,14 +2307,14 @@ repeatedly removed.</p>
 <p>The pattern can be a <code>&amp;str</code>, <a href=
 "primitive.char.html"><code>char</code></a>, or a closure that
 determines if a character matches.</p>
-<h1 id='text-directionality-3' class='section-header'><a href=
-'#text-directionality-3'>Text directionality</a></h1>
+<h1 id="text-directionality-3" class="section-header"><a href=
+"#text-directionality-3">Text directionality</a></h1>
 <p>A string is a sequence of bytes. 'Right' in this context means
 the last position of that byte string; for a language like Arabic
 or Hebrew which are 'right to left' rather than 'left to right',
 this will be the <em>left</em> side, not the right.</p>
-<h1 id='examples-34' class='section-header'><a href=
-'#examples-34'>Examples</a></h1>
+<h1 id="examples-34" class="section-header"><a href=
+"#examples-34">Examples</a></h1>
 <p>Simple patterns:</p>
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class=
@@ -2375,14 +2375,14 @@ into.</p>
 <p><code>parse()</code> can parse any type that implements the
 <a href="str/trait.FromStr.html"><code>FromStr</code></a>
 trait.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>Will return <a href=
 "str/trait.FromStr.html#associatedtype.Err"><code>Err</code></a> if
 it's not possible to parse this string slice into the desired
 type.</p>
-<h1 id='example' class='section-header'><a href=
-'#example'>Example</a></h1>
+<h1 id="example" class="section-header"><a href=
+"#example">Example</a></h1>
 <p>Basic usage</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2436,8 +2436,8 @@ href="https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20nope%20%3D%20%2
 data from this string slice into it. While doing so, it attempts to
 find matches of a pattern. If it finds any, it replaces them with
 the replacement string slice.</p>
-<h1 id='examples-35' class='section-header'><a href=
-'#examples-35'>Examples</a></h1>
+<h1 id="examples-35" class="section-header"><a href=
+"#examples-35">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2483,8 +2483,8 @@ class='invisible'><code>fn <a href='#method.replacen' class=
 data from this string slice into it. While doing so, it attempts to
 find matches of a pattern. If it finds any, it replaces them with
 the replacement string slice at most <code>N</code> times.</p>
-<h1 id='examples-36' class='section-header'><a href=
-'#examples-36'>Examples</a></h1>
+<h1 id="examples-36" class="section-header"><a href=
+"#examples-36">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -2544,9 +2544,9 @@ characters can expand into multiple characters when changing the
 case, this function returns a <a href=
 "string/struct.String.html"><code>String</code></a> instead of
 modifying the parameter in-place.</span></p>
-<h1 id='examples-37' class='section-header'><span id=
+<h1 id="examples-37" class="section-header"><span id=
 'to_lowercase.v' class='invisible'><a href=
-'#examples-37'>Examples</a></span></h1>
+"#examples-37">Examples</a></span></h1>
 <p><span id='to_lowercase.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='to_lowercase.v'
@@ -2617,9 +2617,9 @@ characters can expand into multiple characters when changing the
 case, this function returns a <a href=
 "string/struct.String.html"><code>String</code></a> instead of
 modifying the parameter in-place.</span></p>
-<h1 id='examples-38' class='section-header'><span id=
+<h1 id="examples-38" class="section-header"><span id=
 'to_uppercase.v' class='invisible'><a href=
-'#examples-38'>Examples</a></span></h1>
+"#examples-38">Examples</a></span></h1>
 <p><span id='to_uppercase.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='to_uppercase.v'
@@ -2722,9 +2722,9 @@ class='invisible'><code>fn <a href='#method.into_string' class=
 <code>Box&lt;str&gt;</code> into a <a href=
 "string/struct.String.html"><code>String</code></a> without copying
 or allocating.</span></p>
-<h1 id='examples-39' class='section-header'><span id=
+<h1 id="examples-39" class="section-header"><span id=
 'into_string.v' class='invisible'><a href=
-'#examples-39'>Examples</a></span></h1>
+"#examples-39">Examples</a></span></h1>
 <p><span id='into_string.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='into_string.v'
@@ -2756,8 +2756,8 @@ class='invisible'>
 <p><span id='repeat.v' class='invisible'>Create a <a href=
 "string/struct.String.html"><code>String</code></a> by repeating a
 string <code>n</code> times.</span></p>
-<h1 id='examples-40' class='section-header'><span id='repeat.v'
-class='invisible'><a href='#examples-40'>Examples</a></span></h1>
+<h1 id="examples-40" class="section-header"><span id='repeat.v'
+class='invisible'><a href="#examples-40">Examples</a></span></h1>
 <p><span id='repeat.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='repeat.v' class=
 'invisible'>
@@ -3034,8 +3034,8 @@ string from the byte range
 [<code>begin</code>..<code>end</code>).</span></p>
 <p><span class='out-of-band'>This operation is
 <code>O(1)</code>.</span></p>
-<h1 id='panics-2' class='section-header'><span class=
-'out-of-band'><a href='#panics-2'>Panics</a></span></h1>
+<h1 id="panics-2" class="section-header"><span class=
+'out-of-band'><a href="#panics-2">Panics</a></span></h1>
 <p><span class='out-of-band'>Panics if <code>begin</code> or
 <code>end</code> does not point to the starting byte offset of a
 character (as defined by <code>is_char_boundary</code>). Requires
@@ -3297,15 +3297,15 @@ from the byte range
 [<code>begin</code>..<code>end</code>).</span></p>
 <p><span class='out-of-band'>This operation is
 <code>O(1)</code>.</span></p>
-<h1 id='panics-3' class='section-header'><span class=
-'out-of-band'><a href='#panics-3'>Panics</a></span></h1>
+<h1 id="panics-3" class="section-header"><span class=
+'out-of-band'><a href="#panics-3">Panics</a></span></h1>
 <p><span class='out-of-band'>Panics if <code>begin</code> or
 <code>end</code> does not point to the starting byte offset of a
 character (as defined by <code>is_char_boundary</code>). Requires
 that <code>begin &lt;= end</code> and <code>end &lt;= len</code>
 where <code>len</code> is the length of the string.</span></p>
-<h1 id='examples-41' class='section-header'><span class=
-'out-of-band'><a href='#examples-41'>Examples</a></span></h1>
+<h1 id="examples-41" class="section-header"><span class=
+'out-of-band'><a href="#examples-41">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span class='out-of-band'>
 <span class="kw">let</span> <span class=
 "ident">s</span> <span class="op">=</span> <span class=
@@ -4166,11 +4166,11 @@ is a nightly-only experimental API. (<code>ascii_ctype</code>
 <div class='docblock'>
 <p>Checks if the value is an ASCII punctuation character: U+0021
 ... U+002F <code>! " # $ % & ' ( ) * + , - . /</code> U+003A ...
-U+0040 <code>: ; &lt; = &gt; ? @</code> U+005B ... U+0060 <code>[ \
-] ^ _</code><code>U+007B ... U+007E</code>{ | } ~` For strings,
-true if all characters in the string are ASCII punctuation.
-<a href="../std/ascii/trait.AsciiExt.html#method.is_ascii_punctuation">
-Read more</a></p>
+U+0040 <code>: ; &lt; = &gt; ? @</code> U+005B ... U+0060 <code>[
+\\ ] ^ _ \`` U+007B ... U+007E</code>{ | } ~` For strings, true if
+all characters in the string are ASCII punctuation. <a href=
+"../std/ascii/trait.AsciiExt.html#method.is_ascii_punctuation">Read
+more</a></p>
 </div>
 <h4 id='method.is_ascii_graphic' class="method"><span id=
 'is_ascii_graphic.v' class='invisible'><code>fn <a href=

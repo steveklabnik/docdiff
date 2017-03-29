@@ -56,8 +56,8 @@ pub struct Vec&lt;T&gt; { /* fields omitted */ }</pre>
 <div class='docblock'>
 <p>A contiguous growable array type, written
 <code>Vec&lt;T&gt;</code> but pronounced 'vector'.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -161,8 +161,8 @@ macro is provided to make initialization more convenient:</p>
 "ident">top</span>);
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20mut%20stack%20%3D%20Vec%3A%3Anew()%3B%0A%0Astack.push(1)%3B%0Astack.push(2)%3B%0Astack.push(3)%3B%0A%0Awhile%20let%20Some(top)%20%3D%20stack.pop()%20%7B%0A%20%20%20%20%2F%2F%20Prints%203%2C%202%2C%201%0A%20%20%20%20println!(%22%7B%7D%22%2C%20top)%3B%0A%7D%0A%7D">Run</a></pre>
-<h1 id='indexing' class='section-header'><a href=
-'#indexing'>Indexing</a></h1>
+<h1 id="indexing" class="section-header"><a href=
+"#indexing">Indexing</a></h1>
 <p>The <code>Vec</code> type allows to access values by index,
 because it implements the <a href=
 "../../std/ops/trait.Index.html"><code>Index</code></a> trait. An
@@ -196,8 +196,8 @@ this:</p>
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20v%20%3D%20vec!%5B0%2C%202%2C%204%2C%206%5D%3B%0Aprintln!(%22%7B%7D%22%2C%20v%5B6%5D)%3B%20%2F%2F%20it%20will%20panic!%0A%7D">Run</a></pre>
 <p>In conclusion: always check if the index you want to get really
 exists before doing it.</p>
-<h1 id='slicing' class='section-header'><a href=
-'#slicing'>Slicing</a></h1>
+<h1 id="slicing" class="section-header"><a href=
+"#slicing">Slicing</a></h1>
 <p>A <code>Vec</code> can be mutable. Slices, on the other hand,
 are read-only objects. To get a slice, use <code>&</code>.
 Example:</p>
@@ -230,8 +230,8 @@ goes for <a href=
 "../../std/string/struct.String.html"><code>String</code></a> and
 <a href=
 "../../std/primitive.str.html"><code>&amp;str</code></a>.</p>
-<h1 id='capacity-and-reallocation' class='section-header'><a href=
-'#capacity-and-reallocation'>Capacity and reallocation</a></h1>
+<h1 id="capacity-and-reallocation" class="section-header"><a href=
+"#capacity-and-reallocation">Capacity and reallocation</a></h1>
 <p>The capacity of a vector is the amount of space allocated for
 any future elements that will be added onto the vector. This is not
 to be confused with the <em>length</em> of a vector, which
@@ -248,8 +248,8 @@ reason, it is recommended to use <a href=
 "../../std/vec/struct.Vec.html#method.with_capacity"><code>Vec::with_capacity</code></a>
 whenever possible to specify how big the vector is expected to
 get.</p>
-<h1 id='guarantees' class='section-header'><a href=
-'#guarantees'>Guarantees</a></h1>
+<h1 id="guarantees" class="section-header"><a href=
+"#guarantees">Guarantees</a></h1>
 <p>Due to its incredibly fundamental nature, <code>Vec</code> makes
 a lot of guarantees about its design. This ensures that it's as
 low-overhead as possible in the general case, and can be correctly
@@ -379,8 +379,8 @@ href="../../std/vec/struct.Vec.html" title=
 <p>Constructs a new, empty <code>Vec&lt;T&gt;</code>.</p>
 <p>The vector will not allocate until elements are pushed onto
 it.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span>: <span class=
@@ -407,8 +407,8 @@ vector will not allocate.</p>
 length and capacity, see <em><a href=
 "#capacity-and-reallocation">Capacity and
 reallocation</a></em>.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -448,15 +448,15 @@ href="../../std/vec/struct.Vec.html" title=
 <div class='docblock'>
 <p>Creates a <code>Vec&lt;T&gt;</code> directly from the raw
 components of another vector.</p>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p>This is highly unsafe, due to the number of invariants that
 aren't checked:</p>
 <ul>
 <li><code>ptr</code> needs to have been previously allocated via
 <a href=
-"../../std/string/struct.String.html"><code>String</code></a>/<code>Vec&lt;T&gt;</code>
-(at least, it's highly likely to be incorrect if it wasn't).</li>
+"../../std/string/struct.String.html"><code>String</code></a>/<code>Vec&lt;T&gt;</code>(at
+least, it's highly likely to be incorrect if it wasn't).</li>
 <li><code>length</code> needs to be less than or equal to
 <code>capacity</code>.</li>
 <li><code>capacity</code> needs to be the capacity that the pointer
@@ -472,8 +472,8 @@ the <code>Vec&lt;T&gt;</code> which may then deallocate, reallocate
 or change the contents of memory pointed to by the pointer at will.
 Ensure that nothing else uses the pointer after calling this
 function.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">ptr</span>;
@@ -542,8 +542,8 @@ class='invisible'><code>fn <a href='#method.capacity' class=
 <div class='docblock'>
 <p>Returns the number of elements the vector can hold without
 reallocating.</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">vec</span>: <span class="ident">Vec</span><span class=
@@ -568,11 +568,11 @@ collection may reserve more space to avoid frequent reallocations.
 After calling <code>reserve</code>, capacity will be greater than
 or equal to <code>self.len() + additional</code>. Does nothing if
 capacity is already sufficient.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>Panics if the new capacity overflows <code>usize</code>.</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -602,11 +602,11 @@ capacity is already sufficient.</p>
 it requests. Therefore capacity can not be relied upon to be
 precisely minimal. Prefer <code>reserve</code> if future insertions
 are expected.</p>
-<h1 id='panics-1' class='section-header'><a href=
-'#panics-1'>Panics</a></h1>
+<h1 id="panics-1" class="section-header"><a href=
+"#panics-1">Panics</a></h1>
 <p>Panics if the new capacity overflows <code>usize</code>.</p>
-<h1 id='examples-6' class='section-header'><a href=
-'#examples-6'>Examples</a></h1>
+<h1 id="examples-6" class="section-header"><a href=
+"#examples-6">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -629,8 +629,8 @@ self)</code></span></h4>
 <p>It will drop down as close as possible to the length but the
 allocator may still inform the vector that there is space for a few
 more elements.</p>
-<h1 id='examples-7' class='section-header'><a href=
-'#examples-7'>Examples</a></h1>
+<h1 id="examples-7" class="section-header"><a href=
+"#examples-7">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -667,8 +667,8 @@ converting back to a vector with <a href=
 "../../std/primitive.slice.html#method.into_vec"><code>into_vec</code></a>
 is equivalent to calling <a href=
 "#method.shrink_to_fit"><code>shrink_to_fit</code></a>.</p>
-<h1 id='examples-8' class='section-header'><a href=
-'#examples-8'>Examples</a></h1>
+<h1 id="examples-8" class="section-header"><a href=
+"#examples-8">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> <span class=
@@ -719,8 +719,8 @@ emulate <code>truncate</code>, but causes the excess elements to be
 returned instead of dropped.</p>
 <p>Note that this method has no effect on the allocated capacity of
 the vector.</p>
-<h1 id='examples-9' class='section-header'><a href=
-'#examples-9'>Examples</a></h1>
+<h1 id="examples-9" class="section-header"><a href=
+"#examples-9">Examples</a></h1>
 <p>Truncating a five element vector to two elements:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
@@ -778,8 +778,8 @@ class='invisible'><code>fn <a href='#method.as_slice' class=
 containing the entire vector.</span></p>
 <p><span id='as_slice.v' class='invisible'>Equivalent to
 <code>&amp;s[..]</code>.</span></p>
-<h1 id='examples-10' class='section-header'><span id='as_slice.v'
-class='invisible'><a href='#examples-10'>Examples</a></span></h1>
+<h1 id="examples-10" class="section-header"><span id='as_slice.v'
+class='invisible'><a href="#examples-10">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='as_slice.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -811,9 +811,9 @@ self) -&gt; <a class="primitive" href=
 slice of the entire vector.</span></p>
 <p><span id='as_mut_slice.v' class='invisible'>Equivalent to
 <code>&amp;mut s[..]</code>.</span></p>
-<h1 id='examples-11' class='section-header'><span id=
+<h1 id="examples-11" class="section-header"><span id=
 'as_mut_slice.v' class='invisible'><a href=
-'#examples-11'>Examples</a></span></h1>
+"#examples-11">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='as_mut_slice.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -841,8 +841,8 @@ class='invisible'>
 <p>This will explicitly set the size of the vector, without
 actually modifying its buffers, so it is up to the caller to ensure
 that the vector is actually the specified size.</p>
-<h1 id='examples-12' class='section-header'><a href=
-'#examples-12'>Examples</a></h1>
+<h1 id="examples-12" class="section-header"><a href=
+"#examples-12">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">ptr</span>;
@@ -913,11 +913,11 @@ T</code></span></h4>
 <p>Removes an element from anywhere in the vector and return it,
 replacing it with the last element.</p>
 <p>This does not preserve ordering, but is O(1).</p>
-<h1 id='panics-2' class='section-header'><a href=
-'#panics-2'>Panics</a></h1>
+<h1 id="panics-2" class="section-header"><a href=
+"#panics-2">Panics</a></h1>
 <p>Panics if <code>index</code> is out of bounds.</p>
-<h1 id='examples-13' class='section-header'><a href=
-'#examples-13'>Examples</a></h1>
+<h1 id="examples-13" class="section-header"><a href=
+"#examples-13">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -952,11 +952,11 @@ T)</code></span></h4>
 <div class='docblock'>
 <p>Inserts an element at position <code>index</code> within the
 vector, shifting all elements after it to the right.</p>
-<h1 id='panics-3' class='section-header'><a href=
-'#panics-3'>Panics</a></h1>
+<h1 id="panics-3" class="section-header"><a href=
+"#panics-3">Panics</a></h1>
 <p>Panics if <code>index</code> is out of bounds.</p>
-<h1 id='examples-14' class='section-header'><a href=
-'#examples-14'>Examples</a></h1>
+<h1 id="examples-14" class="section-header"><a href=
+"#examples-14">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -987,11 +987,11 @@ T</code></span></h4>
 <div class='docblock'>
 <p>Removes and returns the element at position <code>index</code>
 within the vector, shifting all elements after it to the left.</p>
-<h1 id='panics-4' class='section-header'><a href=
-'#panics-4'>Panics</a></h1>
+<h1 id="panics-4" class="section-header"><a href=
+"#panics-4">Panics</a></h1>
 <p>Panics if <code>index</code> is out of bounds.</p>
-<h1 id='examples-15' class='section-header'><a href=
-'#examples-15'>Examples</a></h1>
+<h1 id="examples-15" class="section-header"><a href=
+"#examples-15">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -1021,8 +1021,8 @@ within the vector, shifting all elements after it to the left.</p>
 <code>f(&amp;e)</code> returns <code>false</code>. This method
 operates in place and preserves the order of the retained
 elements.</p>
-<h1 id='examples-16' class='section-header'><a href=
-'#examples-16'>Examples</a></h1>
+<h1 id="examples-16" class="section-header"><a href=
+"#examples-16">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -1056,8 +1056,8 @@ F: <a class="trait" href="../../std/ops/trait.FnMut.html" title=
 <p>Removes consecutive elements in the vector that resolve to the
 same key.</p>
 <p>If the vector is sorted, this removes all duplicates.</p>
-<h1 id='examples-17' class='section-header'><a href=
-'#examples-17'>Examples</a></h1>
+<h1 id="examples-17" class="section-header"><a href=
+"#examples-17">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -1097,8 +1097,8 @@ two elements from the vector, and returns <code>true</code> if the
 elements compare equal, or <code>false</code> if they do not. Only
 the first of adjacent equal items is kept.</p>
 <p>If the vector is sorted, this removes all duplicates.</p>
-<h1 id='examples-18' class='section-header'><a href=
-'#examples-18'>Examples</a></h1>
+<h1 id="examples-18" class="section-header"><a href=
+"#examples-18">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">ascii</span>::<span class=
@@ -1130,12 +1130,12 @@ the first of adjacent equal items is kept.</p>
 'fnname'>push</a>(&amp;mut self, value: T)</code></span></h4>
 <div class='docblock'>
 <p>Appends an element to the back of a collection.</p>
-<h1 id='panics-5' class='section-header'><a href=
-'#panics-5'>Panics</a></h1>
+<h1 id="panics-5" class="section-header"><a href=
+"#panics-5">Panics</a></h1>
 <p>Panics if the number of elements in the vector overflows a
 <code>usize</code>.</p>
-<h1 id='examples-19' class='section-header'><a href=
-'#examples-19'>Examples</a></h1>
+<h1 id="examples-19" class="section-header"><a href=
+"#examples-19">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -1159,8 +1159,8 @@ the first of adjacent equal items is kept.</p>
 <a href=
 "../../std/option/enum.Option.html#variant.None"><code>None</code></a>
 if it is empty.</p>
-<h1 id='examples-20' class='section-header'><a href=
-'#examples-20'>Examples</a></h1>
+<h1 id="examples-20" class="section-header"><a href=
+"#examples-20">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -1188,12 +1188,12 @@ if it is empty.</p>
 <p><span id='append.v' class='invisible'>Moves all the elements of
 <code>other</code> into <code>Self</code>, leaving
 <code>other</code> empty.</span></p>
-<h1 id='panics-6' class='section-header'><span id='append.v' class=
-'invisible'><a href='#panics-6'>Panics</a></span></h1>
+<h1 id="panics-6" class="section-header"><span id='append.v' class=
+'invisible'><a href="#panics-6">Panics</a></span></h1>
 <p><span id='append.v' class='invisible'>Panics if the number of
 elements in the vector overflows a <code>usize</code>.</span></p>
-<h1 id='examples-21' class='section-header'><span id='append.v'
-class='invisible'><a href='#examples-21'>Examples</a></span></h1>
+<h1 id="examples-21" class="section-header"><span id='append.v'
+class='invisible'><a href="#examples-21">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='append.v' class=
 'invisible'>
 <span class="kw">let</span> <span class=
@@ -1238,12 +1238,12 @@ the vector and yields the removed items.</p>
 only partially consumed or not consumed at all.</p>
 <p>Note 2: It is unspecified how many elements are removed from the
 vector, if the <code>Drain</code> value is leaked.</p>
-<h1 id='panics-7' class='section-header'><a href=
-'#panics-7'>Panics</a></h1>
+<h1 id="panics-7" class="section-header"><a href=
+"#panics-7">Panics</a></h1>
 <p>Panics if the starting point is greater than the end point or if
 the end point is greater than the length of the vector.</p>
-<h1 id='examples-22' class='section-header'><a href=
-'#examples-22'>Examples</a></h1>
+<h1 id="examples-22" class="section-header"><a href=
+"#examples-22">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -1277,8 +1277,8 @@ the end point is greater than the length of the vector.</p>
 <p>Clears the vector, removing all values.</p>
 <p>Note that this method has no effect on the allocated capacity of
 the vector.</p>
-<h1 id='examples-23' class='section-header'><a href=
-'#examples-23'>Examples</a></h1>
+<h1 id="examples-23" class="section-header"><a href=
+"#examples-23">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -1299,8 +1299,8 @@ href=
 "../primitive.usize.html">usize</a></code></span></h4>
 <div class='docblock'>
 <p>Returns the number of elements in the vector.</p>
-<h1 id='examples-24' class='section-header'><a href=
-'#examples-24'>Examples</a></h1>
+<h1 id="examples-24" class="section-header"><a href=
+"#examples-24">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">a</span> <span class="op">=</span> <span class=
@@ -1319,8 +1319,8 @@ class='invisible'><code>fn <a href='#method.is_empty' class=
 <div class='docblock'>
 <p>Returns <code>true</code> if the vector contains no
 elements.</p>
-<h1 id='examples-25' class='section-header'><a href=
-'#examples-25'>Examples</a></h1>
+<h1 id="examples-25" class="section-header"><a href=
+"#examples-25">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -1356,12 +1356,12 @@ allocated <code>Self</code>. <code>self</code> contains elements
 elements <code>[at, len)</code>.</span></p>
 <p><span id='split_off.v' class='invisible'>Note that the capacity
 of <code>self</code> does not change.</span></p>
-<h1 id='panics-8' class='section-header'><span id='split_off.v'
-class='invisible'><a href='#panics-8'>Panics</a></span></h1>
+<h1 id="panics-8" class="section-header"><span id='split_off.v'
+class='invisible'><a href="#panics-8">Panics</a></span></h1>
 <p><span id='split_off.v' class='invisible'>Panics if <code>at &gt;
 len</code>.</span></p>
-<h1 id='examples-26' class='section-header'><span id='split_off.v'
-class='invisible'><a href='#examples-26'>Examples</a></span></h1>
+<h1 id="examples-26" class="section-header"><span id='split_off.v'
+class='invisible'><a href="#examples-26">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='split_off.v'
 class='invisible'>
 <span class="kw">let</span> <span class=
@@ -1413,8 +1413,8 @@ difference, with each additional slot filled with
 <code>value</code>. If <code>new_len</code> is less than
 <code>len()</code>, the <code>Vec</code> is simply
 truncated.</span></p>
-<h1 id='examples-27' class='section-header'><span class=
-'out-of-band'><a href='#examples-27'>Examples</a></span></h1>
+<h1 id="examples-27" class="section-header"><span class=
+'out-of-band'><a href="#examples-27">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span class='out-of-band'>
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -1464,9 +1464,9 @@ function is same as <code>extend</code> except that it is
 specialized to work with slices instead. If and when Rust gets
 specialization this function will likely be deprecated (but still
 available).</span></p>
-<h1 id='examples-28' class='section-header'><span id=
+<h1 id="examples-28" class="section-header"><span id=
 'extend_from_slice.v' class='invisible'><a href=
-'#examples-28'>Examples</a></span></h1>
+"#examples-28">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'extend_from_slice.v' class='invisible'>
 <span class="kw">let</span> <span class=
@@ -1504,8 +1504,8 @@ experimental API. (<code>collection_placement</code> <a href=
 <p>Using this method with placement syntax is equivalent to
 <a href="#method.push"><code>push</code></a>, but may be more
 efficient.</p>
-<h1 id='examples-29' class='section-header'><a href=
-'#examples-29'>Examples</a></h1>
+<h1 id="examples-29" class="section-header"><a href=
+"#examples-29">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -1550,8 +1550,8 @@ self)</code></span></span></h4>
 <div class='docblock'>
 <p>Removes consecutive repeated elements in the vector.</p>
 <p>If the vector is sorted, this removes all duplicates.</p>
-<h1 id='examples-30' class='section-header'><a href=
-'#examples-30'>Examples</a></h1>
+<h1 id="examples-30" class="section-header"><a href=
+"#examples-30">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
@@ -1586,25 +1586,26 @@ experimental API. (<code>vec_remove_item</code> <a href=
 <div class='docblock'>
 <p>Removes the first instance of <code>item</code> from the vector
 if the item exists.</p>
-<p># Examples</p>
+<h1 id="examples-31" class="section-header"><a href=
+"#examples-31">Examples</a></h1>
 <pre class="rust rust-example-rendered">
- <span class="kw">let</span> <span class=
+<span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">vec</span> <span class=
 "op">=</span> <span class="macro">vec</span><span class=
 "macro">!</span>[<span class="number">1</span>, <span class=
 "number">2</span>, <span class="number">3</span>, <span class=
 "number">1</span>];
 
- <span class="ident">vec</span>.<span class=
+<span class="ident">vec</span>.<span class=
 "ident">remove_item</span>(<span class="kw-2">&</span><span class=
 "number">1</span>);
 
- <span class="macro">assert_eq</span><span class=
+<span class="macro">assert_eq</span><span class=
 "macro">!</span>(<span class="ident">vec</span>, <span class=
 "macro">vec</span><span class="macro">!</span>[<span class=
 "number">2</span>, <span class="number">3</span>, <span class=
 "number">1</span>]);<a class="test-arrow" target="_blank" href=
-"https://play.rust-lang.org/?code=%23!%5Bfeature(vec_remove_item)%5D%0Afn%20main()%20%7B%0A%20let%20mut%20vec%20%3D%20vec!%5B1%2C%202%2C%203%2C%201%5D%3B%0A%0A%20vec.remove_item(%261)%3B%0A%0A%20assert_eq!(vec%2C%20vec!%5B2%2C%203%2C%201%5D)%3B%0A%7D&amp;version=nightly">Run</a></pre></div>
+"https://play.rust-lang.org/?code=%23!%5Bfeature(vec_remove_item)%5D%0Afn%20main()%20%7B%0Alet%20mut%20vec%20%3D%20vec!%5B1%2C%202%2C%203%2C%201%5D%3B%0A%0Avec.remove_item(%261)%3B%0A%0Aassert_eq!(vec%2C%20vec!%5B2%2C%203%2C%201%5D)%3B%0A%7D&amp;version=nightly">Run</a></pre></div>
 </div>
 <h2 id='deref-methods'>Methods from <a class="trait" href=
 "../../std/ops/trait.Deref.html" title=
@@ -1618,8 +1619,8 @@ href="../primitive.slice.html">[</a>T<a class="primitive" href=
 "../primitive.usize.html">usize</a></code></span></h4>
 <div class='docblock'>
 <p>Returns the number of elements in the slice.</p>
-<h1 id='example' class='section-header'><a href=
-'#example'>Example</a></h1>
+<h1 id="example" class="section-header"><a href=
+"#example">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">a</span> <span class="op">=</span> [<span class=
@@ -1636,8 +1637,8 @@ class='invisible'><code>fn <a href='#method.is_empty-1' class=
 "../primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'>
 <p>Returns <code>true</code> if the slice has a length of 0.</p>
-<h1 id='example-1' class='section-header'><a href=
-'#example-1'>Example</a></h1>
+<h1 id="example-1" class="section-header"><a href=
+"#example-1">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">a</span> <span class="op">=</span> [<span class=
@@ -1656,8 +1657,8 @@ class='invisible'><code>fn <a href='#method.is_empty-1' class=
 <div class='docblock'>
 <p>Returns the first element of the slice, or <code>None</code> if
 it is empty.</p>
-<h1 id='examples-31' class='section-header'><a href=
-'#examples-31'>Examples</a></h1>
+<h1 id="examples-32" class="section-header"><a href=
+"#examples-32">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -1686,8 +1687,8 @@ T&gt;</code></span></h4>
 <div class='docblock'>
 <p>Returns a mutable pointer to the first element of the slice, or
 <code>None</code> if it is empty.</p>
-<h1 id='examples-32' class='section-header'><a href=
-'#examples-32'>Examples</a></h1>
+<h1 id="examples-33" class="section-header"><a href=
+"#examples-33">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -1725,9 +1726,9 @@ class='invisible'><code>fn <a href='#method.split_first' class=
 <p><span id='split_first.v' class='invisible'>Returns the first and
 all the rest of the elements of the slice, or <code>None</code> if
 it is empty.</span></p>
-<h1 id='examples-33' class='section-header'><span id=
+<h1 id="examples-34" class="section-header"><span id=
 'split_first.v' class='invisible'><a href=
-'#examples-33'>Examples</a></span></h1>
+"#examples-34">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='split_first.v'
 class='invisible'>
 <span class="kw">let</span> <span class=
@@ -1766,9 +1767,9 @@ href="../primitive.tuple.html">)</a>&gt;</code></span></h4>
 <p><span id='split_first_mut.v' class='invisible'>Returns the first
 and all the rest of the elements of the slice, or <code>None</code>
 if it is empty.</span></p>
-<h1 id='examples-34' class='section-header'><span id=
+<h1 id="examples-35" class="section-header"><span id=
 'split_first_mut.v' class='invisible'><a href=
-'#examples-34'>Examples</a></span></h1>
+"#examples-35">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'split_first_mut.v' class='invisible'>
 <span class="kw">let</span> <span class=
@@ -1814,8 +1815,8 @@ class='invisible'><code>fn <a href='#method.split_last' class=
 <p><span id='split_last.v' class='invisible'>Returns the last and
 all the rest of the elements of the slice, or <code>None</code> if
 it is empty.</span></p>
-<h1 id='examples-35' class='section-header'><span id='split_last.v'
-class='invisible'><a href='#examples-35'>Examples</a></span></h1>
+<h1 id="examples-36" class="section-header"><span id='split_last.v'
+class='invisible'><a href="#examples-36">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='split_last.v'
 class='invisible'>
 <span class="kw">let</span> <span class=
@@ -1854,9 +1855,9 @@ href="../primitive.tuple.html">)</a>&gt;</code></span></h4>
 <p><span id='split_last_mut.v' class='invisible'>Returns the last
 and all the rest of the elements of the slice, or <code>None</code>
 if it is empty.</span></p>
-<h1 id='examples-36' class='section-header'><span id=
+<h1 id="examples-37" class="section-header"><span id=
 'split_last_mut.v' class='invisible'><a href=
-'#examples-36'>Examples</a></span></h1>
+"#examples-37">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='split_last_mut.v'
 class='invisible'>
 <span class="kw">let</span> <span class=
@@ -1894,8 +1895,8 @@ class='invisible'>
 <div class='docblock'>
 <p>Returns the last element of the slice, or <code>None</code> if
 it is empty.</p>
-<h1 id='examples-37' class='section-header'><a href=
-'#examples-37'>Examples</a></h1>
+<h1 id="examples-38" class="section-header"><a href=
+"#examples-38">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -1923,8 +1924,8 @@ class='invisible'><code>fn <a href='#method.last_mut' class=
 T&gt;</code></span></h4>
 <div class='docblock'>
 <p>Returns a mutable pointer to the last item in the slice.</p>
-<h1 id='examples-38' class='section-header'><a href=
-'#examples-38'>Examples</a></h1>
+<h1 id="examples-39" class="section-header"><a href=
+"#examples-39">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -1960,13 +1961,13 @@ href="../../std/slice/trait.SliceIndex.html" title=
 <p>Returns a reference to an element or subslice depending on the
 type of index.</p>
 <ul>
-<li>If given a position, returns a reference to the element at that
-position or <code>None</code> if out of bounds.</li>
+<li>If given a position, returns a reference to the element at
+thatposition or <code>None</code> if out of bounds.</li>
 <li>If given a range, returns the subslice corresponding to that
-range, or <code>None</code> if out of bounds.</li>
+range,or <code>None</code> if out of bounds.</li>
 </ul>
-<h1 id='examples-39' class='section-header'><a href=
-'#examples-39'>Examples</a></h1>
+<h1 id="examples-40" class="section-header"><a href=
+"#examples-40">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -2006,8 +2007,8 @@ target="_blank" href=
 on the type of index (see <a href=
 "#method.get"><code>get</code></a>) or <code>None</code> if the
 index is out of bounds.</p>
-<h1 id='examples-40' class='section-header'><a href=
-'#examples-40'>Examples</a></h1>
+<h1 id="examples-41" class="section-header"><a href=
+"#examples-41">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2043,8 +2044,8 @@ index is out of bounds.</p>
 <div class='docblock'>
 <p>Returns a reference to an element or subslice, without doing
 bounds checking. So use it very carefully!</p>
-<h1 id='examples-41' class='section-header'><a href=
-'#examples-41'>Examples</a></h1>
+<h1 id="examples-42" class="section-header"><a href=
+"#examples-42">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2072,8 +2073,8 @@ bounds checking. So use it very carefully!</p>
 <div class='docblock'>
 <p>Returns a mutable reference to an element or subslice, without
 doing bounds checking. So use it very carefully!</p>
-<h1 id='examples-42' class='section-header'><a href=
-'#examples-42'>Examples</a></h1>
+<h1 id="examples-43" class="section-header"><a href=
+"#examples-43">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2107,8 +2108,8 @@ function returns, or else it will end up pointing to garbage.</p>
 <p>Modifying the container referenced by this slice may cause its
 buffer to be reallocated, which would also make any pointers to it
 invalid.</p>
-<h1 id='examples-43' class='section-header'><a href=
-'#examples-43'>Examples</a></h1>
+<h1 id="examples-44" class="section-header"><a href=
+"#examples-44">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2144,8 +2145,8 @@ function returns, or else it will end up pointing to garbage.</p>
 <p>Modifying the container referenced by this slice may cause its
 buffer to be reallocated, which would also make any pointers to it
 invalid.</p>
-<h1 id='examples-44' class='section-header'><a href=
-'#examples-44'>Examples</a></h1>
+<h1 id="examples-45" class="section-header"><a href=
+"#examples-45">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2181,18 +2182,18 @@ invalid.</p>
 "../primitive.usize.html">usize</a>)</code></span></h4>
 <div class='docblock'>
 <p>Swaps two elements in the slice.</p>
-<h1 id='arguments' class='section-header'><a href=
-'#arguments'>Arguments</a></h1>
+<h1 id="arguments" class="section-header"><a href=
+"#arguments">Arguments</a></h1>
 <ul>
 <li>a - The index of the first element</li>
 <li>b - The index of the second element</li>
 </ul>
-<h1 id='panics-9' class='section-header'><a href=
-'#panics-9'>Panics</a></h1>
+<h1 id="panics-9" class="section-header"><a href=
+"#panics-9">Panics</a></h1>
 <p>Panics if <code>a</code> or <code>b</code> are out of
 bounds.</p>
-<h1 id='examples-45' class='section-header'><a href=
-'#examples-45'>Examples</a></h1>
+<h1 id="examples-46" class="section-header"><a href=
+"#examples-46">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -2213,8 +2214,8 @@ bounds.</p>
 'fnname'>reverse</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'>
 <p>Reverses the order of elements in the slice, in place.</p>
-<h1 id='example-2' class='section-header'><a href=
-'#example-2'>Example</a></h1>
+<h1 id="example-2" class="section-header"><a href=
+"#example-2">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -2234,8 +2235,8 @@ bounds.</p>
 "struct std::slice::Iter">Iter</a>&lt;T&gt;</code></span></h4>
 <div class='docblock'>
 <p>Returns an iterator over the slice.</p>
-<h1 id='examples-46' class='section-header'><a href=
-'#examples-46'>Examples</a></h1>
+<h1 id="examples-47" class="section-header"><a href=
+"#examples-47">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2274,8 +2275,8 @@ class='invisible'><code>fn <a href='#method.iter_mut' class=
 "struct std::slice::IterMut">IterMut</a>&lt;T&gt;</code></span></h4>
 <div class='docblock'>
 <p>Returns an iterator that allows modifying each value.</p>
-<h1 id='examples-47' class='section-header'><a href=
-'#examples-47'>Examples</a></h1>
+<h1 id="examples-48" class="section-header"><a href=
+"#examples-48">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">x</span> <span class="op">=</span> <span class=
@@ -2305,11 +2306,11 @@ class='invisible'><code>fn <a href='#method.iter_mut' class=
 <p>Returns an iterator over all contiguous windows of length
 <code>size</code>. The windows overlap. If the slice is shorter
 than <code>size</code>, the iterator returns no values.</p>
-<h1 id='panics-10' class='section-header'><a href=
-'#panics-10'>Panics</a></h1>
+<h1 id="panics-10" class="section-header"><a href=
+"#panics-10">Panics</a></h1>
 <p>Panics if <code>size</code> is 0.</p>
-<h1 id='example-3' class='section-header'><a href=
-'#example-3'>Example</a></h1>
+<h1 id="example-3" class="section-header"><a href=
+"#example-3">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">slice</span> <span class="op">=</span> [<span class=
@@ -2367,11 +2368,11 @@ href=
 at a time. The chunks are slices and do not overlap. If
 <code>size</code> does not divide the length of the slice, then the
 last chunk will not have length <code>size</code>.</p>
-<h1 id='panics-11' class='section-header'><a href=
-'#panics-11'>Panics</a></h1>
+<h1 id="panics-11" class="section-header"><a href=
+"#panics-11">Panics</a></h1>
 <p>Panics if <code>size</code> is 0.</p>
-<h1 id='example-4' class='section-header'><a href=
-'#example-4'>Example</a></h1>
+<h1 id="example-4" class="section-header"><a href=
+"#example-4">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">slice</span> <span class="op">=</span> [<span class=
@@ -2416,11 +2417,11 @@ slice at a time. The chunks are mutable slices, and do not overlap.
 If <code>chunk_size</code> does not divide the length of the slice,
 then the last chunk will not have length
 <code>chunk_size</code>.</p>
-<h1 id='panics-12' class='section-header'><a href=
-'#panics-12'>Panics</a></h1>
+<h1 id="panics-12" class="section-header"><a href=
+"#panics-12">Panics</a></h1>
 <p>Panics if <code>chunk_size</code> is 0.</p>
-<h1 id='examples-48' class='section-header'><a href=
-'#examples-48'>Examples</a></h1>
+<h1 id="examples-49" class="section-header"><a href=
+"#examples-49">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> <span class=
@@ -2467,11 +2468,11 @@ href="../primitive.tuple.html">(</a><a class="primitive" href=
 (excluding the index <code>mid</code> itself) and the second will
 contain all indices from <code>[mid, len)</code> (excluding the
 index <code>len</code> itself).</p>
-<h1 id='panics-13' class='section-header'><a href=
-'#panics-13'>Panics</a></h1>
+<h1 id="panics-13" class="section-header"><a href=
+"#panics-13">Panics</a></h1>
 <p>Panics if <code>mid &gt; len</code>.</p>
-<h1 id='examples-49' class='section-header'><a href=
-'#examples-49'>Examples</a></h1>
+<h1 id="examples-50" class="section-header"><a href=
+"#examples-50">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -2505,11 +2506,11 @@ href="../primitive.tuple.html">)</a></code></span></h4>
 (excluding the index <code>mid</code> itself) and the second will
 contain all indices from <code>[mid, len)</code> (excluding the
 index <code>len</code> itself).</p>
-<h1 id='panics-14' class='section-header'><a href=
-'#panics-14'>Panics</a></h1>
+<h1 id="panics-14" class="section-header"><a href=
+"#panics-14">Panics</a></h1>
 <p>Panics if <code>mid &gt; len</code>.</p>
-<h1 id='examples-50' class='section-header'><a href=
-'#examples-50'>Examples</a></h1>
+<h1 id="examples-51" class="section-header"><a href=
+"#examples-51">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -2582,8 +2583,8 @@ index <code>len</code> itself).</p>
 <p>Returns an iterator over subslices separated by elements that
 match <code>pred</code>. The matched element is not contained in
 the subslices.</p>
-<h1 id='examples-51' class='section-header'><a href=
-'#examples-51'>Examples</a></h1>
+<h1 id="examples-52" class="section-header"><a href=
+"#examples-52">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">slice</span> <span class="op">=</span> [<span class=
@@ -2697,8 +2698,8 @@ title="struct std::slice::SplitMut">SplitMut</a>&lt;T, F&gt;
 <p>Returns an iterator over mutable subslices separated by elements
 that match <code>pred</code>. The matched element is not contained
 in the subslices.</p>
-<h1 id='examples-52' class='section-header'><a href=
-'#examples-52'>Examples</a></h1>
+<h1 id="examples-53" class="section-header"><a href=
+"#examples-53">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -2744,8 +2745,8 @@ match <code>pred</code>, limited to returning at most
 subslices.</p>
 <p>The last element returned, if any, will contain the remainder of
 the slice.</p>
-<h1 id='examples-53' class='section-header'><a href=
-'#examples-53'>Examples</a></h1>
+<h1 id="examples-54" class="section-header"><a href=
+"#examples-54">Examples</a></h1>
 <p>Print the slice split once by numbers divisible by 3 (i.e.
 <code>[10, 40]</code>, <code>[20, 60, 50]</code>):</p>
 <pre class="rust rust-example-rendered">
@@ -2787,8 +2788,8 @@ match <code>pred</code>, limited to returning at most
 subslices.</p>
 <p>The last element returned, if any, will contain the remainder of
 the slice.</p>
-<h1 id='examples-54' class='section-header'><a href=
-'#examples-54'>Examples</a></h1>
+<h1 id="examples-55" class="section-header"><a href=
+"#examples-55">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -2834,8 +2835,8 @@ items. This starts at the end of the slice and works backwards. The
 matched element is not contained in the subslices.</p>
 <p>The last element returned, if any, will contain the remainder of
 the slice.</p>
-<h1 id='examples-55' class='section-header'><a href=
-'#examples-55'>Examples</a></h1>
+<h1 id="examples-56" class="section-header"><a href=
+"#examples-56">Examples</a></h1>
 <p>Print the slice split once, starting from the end, by numbers
 divisible by 3 (i.e. <code>[50]</code>, <code>[10, 40, 30,
 20]</code>):</p>
@@ -2878,8 +2879,8 @@ items. This starts at the end of the slice and works backwards. The
 matched element is not contained in the subslices.</p>
 <p>The last element returned, if any, will contain the remainder of
 the slice.</p>
-<h1 id='examples-56' class='section-header'><a href=
-'#examples-56'>Examples</a></h1>
+<h1 id="examples-57" class="section-header"><a href=
+"#examples-57">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">s</span> <span class=
@@ -2913,8 +2914,8 @@ class='invisible'><code>fn <a href='#method.contains' class=
 <div class='docblock'>
 <p>Returns <code>true</code> if the slice contains an element with
 the given value.</p>
-<h1 id='examples-57' class='section-header'><a href=
-'#examples-57'>Examples</a></h1>
+<h1 id="examples-58" class="section-header"><a href=
+"#examples-58">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -2941,8 +2942,8 @@ href="../primitive.slice.html">&amp;[T]</a>) -&gt; <a class=
 <div class='docblock'>
 <p>Returns <code>true</code> if <code>needle</code> is a prefix of
 the slice.</p>
-<h1 id='examples-58' class='section-header'><a href=
-'#examples-58'>Examples</a></h1>
+<h1 id="examples-59" class="section-header"><a href=
+"#examples-59">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -2998,8 +2999,8 @@ href="../primitive.slice.html">&amp;[T]</a>) -&gt; <a class=
 <div class='docblock'>
 <p>Returns <code>true</code> if <code>needle</code> is a suffix of
 the slice.</p>
-<h1 id='examples-59' class='section-header'><a href=
-'#examples-59'>Examples</a></h1>
+<h1 id="examples-60" class="section-header"><a href=
+"#examples-60">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> [<span class=
@@ -3060,8 +3061,8 @@ containing the index of the matching element; if the value is not
 found then <code>Err</code> is returned, containing the index where
 a matching element could be inserted while maintaining sorted
 order.</p>
-<h1 id='example-5' class='section-header'><a href=
-'#example-5'>Example</a></h1>
+<h1 id="example-5" class="section-header"><a href=
+"#example-5">Example</a></h1>
 <p>Looks up a series of four elements. The first is found, with a
 uniquely determined position; the second and third are not found;
 the fourth could match any position in <code>[1, 4]</code>.</p>
@@ -3129,8 +3130,8 @@ containing the index for the matched element; if no match is found
 then <code>Err</code> is returned, containing the index where a
 matching element could be inserted while maintaining sorted
 order.</p>
-<h1 id='example-6' class='section-header'><a href=
-'#example-6'>Example</a></h1>
+<h1 id="example-6" class="section-header"><a href=
+"#example-6">Example</a></h1>
 <p>Looks up a series of four elements. The first is found, with a
 uniquely determined position; the second and third are not found;
 the fourth could match any position in <code>[1, 4]</code>.</p>
@@ -3225,8 +3226,8 @@ containing the index for the matched element; if no match is found
 then <code>Err</code> is returned, containing the index where a
 matching element could be inserted while maintaining sorted
 order.</p>
-<h1 id='examples-60' class='section-header'><a href=
-'#examples-60'>Examples</a></h1>
+<h1 id="examples-61" class="section-header"><a href=
+"#examples-61">Examples</a></h1>
 <p>Looks up a series of four elements in a slice of pairs sorted by
 their second elements. The first is found, with a uniquely
 determined position; the second and third are not found; the fourth
@@ -3300,8 +3301,8 @@ target="_blank" href=
 <p>Sorts the slice.</p>
 <p>This sort is stable (i.e. does not reorder equal elements) and
 <code>O(n log n)</code> worst-case.</p>
-<h1 id='current-implementation' class='section-header'><a href=
-'#current-implementation'>Current implementation</a></h1>
+<h1 id="current-implementation" class="section-header"><a href=
+"#current-implementation">Current implementation</a></h1>
 <p>The current algorithm is an adaptive, iterative merge sort
 inspired by <a href=
 "https://en.wikipedia.org/wiki/Timsort">timsort</a>. It is designed
@@ -3311,8 +3312,8 @@ another.</p>
 <p>Also, it allocates temporary storage half the size of
 <code>self</code>, but for short slices a non-allocating insertion
 sort is used instead.</p>
-<h1 id='examples-61' class='section-header'><a href=
-'#examples-61'>Examples</a></h1>
+<h1 id="examples-62" class="section-header"><a href=
+"#examples-62">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -3342,8 +3343,8 @@ sort is used instead.</p>
 <p>Sorts the slice with a comparator function.</p>
 <p>This sort is stable (i.e. does not reorder equal elements) and
 <code>O(n log n)</code> worst-case.</p>
-<h1 id='current-implementation-1' class='section-header'><a href=
-'#current-implementation-1'>Current implementation</a></h1>
+<h1 id="current-implementation-1" class="section-header"><a href=
+"#current-implementation-1">Current implementation</a></h1>
 <p>The current algorithm is an adaptive, iterative merge sort
 inspired by <a href=
 "https://en.wikipedia.org/wiki/Timsort">timsort</a>. It is designed
@@ -3353,8 +3354,8 @@ another.</p>
 <p>Also, it allocates temporary storage half the size of
 <code>self</code>, but for short slices a non-allocating insertion
 sort is used instead.</p>
-<h1 id='examples-62' class='section-header'><a href=
-'#examples-62'>Examples</a></h1>
+<h1 id="examples-63" class="section-header"><a href=
+"#examples-63">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -3400,8 +3401,8 @@ B</span></code></span></h4>
 <p>Sorts the slice with a key extraction function.</p>
 <p>This sort is stable (i.e. does not reorder equal elements) and
 <code>O(n log n)</code> worst-case.</p>
-<h1 id='current-implementation-2' class='section-header'><a href=
-'#current-implementation-2'>Current implementation</a></h1>
+<h1 id="current-implementation-2" class="section-header"><a href=
+"#current-implementation-2">Current implementation</a></h1>
 <p>The current algorithm is an adaptive, iterative merge sort
 inspired by <a href=
 "https://en.wikipedia.org/wiki/Timsort">timsort</a>. It is designed
@@ -3411,8 +3412,8 @@ another.</p>
 <p>Also, it allocates temporary storage half the size of
 <code>self</code>, but for short slices a non-allocating insertion
 sort is used instead.</p>
-<h1 id='examples-63' class='section-header'><a href=
-'#examples-63'>Examples</a></h1>
+<h1 id="examples-64" class="section-header"><a href=
+"#examples-64">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">v</span> <span class=
@@ -3451,8 +3452,8 @@ elements.</p>
 <p>This sort is unstable (i.e. may reorder equal elements),
 in-place (i.e. does not allocate), and <code>O(n log n)</code>
 worst-case.</p>
-<h1 id='current-implementation-3' class='section-header'><a href=
-'#current-implementation-3'>Current implementation</a></h1>
+<h1 id="current-implementation-3" class="section-header"><a href=
+"#current-implementation-3">Current implementation</a></h1>
 <p>The current algorithm is based on Orson Peters' <a href=
 "https://github.com/orlp/pdqsort">pattern-defeating quicksort</a>,
 which is a quicksort variant designed to be very fast on certain
@@ -3462,8 +3463,8 @@ degenerate inputs.</p>
 <p>It is generally faster than stable sorting, except in a few
 special cases, e.g. when the slice consists of several concatenated
 sorted sequences.</p>
-<h1 id='examples-64' class='section-header'><a href=
-'#examples-64'>Examples</a></h1>
+<h1 id="examples-65" class="section-header"><a href=
+"#examples-65">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -3507,8 +3508,8 @@ the order of equal elements.</p>
 <p>This sort is unstable (i.e. may reorder equal elements),
 in-place (i.e. does not allocate), and <code>O(n log n)</code>
 worst-case.</p>
-<h1 id='current-implementation-4' class='section-header'><a href=
-'#current-implementation-4'>Current implementation</a></h1>
+<h1 id="current-implementation-4" class="section-header"><a href=
+"#current-implementation-4">Current implementation</a></h1>
 <p>The current algorithm is based on Orson Peters' <a href=
 "https://github.com/orlp/pdqsort">pattern-defeating quicksort</a>,
 which is a quicksort variant designed to be very fast on certain
@@ -3518,8 +3519,8 @@ degenerate inputs.</p>
 <p>It is generally faster than stable sorting, except in a few
 special cases, e.g. when the slice consists of several concatenated
 sorted sequences.</p>
-<h1 id='examples-65' class='section-header'><a href=
-'#examples-65'>Examples</a></h1>
+<h1 id="examples-66" class="section-header"><a href=
+"#examples-66">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -3577,8 +3578,8 @@ preserve the order of equal elements.</p>
 <p>This sort is unstable (i.e. may reorder equal elements),
 in-place (i.e. does not allocate), and <code>O(n log n)</code>
 worst-case.</p>
-<h1 id='current-implementation-5' class='section-header'><a href=
-'#current-implementation-5'>Current implementation</a></h1>
+<h1 id="current-implementation-5" class="section-header"><a href=
+"#current-implementation-5">Current implementation</a></h1>
 <p>The current algorithm is based on Orson Peters' <a href=
 "https://github.com/orlp/pdqsort">pattern-defeating quicksort</a>,
 which is a quicksort variant designed to be very fast on certain
@@ -3588,8 +3589,8 @@ degenerate inputs.</p>
 <p>It is generally faster than stable sorting, except in a few
 special cases, e.g. when the slice consists of several concatenated
 sorted sequences.</p>
-<h1 id='examples-66' class='section-header'><a href=
-'#examples-66'>Examples</a></h1>
+<h1 id="examples-67" class="section-header"><a href=
+"#examples-67">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -3631,12 +3632,12 @@ target="_blank" href=
 <code>self</code>.</p>
 <p>The length of <code>src</code> must be the same as
 <code>self</code>.</p>
-<h1 id='panics-15' class='section-header'><a href=
-'#panics-15'>Panics</a></h1>
+<h1 id="panics-15" class="section-header"><a href=
+"#panics-15">Panics</a></h1>
 <p>This function will panic if the two slices have different
 lengths.</p>
-<h1 id='example-7' class='section-header'><a href=
-'#example-7'>Example</a></h1>
+<h1 id="example-7" class="section-header"><a href=
+"#example-7">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">dst</span> <span class=
@@ -3672,12 +3673,12 @@ lengths.</p>
 <code>self</code>, using a memcpy.</p>
 <p>The length of <code>src</code> must be the same as
 <code>self</code>.</p>
-<h1 id='panics-16' class='section-header'><a href=
-'#panics-16'>Panics</a></h1>
+<h1 id="panics-16" class="section-header"><a href=
+"#panics-16">Panics</a></h1>
 <p>This function will panic if the two slices have different
 lengths.</p>
-<h1 id='example-8' class='section-header'><a href=
-'#example-8'>Example</a></h1>
+<h1 id="example-8" class="section-header"><a href=
+"#example-8">Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "kw-2">mut</span> <span class="ident">dst</span> <span class=
@@ -3705,8 +3706,8 @@ lengths.</p>
 "trait std::clone::Clone">Clone</a></span></code></span></h4>
 <div class='docblock'>
 <p>Copies <code>self</code> into a new <code>Vec</code>.</p>
-<h1 id='examples-67' class='section-header'><a href=
-'#examples-67'>Examples</a></h1>
+<h1 id="examples-68" class="section-header"><a href=
+"#examples-68">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">s</span> <span class="op">=</span> [<span class=
@@ -3731,8 +3732,8 @@ class='invisible'><code>fn <a href='#method.into_vec' class=
 <div class='docblock'>
 <p>Converts <code>self</code> into a vector without clones or
 allocation.</p>
-<h1 id='examples-68' class='section-header'><a href=
-'#examples-68'>Examples</a></h1>
+<h1 id="examples-69" class="section-header"><a href=
+"#examples-69">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">s</span>: <span class="ident">Box</span><span class=
@@ -7599,8 +7600,8 @@ class='invisible'><code>fn <a href=
 <p>Creates a consuming iterator, that is, one that moves each value
 out of the vector (from start to end). The vector cannot be used
 after calling this.</p>
-<h1 id='examples-69' class='section-header'><a href=
-'#examples-69'>Examples</a></h1>
+<h1 id="examples-70" class="section-header"><a href=
+"#examples-70">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">v</span> <span class="op">=</span> <span class=

@@ -57,25 +57,25 @@ you'll quickly run into 'iterators'. Iterators are heavily used in
 idiomatic Rust code, so it's worth becoming familiar with them.</p>
 <p>Before explaining more, let's talk about how this module is
 structured:</p>
-<h1 id='organization' class='section-header'><a href=
-'#organization'>Organization</a></h1>
+<h1 id="organization" class="section-header"><a href=
+"#organization">Organization</a></h1>
 <p>This module is largely organized by type:</p>
 <ul>
 <li><a href="#traits">Traits</a> are the core portion: these traits
-define what kind of iterators exist and what you can do with them.
-The methods of these traits are worth putting some extra study time
+define what kind of iteratorsexist and what you can do with them.
+The methods of these traits are worthputting some extra study time
 into.</li>
 <li><a href="#functions">Functions</a> provide some helpful ways to
 create some basic iterators.</li>
 <li><a href="#structs">Structs</a> are often the return types of
-the various methods on this module's traits. You'll usually want to
-look at the method that creates the <code>struct</code>, rather
-than the <code>struct</code> itself. For more detail about why, see
+the various methods on thismodule's traits. You'll usually want to
+look at the method that createsthe <code>struct</code>, rather than
+the <code>struct</code> itself. For more detail about why,see
 '<a href="#implementing-iterator">Implementing Iterator</a>'.</li>
 </ul>
 <p>That's it! Let's dig into iterators.</p>
-<h1 id='iterator' class='section-header'><a href=
-'#iterator'>Iterator</a></h1>
+<h1 id="iterator" class="section-header"><a href=
+"#iterator">Iterator</a></h1>
 <p>The heart and soul of this module is the <a href=
 "trait.Iterator.html"><code>Iterator</code></a> trait. The core of
 <a href="trait.Iterator.html"><code>Iterator</code></a> looks like
@@ -112,8 +112,8 @@ you get them for free.</p>
 <p>Iterators are also composable, and it's common to chain them
 together to do more complex forms of processing. See the <a href=
 "#adapters">Adapters</a> section below for more details.</p>
-<h1 id='the-three-forms-of-iteration' class='section-header'>
-<a href='#the-three-forms-of-iteration'>The three forms of
+<h1 id="the-three-forms-of-iteration" class="section-header">
+<a href="#the-three-forms-of-iteration">The three forms of
 iteration</a></h1>
 <p>There are three common methods which can create iterators from a
 collection:</p>
@@ -127,8 +127,8 @@ T</code>.</li>
 </ul>
 <p>Various things in the standard library may implement one or more
 of the three, where appropriate.</p>
-<h1 id='implementing-iterator' class='section-header'><a href=
-'#implementing-iterator'>Implementing Iterator</a></h1>
+<h1 id="implementing-iterator" class="section-header"><a href=
+"#implementing-iterator">Implementing Iterator</a></h1>
 <p>Creating an iterator of your own involves two steps: creating a
 <code>struct</code> to hold the iterator's state, and then
 <code>impl</code>ementing <a href=
@@ -253,8 +253,8 @@ their own line.</p>
 <p>Calling <code>next()</code> this way gets repetitive. Rust has a
 construct which can call <code>next()</code> on your iterator,
 until it reaches <code>None</code>. Let's go over that next.</p>
-<h1 id='for-loops-and-intoiterator' class='section-header'><a href=
-'#for-loops-and-intoiterator'>for Loops and IntoIterator</a></h1>
+<h1 id="for-loops-and-intoiterator" class="section-header"><a href=
+"#for-loops-and-intoiterator">for Loops and IntoIterator</a></h1>
 <p>Rust's <code>for</code> loop syntax is actually sugar for
 iterators. Here's a basic example of <code>for</code>:</p>
 <pre class="rust rust-example-rendered">
@@ -352,17 +352,17 @@ target="_blank" href=
 "trait.Iterator.html"><code>Iterator</code></a>s implement <a href=
 "trait.IntoIterator.html"><code>IntoIterator</code></a>, by just
 returning themselves. This means two things:</p>
-<ol>
+<ul>
 <li>If you're writing an <a href=
 "trait.Iterator.html"><code>Iterator</code></a>, you can use it
 with a <code>for</code> loop.</li>
 <li>If you're creating a collection, implementing <a href=
-"trait.IntoIterator.html"><code>IntoIterator</code></a> for it will
+"trait.IntoIterator.html"><code>IntoIterator</code></a> for itwill
 allow your collection to be used with the <code>for</code>
 loop.</li>
-</ol>
-<h1 id='adapters' class='section-header'><a href=
-'#adapters'>Adapters</a></h1>
+</ul>
+<h1 id="adapters" class="section-header"><a href=
+"#adapters">Adapters</a></h1>
 <p>Functions which take an <a href=
 "trait.Iterator.html"><code>Iterator</code></a> and return another
 <a href="trait.Iterator.html"><code>Iterator</code></a> are often
@@ -374,8 +374,8 @@ pattern'.</p>
 <a href=
 "trait.Iterator.html#method.filter"><code>filter</code></a>. For
 more, see their documentation.</p>
-<h1 id='laziness' class='section-header'><a href=
-'#laziness'>Laziness</a></h1>
+<h1 id="laziness" class="section-header"><a href=
+"#laziness">Laziness</a></h1>
 <p>Iterators (and iterator <a href="#adapters">adapters</a>) are
 <em>lazy</em>. This means that just creating an iterator doesn't
 <em>do</em> a whole lot. Nothing really happens until you call
@@ -403,8 +403,7 @@ rather than using it. The compiler will warn us about this kind of
 behavior:</p>
 <pre><code class=
 "language-text">warning: unused result which must be used: iterator adaptors are lazy and
-do nothing unless consumed
-</code></pre>
+do nothing unless consumed</code></pre>
 <p>The idiomatic way to write a <a href=
 "trait.Iterator.html#method.map"><code>map</code></a> for its side
 effects is to use a <code>for</code> loop instead:</p>
@@ -428,8 +427,8 @@ effects is to use a <code>for</code> loop instead:</p>
 <code>for</code> loop like this, or using the <a href=
 "trait.Iterator.html#method.collect"><code>collect</code></a>
 method to produce a new collection.</p>
-<h1 id='infinity' class='section-header'><a href=
-'#infinity'>Infinity</a></h1>
+<h1 id="infinity" class="section-header"><a href=
+"#infinity">Infinity</a></h1>
 <p>Iterators do not have to be finite. As an example, an open-ended
 range is an infinite iterator:</p>
 <pre class="rust rust-example-rendered">

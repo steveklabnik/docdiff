@@ -64,15 +64,15 @@ standard library</p>
 <p>rustc compiler intrinsics.</p>
 <p>The corresponding definitions are in
 librustc_trans/intrinsic.rs.</p>
-<h1 id='volatiles' class='section-header'><a href=
-'#volatiles'>Volatiles</a></h1>
+<h1 id="volatiles" class="section-header"><a href=
+"#volatiles">Volatiles</a></h1>
 <p>The volatile intrinsics provide operations intended to act on
 I/O memory, which are guaranteed to not be reordered by the
 compiler across other volatile intrinsics. See the LLVM
 documentation on [<a href=
 "http://llvm.org/docs/LangRef.html#volatile-memory-accesses">volatile</a>].</p>
-<h1 id='atomics' class='section-header'><a href=
-'#atomics'>Atomics</a></h1>
+<h1 id="atomics" class="section-header"><a href=
+"#atomics">Atomics</a></h1>
 <p>The atomic intrinsics provide common atomic operations on
 machine words, with multiple possible memory orderings. They obey
 the same semantics as C++11. See the LLVM documentation on
@@ -80,12 +80,12 @@ the same semantics as C++11. See the LLVM documentation on
 <p>A quick refresher on memory ordering:</p>
 <ul>
 <li>Acquire - a barrier for acquiring a lock. Subsequent reads and
-writes take place after the barrier.</li>
+writestake place after the barrier.</li>
 <li>Release - a barrier for releasing a lock. Preceding reads and
-writes take place before the barrier.</li>
+writestake place before the barrier.</li>
 <li>Sequentially consistent - sequentially consistent operations
-are guaranteed to happen in order. This is the standard mode for
-working with atomic types and is equivalent to Java's
+areguaranteed to happen in order. This is the standard mode for
+workingwith atomic types and is equivalent to Java's
 <code>volatile</code>.</li>
 </ul>
 </div>
@@ -282,9 +282,9 @@ available on the <code>std::sync::atomic</code> types via the
 <code>compare_exchange</code> method by passing <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::SeqCst</code></a>
 as both the <code>success</code> and <code>failure</code>
-parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -300,9 +300,9 @@ available on the <code>std::sync::atomic</code> types via the
 <code>compare_exchange</code> method by passing <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
 as both the <code>success</code> and <code>failure</code>
-parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -319,9 +319,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -338,9 +338,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::AcqRel</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -358,9 +358,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::AcqRel</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -377,9 +377,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::SeqCst</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -396,9 +396,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::SeqCst</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -415,9 +415,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Release</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -433,9 +433,9 @@ available on the <code>std::sync::atomic</code> types via the
 <code>compare_exchange</code> method by passing <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
 as both the <code>success</code> and <code>failure</code>
-parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange">
-<code>AtomicBool::compare_exchange</code></a>.</p>
+parameters. For example,
+[<code>AtomicBool::compare_exchange</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -451,9 +451,9 @@ available on the <code>std::sync::atomic</code> types via the
 <code>compare_exchange_weak</code> method by passing <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::SeqCst</code></a>
 as both the <code>success</code> and <code>failure</code>
-parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -469,9 +469,9 @@ available on the <code>std::sync::atomic</code> types via the
 <code>compare_exchange_weak</code> method by passing <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
 as both the <code>success</code> and <code>failure</code>
-parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -489,9 +489,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -508,9 +508,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::AcqRel</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -528,9 +528,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::AcqRel</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -547,9 +547,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::SeqCst</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Acquire</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -566,9 +566,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::SeqCst</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -585,9 +585,9 @@ available on the <code>std::sync::atomic</code> types via the
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Release</code></a>
 as the <code>success</code> and <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
-as the <code>failure</code> parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+as the <code>failure</code> parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -603,9 +603,9 @@ available on the <code>std::sync::atomic</code> types via the
 <code>compare_exchange_weak</code> method by passing <a href=
 "../../std/sync/atomic/enum.Ordering.html"><code>Ordering::Relaxed</code></a>
 as both the <code>success</code> and <code>failure</code>
-parameters. For example, <a href=
-"../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak">
-<code>AtomicBool::compare_exchange_weak</code></a>.</p>
+parameters. For example,
+[<code>AtomicBool::compare_exchange_weak</code>]
+(../../std/sync/atomic/struct.AtomicBool.html#method.compare_exchange_weak).</p>
 </td>
 </tr>
 <tr class='unstable module-item'>
@@ -1918,10 +1918,10 @@ href='#'><sup>⚠</sup></a></td>
 <td class='docblock-short'>[
 <div class='stab unstable'>Experimental</div>
 ]
-<p>Returns (a + b) mod 2<sup>N,</sup> where N is the width of T in
-bits. The stabilized versions of this intrinsic are available on
-the integer primitives via the <code>wrapping_add</code> method.
-For example, <a href=
+<p>Returns (a + b) mod 2^N, where N is the width of T in bits. The
+stabilized versions of this intrinsic are available on the integer
+primitives via the <code>wrapping_add</code> method. For example,
+<a href=
 "../../std/primitive.u32.html#method.wrapping_add"><code>std::u32::wrapping_add</code></a></p>
 </td>
 </tr>
@@ -1932,10 +1932,10 @@ For example, <a href=
 <td class='docblock-short'>[
 <div class='stab unstable'>Experimental</div>
 ]
-<p>Returns (a * b) mod 2<sup>N,</sup> where N is the width of T in
-bits. The stabilized versions of this intrinsic are available on
-the integer primitives via the <code>wrapping_mul</code> method.
-For example, <a href=
+<p>Returns (a * b) mod 2^N, where N is the width of T in bits. The
+stabilized versions of this intrinsic are available on the integer
+primitives via the <code>wrapping_mul</code> method. For example,
+<a href=
 "../../std/primitive.u32.html#method.wrapping_mul"><code>std::u32::wrapping_mul</code></a></p>
 </td>
 </tr>
@@ -1946,10 +1946,10 @@ For example, <a href=
 <td class='docblock-short'>[
 <div class='stab unstable'>Experimental</div>
 ]
-<p>Returns (a - b) mod 2<sup>N,</sup> where N is the width of T in
-bits. The stabilized versions of this intrinsic are available on
-the integer primitives via the <code>wrapping_sub</code> method.
-For example, <a href=
+<p>Returns (a - b) mod 2^N, where N is the width of T in bits. The
+stabilized versions of this intrinsic are available on the integer
+primitives via the <code>wrapping_sub</code> method. For example,
+<a href=
 "../../std/primitive.u32.html#method.wrapping_sub"><code>std::u32::wrapping_sub</code></a></p>
 </td>
 </tr>

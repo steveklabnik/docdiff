@@ -71,8 +71,8 @@ should prefer implementing the <a href=
 flexibility and provides an equivalent <code>Into</code>
 implementation for free, thanks to a blanket implementation in the
 standard library.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p><a href=
 "../../std/string/struct.String.html"><code>String</code></a>
 implements <code>Into&lt;Vec&lt;u8&gt;&gt;</code>:</p>
@@ -98,8 +98,8 @@ implements <code>Into&lt;Vec&lt;u8&gt;&gt;</code>:</p>
 <span class="ident">is_hello</span>(<span class=
 "ident">s</span>);<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Afn%20is_hello%3CT%3A%20Into%3CVec%3Cu8%3E%3E%3E(s%3A%20T)%20%7B%0A%20%20%20let%20bytes%20%3D%20b%22hello%22.to_vec()%3B%0A%20%20%20assert_eq!(bytes%2C%20s.into())%3B%0A%7D%0A%0Alet%20s%20%3D%20%22hello%22.to_string()%3B%0Ais_hello(s)%3B%0A%7D">Run</a></pre>
-<h1 id='generic-impls' class='section-header'><a href=
-'#generic-impls'>Generic Impls</a></h1>
+<h1 id="generic-impls" class="section-header"><a href=
+"#generic-impls">Generic Impls</a></h1>
 <ul>
 <li><a href=
 "trait.From.html"><code>From&lt;T&gt;</code></a><code>for U</code>

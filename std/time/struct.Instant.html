@@ -111,8 +111,8 @@ href="../../std/time/struct.Instant.html" title=
 "struct std::time::Instant">Instant</a></code></span></span></h4>
 <div class='docblock'>
 <p>Returns an instant corresponding to "now".</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -134,15 +134,15 @@ href="../../std/time/struct.Duration.html" title=
 <div class='docblock'>
 <p>Returns the amount of time elapsed from another instant to this
 one.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>This function will panic if <code>earlier</code> is later than
 <code>self</code>, which should only be possible if
 <code>earlier</code> was created after <code>self</code>. Because
 <code>Instant</code> is monotonic, the only time that this should
 happen should be a bug.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::{<span class=
@@ -175,13 +175,13 @@ happen should be a bug.</p>
 <div class='docblock'>
 <p>Returns the amount of time elapsed since this instant was
 created.</p>
-<h1 id='panics-1' class='section-header'><a href=
-'#panics-1'>Panics</a></h1>
+<h1 id="panics-1" class="section-header"><a href=
+"#panics-1">Panics</a></h1>
 <p>This function may panic if the current time is earlier than this
 instant, which is something that can happen if an
 <code>Instant</code> is produced synthetically.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">thread</span>::<span class=

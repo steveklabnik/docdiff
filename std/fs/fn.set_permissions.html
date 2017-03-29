@@ -65,15 +65,14 @@ href="../../std/convert/trait.AsRef.html" title=
 "../primitive.tuple.html">()</a>&gt;</pre>
 <div class='docblock'>
 <p>Changes the permissions found on a file or a directory.</p>
-<h1 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h1>
+<h1 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h1>
 <p>This function currently corresponds to the <code>chmod</code>
 function on Unix and the <code>SetFileAttributes</code> function on
-Windows. Note that, this <a href=
-"../io/index.html#platform-specific-behavior">may change in the
-future</a>.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+Windows. Note that, this [may change in the future][changes].
+[changes]: ../io/index.html#platform-specific-behavior</p>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This function will return an error in the following situations,
 but is not limited to just these cases:</p>
 <ul>
@@ -81,8 +80,8 @@ but is not limited to just these cases:</p>
 <li>The user lacks the permission to change attributes of the
 file.</li>
 </ul>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;

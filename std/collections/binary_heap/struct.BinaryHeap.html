@@ -67,8 +67,8 @@ that the item's ordering relative to any other item, as determined
 by the <code>Ord</code> trait, changes while it is in the heap.
 This is normally only possible through <code>Cell</code>,
 <code>RefCell</code>, global state, I/O, or unsafe code.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -173,8 +173,8 @@ title=
 "struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt;</code></span></span></h4>
 <div class='docblock'>
 <p>Creates an empty <code>BinaryHeap</code> as a max-heap.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -200,8 +200,8 @@ title="struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt;
 capacity. This preallocates enough memory for <code>capacity</code>
 elements, so that the <code>BinaryHeap</code> does not have to be
 reallocated until it contains at least that many values.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -223,8 +223,8 @@ reallocated until it contains at least that many values.</p>
 <div class='docblock'>
 <p>Returns an iterator visiting all values in the underlying
 vector, in arbitrary order.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -255,8 +255,8 @@ vector, in arbitrary order.</p>
 <div class='docblock'>
 <p>Returns the greatest item in the binary heap, or
 <code>None</code> if it is empty.</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -301,8 +301,8 @@ reference to the greatest item in the binary heap, or
 <p><span id='peek_mut.v' class='invisible'>Note: If the
 <code>PeekMut</code> value is leaked, the heap may be in an
 inconsistent state.</span></p>
-<h1 id='examples-5' class='section-header'><span id='peek_mut.v'
-class='invisible'><a href='#examples-5'>Examples</a></span></h1>
+<h1 id="examples-5" class="section-header"><span id='peek_mut.v'
+class='invisible'><a href="#examples-5">Examples</a></span></h1>
 <p><span id='peek_mut.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='peek_mut.v'
 class='invisible'>
@@ -345,8 +345,8 @@ class='invisible'><code>fn <a href='#method.capacity' class=
 <div class='docblock'>
 <p>Returns the number of elements the binary heap can hold without
 reallocating.</p>
-<h1 id='examples-6' class='section-header'><a href=
-'#examples-6'>Examples</a></h1>
+<h1 id="examples-6" class="section-header"><a href=
+"#examples-6">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -378,11 +378,11 @@ sufficient.</p>
 it requests. Therefore capacity can not be relied upon to be
 precisely minimal. Prefer <code>reserve</code> if future insertions
 are expected.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>Panics if the new capacity overflows <code>usize</code>.</p>
-<h1 id='examples-7' class='section-header'><a href=
-'#examples-7'>Examples</a></h1>
+<h1 id="examples-7" class="section-header"><a href=
+"#examples-7">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -412,11 +412,11 @@ are expected.</p>
 elements to be inserted in the <code>BinaryHeap</code>. The
 collection may reserve more space to avoid frequent
 reallocations.</p>
-<h1 id='panics-1' class='section-header'><a href=
-'#panics-1'>Panics</a></h1>
+<h1 id="panics-1" class="section-header"><a href=
+"#panics-1">Panics</a></h1>
 <p>Panics if the new capacity overflows <code>usize</code>.</p>
-<h1 id='examples-8' class='section-header'><a href=
-'#examples-8'>Examples</a></h1>
+<h1 id="examples-8" class="section-header"><a href=
+"#examples-8">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -442,8 +442,8 @@ reallocations.</p>
 self)</code></span></h4>
 <div class='docblock'>
 <p>Discards as much additional capacity as possible.</p>
-<h1 id='examples-9' class='section-header'><a href=
-'#examples-9'>Examples</a></h1>
+<h1 id="examples-9" class="section-header"><a href=
+"#examples-9">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -475,8 +475,8 @@ self)</code></span></h4>
 <div class='docblock'>
 <p>Removes the greatest item from the binary heap and returns it,
 or <code>None</code> if it is empty.</p>
-<h1 id='examples-10' class='section-header'><a href=
-'#examples-10'>Examples</a></h1>
+<h1 id="examples-10" class="section-header"><a href=
+"#examples-10">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -508,8 +508,8 @@ href=
 'fnname'>push</a>(&amp;mut self, item: T)</code></span></h4>
 <div class='docblock'>
 <p>Pushes an item onto the binary heap.</p>
-<h1 id='examples-11' class='section-header'><a href=
-'#examples-11'>Examples</a></h1>
+<h1 id="examples-11" class="section-header"><a href=
+"#examples-11">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -555,8 +555,8 @@ experimental API. (<code>binary_heap_extras</code> <a href=
 <div class='docblock'>
 <p>Pushes an item onto the binary heap, then pops the greatest item
 off the queue in an optimized fashion.</p>
-<h1 id='examples-12' class='section-header'><a href=
-'#examples-12'>Examples</a></h1>
+<h1 id="examples-12" class="section-header"><a href=
+"#examples-12">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
@@ -616,8 +616,8 @@ experimental API. (<code>binary_heap_extras</code> <a href=
 <p>Pops the greatest item off the binary heap, then pushes an item
 onto the queue in an optimized fashion. The push is done regardless
 of whether the binary heap was empty.</p>
-<h1 id='examples-13' class='section-header'><a href=
-'#examples-13'>Examples</a></h1>
+<h1 id="examples-13" class="section-header"><a href=
+"#examples-13">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
@@ -664,8 +664,8 @@ class='invisible'><code>fn <a href='#method.into_vec' class=
 <p><span id='into_vec.v' class='invisible'>Consumes the
 <code>BinaryHeap</code> and returns the underlying vector in
 arbitrary order.</span></p>
-<h1 id='examples-14' class='section-header'><span id='into_vec.v'
-class='invisible'><a href='#examples-14'>Examples</a></span></h1>
+<h1 id="examples-14" class="section-header"><span id='into_vec.v'
+class='invisible'><a href="#examples-14">Examples</a></span></h1>
 <p><span id='into_vec.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='into_vec.v'
 class='invisible'>
@@ -706,9 +706,9 @@ title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code></span></h4>
 <p><span id='into_sorted_vec.v' class='invisible'>Consumes the
 <code>BinaryHeap</code> and returns a vector in sorted (ascending)
 order.</span></p>
-<h1 id='examples-15' class='section-header'><span id=
+<h1 id="examples-15" class="section-header"><span id=
 'into_sorted_vec.v' class='invisible'><a href=
-'#examples-15'>Examples</a></span></h1>
+"#examples-15">Examples</a></span></h1>
 <p><span id='into_sorted_vec.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id=
@@ -745,8 +745,8 @@ usage:</span></p>
 "../../primitive.usize.html">usize</a></code></span></h4>
 <div class='docblock'>
 <p>Returns the length of the binary heap.</p>
-<h1 id='examples-16' class='section-header'><a href=
-'#examples-16'>Examples</a></h1>
+<h1 id="examples-16" class="section-header"><a href=
+"#examples-16">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -770,8 +770,8 @@ class='invisible'><code>fn <a href='#method.is_empty' class=
 "../../primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'>
 <p>Checks if the binary heap is empty.</p>
-<h1 id='examples-17' class='section-header'><a href=
-'#examples-17'>Examples</a></h1>
+<h1 id="examples-17" class="section-header"><a href=
+"#examples-17">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -812,8 +812,8 @@ href=
 returning an iterator over the removed elements.</span></p>
 <p><span id='drain.v' class='invisible'>The elements are removed in
 arbitrary order.</span></p>
-<h1 id='examples-18' class='section-header'><span id='drain.v'
-class='invisible'><a href='#examples-18'>Examples</a></span></h1>
+<h1 id="examples-18" class="section-header"><span id='drain.v'
+class='invisible'><a href="#examples-18">Examples</a></span></h1>
 <p><span id='drain.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='drain.v' class=
 'invisible'>
@@ -849,8 +849,8 @@ href=
 'fnname'>clear</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'>
 <p>Drops all items from the binary heap.</p>
-<h1 id='examples-19' class='section-header'><a href=
-'#examples-19'>Examples</a></h1>
+<h1 id="examples-19" class="section-header"><a href=
+"#examples-19">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -887,8 +887,8 @@ title="struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt;
 <p><span id='append.v' class='invisible'>Moves all the elements of
 <code>other</code> into <code>self</code>, leaving
 <code>other</code> empty.</span></p>
-<h1 id='examples-20' class='section-header'><span id='append.v'
-class='invisible'><a href='#examples-20'>Examples</a></span></h1>
+<h1 id="examples-20" class="section-header"><span id='append.v'
+class='invisible'><a href="#examples-20">Examples</a></span></h1>
 <p><span id='append.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='append.v' class=
 'invisible'>
@@ -1224,8 +1224,8 @@ class='fnname'>into_iter</a>(self) -&gt; <a class="struct" href=
 <p>Creates a consuming iterator, that is, one that moves each value
 out of the binary heap in arbitrary order. The binary heap cannot
 be used after calling this.</p>
-<h1 id='examples-21' class='section-header'><a href=
-'#examples-21'>Examples</a></h1>
+<h1 id="examples-21" class="section-header"><a href=
+"#examples-21">Examples</a></h1>
 <p>Basic usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=

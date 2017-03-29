@@ -73,28 +73,28 @@ destination file.</p>
 the same file, then the file will likely get truncated by this
 operation.</p>
 <p>On success, the total number of bytes copied is returned.</p>
-<h1 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h1>
+<h1 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h1>
 <p>This function currently corresponds to the <code>open</code>
 function in Unix with <code>O_RDONLY</code> for <code>from</code>
 and <code>O_WRONLY</code>, <code>O_CREAT</code>, and
 <code>O_TRUNC</code> for <code>to</code>. <code>O_CLOEXEC</code> is
 set for returned file descriptors. On Windows, this function
 currently corresponds to <code>CopyFileEx</code>. Note that, this
-<a href="../io/index.html#platform-specific-behavior">may change in
-the future</a>.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+[may change in the future][changes]. [changes]:
+../io/index.html#platform-specific-behavior</p>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This function will return an error in the following situations,
 but is not limited to just these cases:</p>
 <ul>
 <li>The <code>from</code> path is not a file.</li>
 <li>The <code>from</code> file does not exist.</li>
 <li>The current process does not have the permission rights to
-access <code>from</code> or write <code>to</code>.</li>
+access<code>from</code> or write <code>to</code>.</li>
 </ul>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;

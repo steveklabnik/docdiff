@@ -69,7 +69,7 @@ data to a <code>Receiver</code>. Both senders are clone-able
 (multi-producer) such that many threads can send simultaneously to
 one receiver (single-consumer).</p>
 <p>These channels come in two flavors:</p>
-<ol>
+<ul>
 <li>
 <p>An asynchronous, infinitely buffered channel. The
 <code>channel()</code> function will return a <code>(Sender,
@@ -87,9 +87,9 @@ of 0 is allowed, causing the channel to become a "rendezvous"
 channel where each sender atomically hands off a message to a
 receiver.</p>
 </li>
-</ol>
-<h2 id='disconnection' class='section-header'><a href=
-'#disconnection'>Disconnection</a></h2>
+</ul>
+<h2 id="disconnection" class="section-header"><a href=
+"#disconnection">Disconnection</a></h2>
 <p>The send and receive operations on channels will all return a
 <code>Result</code> indicating whether the operation succeeded or
 not. An unsuccessful operation is normally indicative of the other
@@ -100,8 +100,8 @@ no longer continue to make progress, so <code>Err</code> will be
 returned. Many applications will continue to <code>unwrap()</code>
 the results returned from this module, instigating a propagation of
 failure among threads if one unexpectedly dies.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>Simple usage:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=

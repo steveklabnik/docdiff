@@ -88,69 +88,69 @@ categories:</p>
 <li>Misc: <a href=
 "../../std/collections/struct.BinaryHeap.html"><code>BinaryHeap</code></a></li>
 </ul>
-<h1 id='when-should-you-use-which-collection' class=
-'section-header'><a href=
-'#when-should-you-use-which-collection'>When Should You Use Which
+<h1 id="when-should-you-use-which-collection" class=
+"section-header"><a href=
+"#when-should-you-use-which-collection">When Should You Use Which
 Collection?</a></h1>
 <p>These are fairly high-level and quick break-downs of when each
 collection should be considered. Detailed discussions of strengths
 and weaknesses of individual collections can be found on their own
 documentation pages.</p>
-<h3 id='use-a-vec-when' class='section-header'><a href=
-'#use-a-vec-when'>Use a <code>Vec</code> when:</a></h3>
+<h3 id="use-a-vec-when" class="section-header"><a href=
+"#use-a-vec-when">Use a <code>Vec</code> when:</a></h3>
 <ul>
 <li>You want to collect items up to be processed or sent elsewhere
-later, and don't care about any properties of the actual values
+later, anddon't care about any properties of the actual values
 being stored.</li>
 <li>You want a sequence of elements in a particular order, and will
-only be appending to (or near) the end.</li>
+only beappending to (or near) the end.</li>
 <li>You want a stack.</li>
 <li>You want a resizable array.</li>
 <li>You want a heap-allocated array.</li>
 </ul>
-<h3 id='use-a-vecdeque-when' class='section-header'><a href=
-'#use-a-vecdeque-when'>Use a <code>VecDeque</code> when:</a></h3>
+<h3 id="use-a-vecdeque-when" class="section-header"><a href=
+"#use-a-vecdeque-when">Use a <code>VecDeque</code> when:</a></h3>
 <ul>
 <li>You want a <a href=
 "../../std/vec/struct.Vec.html"><code>Vec</code></a> that supports
-efficient insertion at both ends of the sequence.</li>
+efficient insertion at both ends of thesequence.</li>
 <li>You want a queue.</li>
 <li>You want a double-ended queue (deque).</li>
 </ul>
-<h3 id='use-a-linkedlist-when' class='section-header'><a href=
-'#use-a-linkedlist-when'>Use a <code>LinkedList</code>
+<h3 id="use-a-linkedlist-when" class="section-header"><a href=
+"#use-a-linkedlist-when">Use a <code>LinkedList</code>
 when:</a></h3>
 <ul>
 <li>You want a <a href=
 "../../std/vec/struct.Vec.html"><code>Vec</code></a> or <a href=
 "../../std/collections/struct.VecDeque.html"><code>VecDeque</code></a>
-of unknown size, and can't tolerate amortization.</li>
+of unknown size, and can't tolerateamortization.</li>
 <li>You want to efficiently split and append lists.</li>
 <li>You are <em>absolutely</em> certain you <em>really</em>,
-<em>truly</em>, want a doubly linked list.</li>
+<em>truly</em>, want a doubly linkedlist.</li>
 </ul>
-<h3 id='use-a-hashmap-when' class='section-header'><a href=
-'#use-a-hashmap-when'>Use a <code>HashMap</code> when:</a></h3>
+<h3 id="use-a-hashmap-when" class="section-header"><a href=
+"#use-a-hashmap-when">Use a <code>HashMap</code> when:</a></h3>
 <ul>
 <li>You want to associate arbitrary keys with an arbitrary
 value.</li>
 <li>You want a cache.</li>
 <li>You want a map, with no extra functionality.</li>
 </ul>
-<h3 id='use-a-btreemap-when' class='section-header'><a href=
-'#use-a-btreemap-when'>Use a <code>BTreeMap</code> when:</a></h3>
+<h3 id="use-a-btreemap-when" class="section-header"><a href=
+"#use-a-btreemap-when">Use a <code>BTreeMap</code> when:</a></h3>
 <ul>
 <li>You're interested in what the smallest or largest key-value
 pair is.</li>
 <li>You want to find the largest or smallest key that is smaller or
-larger than something.</li>
+largerthan something.</li>
 <li>You want to be able to get all of the entries in order
 on-demand.</li>
 <li>You want a map sorted by its keys.</li>
 </ul>
-<h3 id='use-the-set-variant-of-any-of-these-maps-when' class=
-'section-header'><a href=
-'#use-the-set-variant-of-any-of-these-maps-when'>Use the
+<h3 id="use-the-set-variant-of-any-of-these-maps-when" class=
+"section-header"><a href=
+"#use-the-set-variant-of-any-of-these-maps-when">Use the
 <code>Set</code> variant of any of these <code>Map</code>s
 when:</a></h3>
 <ul>
@@ -158,17 +158,17 @@ when:</a></h3>
 <li>There is no meaningful value to associate with your keys.</li>
 <li>You just want a set.</li>
 </ul>
-<h3 id='use-a-binaryheap-when' class='section-header'><a href=
-'#use-a-binaryheap-when'>Use a <code>BinaryHeap</code>
+<h3 id="use-a-binaryheap-when" class="section-header"><a href=
+"#use-a-binaryheap-when">Use a <code>BinaryHeap</code>
 when:</a></h3>
 <ul>
 <li>You want to store a bunch of elements, but only ever want to
-process the "biggest" or "most important" one at any given
+process the"biggest" or "most important" one at any given
 time.</li>
 <li>You want a priority queue.</li>
 </ul>
-<h1 id='performance' class='section-header'><a href=
-'#performance'>Performance</a></h1>
+<h1 id="performance" class="section-header"><a href=
+"#performance">Performance</a></h1>
 <p>Choosing the right collection for the job requires an
 understanding of what each collection is good at. Here we briefly
 summarize the performance of different collections for certain
@@ -193,8 +193,8 @@ has expected costs, due to the probabilistic nature of hashing. It
 is theoretically possible, though very unlikely, for <a href=
 "../../std/collections/struct.HashMap.html"><code>HashMap</code></a>
 to experience worse performance.</p>
-<h2 id='sequences' class='section-header'><a href=
-'#sequences'>Sequences</a></h2>
+<h2 id="sequences" class="section-header"><a href=
+"#sequences">Sequences</a></h2>
 <table>
 <thead>
 <tr>
@@ -244,7 +244,7 @@ and <a href=
 "../../std/collections/struct.VecDeque.html"><code>VecDeque</code></a>
 is generally going to be faster than <a href=
 "../../std/collections/struct.LinkedList.html"><code>LinkedList</code></a>.</p>
-<h2 id='maps' class='section-header'><a href='#maps'>Maps</a></h2>
+<h2 id="maps" class="section-header"><a href="#maps">Maps</a></h2>
 <p>For Sets, all operations have the cost of the equivalent Map
 operation.</p>
 <table>
@@ -279,9 +279,9 @@ operation.</p>
 </tr>
 </tbody>
 </table>
-<h1 id='correct-and-efficient-usage-of-collections' class=
-'section-header'><a href=
-'#correct-and-efficient-usage-of-collections'>Correct and Efficient
+<h1 id="correct-and-efficient-usage-of-collections" class=
+"section-header"><a href=
+"#correct-and-efficient-usage-of-collections">Correct and Efficient
 Usage of Collections</a></h1>
 <p>Of course, knowing which collection is the right one for the job
 doesn't instantly permit you to use it correctly. Here are some
@@ -289,8 +289,8 @@ quick tips for efficient and correct usage of the standard
 collections in general. If you're interested in how to use a
 specific collection in particular, consult its documentation for
 detailed discussion and code examples.</p>
-<h2 id='capacity-management' class='section-header'><a href=
-'#capacity-management'>Capacity Management</a></h2>
+<h2 id="capacity-management" class="section-header"><a href=
+"#capacity-management">Capacity Management</a></h2>
 <p>Many collections provide several constructors and methods that
 refer to "capacity". These collections are generally built on top
 of an array. Optimally, this array would be exactly the right size
@@ -339,8 +339,8 @@ of the collection is, most collections provide a
 <code>capacity()</code> method to query this information on demand.
 This can be useful for debugging purposes, or for use with the
 <code>reserve()</code> methods.</p>
-<h2 id='iterators' class='section-header'><a href=
-'#iterators'>Iterators</a></h2>
+<h2 id="iterators" class="section-header"><a href=
+"#iterators">Iterators</a></h2>
 <p>Iterators are a powerful and robust mechanism used throughout
 Rust's standard libraries. Iterators provide a sequence of values
 in a generic, safe, efficient and convenient way. The contents of
@@ -480,8 +480,8 @@ store the result in. This provides maximum flexibility as
 sequence can be looped over with a <code>for</code> loop. The
 iterator can also be discarded after partial use, preventing the
 computation of the unused items.</p>
-<h2 id='entries' class='section-header'><a href=
-'#entries'>Entries</a></h2>
+<h2 id="entries" class="section-header"><a href=
+"#entries">Entries</a></h2>
 <p>The <code>entry()</code> API is intended to provide an efficient
 mechanism for manipulating the contents of a map conditionally on
 the presence of a key or not. The primary motivating use case for
@@ -510,15 +510,15 @@ they can <code>get()</code>, <code>insert()</code> or
 Additionally, they can convert the occupied entry into a mutable
 reference to its value, providing symmetry to the vacant
 <code>insert()</code> case.</p>
-<h3 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h3>
+<h3 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h3>
 <p>Here are the two primary ways in which <code>entry()</code> is
 used. First, a simple example where the logic performed on the
 values is trivial.</p>
 <h4 id=
-'counting-the-number-of-times-each-character-in-a-string-occurs'
-class='section-header'><a href=
-'#counting-the-number-of-times-each-character-in-a-string-occurs'>Counting
+"counting-the-number-of-times-each-character-in-a-string-occurs"
+class="section-header"><a href=
+"#counting-the-number-of-times-each-character-in-a-string-occurs">Counting
 the number of times each character in a string occurs</a></h4>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -566,9 +566,9 @@ the number of times each character in a string occurs</a></h4>
 <p>When the logic to be performed on the value is more complex, we
 may simply use the <code>entry()</code> API to ensure that the
 value is initialized and perform the logic afterwards.</p>
-<h4 id='tracking-the-inebriation-of-customers-at-a-bar' class=
-'section-header'><a href=
-'#tracking-the-inebriation-of-customers-at-a-bar'>Tracking the
+<h4 id="tracking-the-inebriation-of-customers-at-a-bar" class=
+"section-header"><a href=
+"#tracking-the-inebriation-of-customers-at-a-bar">Tracking the
 inebriation of customers at a bar</a></h4>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -641,8 +641,8 @@ inebriation of customers at a bar</a></h4>
     }
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Acollections%3A%3Abtree_map%3A%3ABTreeMap%3B%0A%0A%2F%2F%20A%20client%20of%20the%20bar.%20They%20have%20a%20blood%20alcohol%20level.%0Astruct%20Person%20%7B%20blood_alcohol%3A%20f32%20%7D%0A%0A%2F%2F%20All%20the%20orders%20made%20to%20the%20bar%2C%20by%20client%20id.%0Alet%20orders%20%3D%20vec!%5B1%2C2%2C1%2C2%2C3%2C4%2C1%2C2%2C2%2C3%2C4%2C1%2C1%2C1%5D%3B%0A%0A%2F%2F%20Our%20clients.%0Alet%20mut%20blood_alcohol%20%3D%20BTreeMap%3A%3Anew()%3B%0A%0Afor%20id%20in%20orders%20%7B%0A%20%20%20%20%2F%2F%20If%20this%20is%20the%20first%20time%20we've%20seen%20this%20customer%2C%20initialize%20them%0A%20%20%20%20%2F%2F%20with%20no%20blood%20alcohol.%20Otherwise%2C%20just%20retrieve%20them.%0A%20%20%20%20let%20person%20%3D%20blood_alcohol.entry(id).or_insert(Person%20%7B%20blood_alcohol%3A%200.0%20%7D)%3B%0A%0A%20%20%20%20%2F%2F%20Reduce%20their%20blood%20alcohol%20level.%20It%20takes%20time%20to%20order%20and%20drink%20a%20beer!%0A%20%20%20%20person.blood_alcohol%20*%3D%200.9%3B%0A%0A%20%20%20%20%2F%2F%20Check%20if%20they're%20sober%20enough%20to%20have%20another%20beer.%0A%20%20%20%20if%20person.blood_alcohol%20%3E%200.3%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Too%20drunk...%20for%20now.%0A%20%20%20%20%20%20%20%20println!(%22Sorry%20%7B%7D%2C%20I%20have%20to%20cut%20you%20off%22%2C%20id)%3B%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Have%20another!%0A%20%20%20%20%20%20%20%20person.blood_alcohol%20%2B%3D%200.1%3B%0A%20%20%20%20%7D%0A%7D%0A%7D">Run</a></pre>
-<h1 id='insert-and-complex-keys' class='section-header'><a href=
-'#insert-and-complex-keys'>Insert and complex keys</a></h1>
+<h1 id="insert-and-complex-keys" class="section-header"><a href=
+"#insert-and-complex-keys">Insert and complex keys</a></h1>
 <p>If we have a more complex key, calls to <code>insert()</code>
 will not update the value of the key. For example:</p>
 <pre class="rust rust-example-rendered">

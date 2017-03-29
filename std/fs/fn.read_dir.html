@@ -67,15 +67,14 @@ title="collapse all docs">[<span class='inner'>−</span>]</a></span>
 "../io/type.Result.html"><code>io::Result</code></a><code>&lt;</code><a href="struct.DirEntry.html"><code>DirEntry</code></a><code>&gt;</code>.
 New errors may be encountered after an iterator is initially
 constructed.</p>
-<h1 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h1>
+<h1 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h1>
 <p>This function currently corresponds to the <code>opendir</code>
 function on Unix and the <code>FindFirstFile</code> function on
-Windows. Note that, this <a href=
-"../io/index.html#platform-specific-behavior">may change in the
-future</a>.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+Windows. Note that, this [may change in the future][changes].
+[changes]: ../io/index.html#platform-specific-behavior</p>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This function will return an error in the following situations,
 but is not limited to just these cases:</p>
 <ul>
@@ -83,8 +82,8 @@ but is not limited to just these cases:</p>
 <li>The process lacks permissions to view the contents.</li>
 <li>The <code>path</code> points at a non-directory file.</li>
 </ul>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">io</span>;

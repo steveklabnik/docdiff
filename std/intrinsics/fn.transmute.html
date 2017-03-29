@@ -73,8 +73,8 @@ behavior</a> with this function. <code>transmute</code> should be
 the absolute last resort.</p>
 <p>The <a href="../../nomicon/transmutes.html">nomicon</a> has
 additional documentation.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>There are a few things that <code>transmute</code> is really
 useful for.</p>
 <p>Getting the bitpattern of a floating point type (or, more
@@ -179,8 +179,8 @@ is advanced, very unsafe Rust!</p>
 "ident">r</span>)
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Astruct%20R%3C'a%3E(%26'a%20i32)%3B%0Aunsafe%20fn%20extend_lifetime%3C'b%3E(r%3A%20R%3C'b%3E)%20-%3E%20R%3C'static%3E%20%7B%0A%20%20%20%20std%3A%3Amem%3A%3Atransmute%3A%3A%3CR%3C'b%3E%2C%20R%3C'static%3E%3E(r)%0A%7D%0A%0Aunsafe%20fn%20shorten_invariant_lifetime%3C'b%2C%20'c%3E(r%3A%20%26'b%20mut%20R%3C'static%3E)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20-%3E%20%26'b%20mut%20R%3C'c%3E%20%7B%0A%20%20%20%20std%3A%3Amem%3A%3Atransmute%3A%3A%3C%26'b%20mut%20R%3C'static%3E%2C%20%26'b%20mut%20R%3C'c%3E%3E(r)%0A%7D%0A%7D">Run</a></pre>
-<h1 id='alternatives' class='section-header'><a href=
-'#alternatives'>Alternatives</a></h1>
+<h1 id="alternatives" class="section-header"><a href=
+"#alternatives">Alternatives</a></h1>
 <p>Don't despair: many uses of <code>transmute</code> can be
 achieved through other means. Below are common applications of
 <code>transmute</code> which can be replaced with safer

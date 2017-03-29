@@ -92,8 +92,7 @@ although this can frequently be achieved by using
 <code>#[derive(PartialEq, Eq, Hash)]</code>. If you implement these
 yourself, it is important that the following property holds:</p>
 <pre><code class=
-"language-text">k1 == k2 -&gt; hash(k1) == hash(k2)
-</code></pre>
+"language-text">k1 == k2 -&gt; hash(k1) == hash(k2)</code></pre>
 <p>In other words, if two keys are equal, their hashes must be
 equal.</p>
 <p>It is a logic error for a key to be modified in such a way that
@@ -107,7 +106,7 @@ while it is in the map. This is normally only possible through
 "../../std/cell/struct.RefCell.html"><code>RefCell</code></a>,
 global state, I/O, or unsafe code.</p>
 <p>Relevant papers/articles:</p>
-<ol>
+<ul>
 <li>Pedro Celis. <a href=
 "https://cs.uwaterloo.ca/research/tr/1986/CS-86-14.pdf">"Robin Hood
 Hashing"</a></li>
@@ -117,9 +116,9 @@ hashing"</a></li>
 <li>Emmanuel Goossaert. <a href=
 "http://codecapsule.com/2013/11/17/robin-hood-hashing-backward-shift-deletion/">
 "Robin Hood hashing: backward shift deletion"</a></li>
-</ol>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+</ul>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -388,8 +387,8 @@ href="../../std/collections/struct.HashMap.html" title=
 "struct std::collections::hash_map::RandomState">RandomState</a>&gt;</code></span></span></h4>
 <div class='docblock'>
 <p>Creates an empty <code>HashMap</code>.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -418,8 +417,8 @@ capacity.</p>
 <p>The hash map will be able to hold at least <code>capacity</code>
 elements without reallocating. If <code>capacity</code> is 0, the
 hash map will not allocate.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -469,8 +468,8 @@ normally randomly generated, and is designed to allow HashMaps to
 be resistant to attacks that cause many collisions and very poor
 performance. Setting it manually using this function can expose a
 DoS attack vector.</span></p>
-<h1 id='examples-3' class='section-header'><span class=
-'out-of-band'><a href='#examples-3'>Examples</a></span></h1>
+<h1 id="examples-3" class="section-header"><span class=
+'out-of-band'><a href="#examples-3">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span class='out-of-band'>
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -519,9 +518,9 @@ randomly generated, and is designed to allow HashMaps to be
 resistant to attacks that cause many collisions and very poor
 performance. Setting it manually using this function can expose a
 DoS attack vector.</span></p>
-<h1 id='examples-4' class='section-header'><span id=
+<h1 id="examples-4" class="section-header"><span id=
 'with_capacity_and_hasher.v' class='invisible'><a href=
-'#examples-4'>Examples</a></span></h1>
+"#examples-4">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'with_capacity_and_hasher.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -565,8 +564,8 @@ reallocating.</p>
 <p>This number is a lower bound; the <code>HashMap&lt;K,
 V&gt;</code> might be able to hold more, but is guaranteed to be
 able to hold at least this many.</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -592,12 +591,12 @@ able to hold at least this many.</p>
 <p>Reserves capacity for at least <code>additional</code> more
 elements to be inserted in the <code>HashMap</code>. The collection
 may reserve more space to avoid frequent reallocations.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>Panics if the new allocation size overflows <a href=
 "../../std/primitive.usize.html"><code>usize</code></a>.</p>
-<h1 id='examples-6' class='section-header'><a href=
-'#examples-6'>Examples</a></h1>
+<h1 id="examples-6" class="section-header"><a href=
+"#examples-6">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -622,8 +621,8 @@ self)</code></span></h4>
 drop down as much as possible while maintaining the internal rules
 and possibly leaving some space in accordance with the resize
 policy.</p>
-<h1 id='examples-7' class='section-header'><a href=
-'#examples-7'>Examples</a></h1>
+<h1 id="examples-7" class="section-header"><a href=
+"#examples-7">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -663,8 +662,8 @@ V&gt;</code></span></h4>
 <div class='docblock'>
 <p>An iterator visiting all keys in arbitrary order. Iterator
 element type is <code>&amp;'a K</code>.</p>
-<h1 id='examples-8' class='section-header'><a href=
-'#examples-8'>Examples</a></h1>
+<h1 id="examples-8" class="section-header"><a href=
+"#examples-8">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -701,8 +700,8 @@ V&gt;</code></span></h4>
 <div class='docblock'>
 <p>An iterator visiting all values in arbitrary order. Iterator
 element type is <code>&amp;'a V</code>.</p>
-<h1 id='examples-9' class='section-header'><a href=
-'#examples-9'>Examples</a></h1>
+<h1 id="examples-9" class="section-header"><a href=
+"#examples-9">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -744,8 +743,8 @@ V&gt;</code></span></h4>
 <p><span id='values_mut.v' class='invisible'>An iterator visiting
 all values mutably in arbitrary order. Iterator element type is
 <code>&amp;'a mut V</code>.</span></p>
-<h1 id='examples-10' class='section-header'><span id='values_mut.v'
-class='invisible'><a href='#examples-10'>Examples</a></span></h1>
+<h1 id="examples-10" class="section-header"><span id='values_mut.v'
+class='invisible'><a href="#examples-10">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='values_mut.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -793,8 +792,8 @@ V&gt;</code></span></h4>
 <div class='docblock'>
 <p>An iterator visiting all key-value pairs in arbitrary order.
 Iterator element type is <code>(&amp;'a K, &amp;'a V)</code>.</p>
-<h1 id='examples-11' class='section-header'><a href=
-'#examples-11'>Examples</a></h1>
+<h1 id="examples-11" class="section-header"><a href=
+"#examples-11">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -834,8 +833,8 @@ V&gt;</code></span></h4>
 <p>An iterator visiting all key-value pairs in arbitrary order,
 with mutable references to the values. Iterator element type is
 <code>(&amp;'a K, &amp;'a mut V)</code>.</p>
-<h1 id='examples-12' class='section-header'><a href=
-'#examples-12'>Examples</a></h1>
+<h1 id="examples-12" class="section-header"><a href=
+"#examples-12">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -883,8 +882,8 @@ V&gt;</code></span></h4>
 <div class='docblock'>
 <p>Gets the given key's corresponding entry in the map for in-place
 manipulation.</p>
-<h1 id='examples-13' class='section-header'><a href=
-'#examples-13'>Examples</a></h1>
+<h1 id="examples-13" class="section-header"><a href=
+"#examples-13">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -934,8 +933,8 @@ href=
 "../primitive.usize.html">usize</a></code></span></h4>
 <div class='docblock'>
 <p>Returns the number of elements in the map.</p>
-<h1 id='examples-14' class='section-header'><a href=
-'#examples-14'>Examples</a></h1>
+<h1 id="examples-14" class="section-header"><a href=
+"#examples-14">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -962,8 +961,8 @@ class='invisible'><code>fn <a href='#method.is_empty' class=
 "../primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'>
 <p>Returns true if the map contains no elements.</p>
-<h1 id='examples-15' class='section-header'><a href=
-'#examples-15'>Examples</a></h1>
+<h1 id="examples-15" class="section-header"><a href=
+"#examples-15">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -997,8 +996,8 @@ V&gt;</code></span></h4>
 <p><span id='drain.v' class='invisible'>Clears the map, returning
 all key-value pairs as an iterator. Keeps the allocated memory for
 reuse.</span></p>
-<h1 id='examples-16' class='section-header'><span id='drain.v'
-class='invisible'><a href='#examples-16'>Examples</a></span></h1>
+<h1 id="examples-16" class="section-header"><span id='drain.v'
+class='invisible'><a href="#examples-16">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='drain.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -1044,8 +1043,8 @@ href=
 <div class='docblock'>
 <p>Clears the map, removing all key-value pairs. Keeps the
 allocated memory for reuse.</p>
-<h1 id='examples-17' class='section-header'><a href=
-'#examples-17'>Examples</a></h1>
+<h1 id="examples-17" class="section-header"><a href=
+"#examples-17">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -1084,8 +1083,8 @@ title="enum std::option::Option">Option</a>&lt;&amp;V&gt;
 <a href="../../std/hash/trait.Hash.html"><code>Hash</code></a> and
 <a href="../../std/cmp/trait.Eq.html"><code>Eq</code></a> on the
 borrowed form <em>must</em> match those for the key type.</p>
-<h1 id='examples-18' class='section-header'><a href=
-'#examples-18'>Examples</a></h1>
+<h1 id="examples-18" class="section-header"><a href=
+"#examples-18">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -1132,8 +1131,8 @@ key.</p>
 <a href="../../std/hash/trait.Hash.html"><code>Hash</code></a> and
 <a href="../../std/cmp/trait.Eq.html"><code>Eq</code></a> on the
 borrowed form <em>must</em> match those for the key type.</p>
-<h1 id='examples-19' class='section-header'><a href=
-'#examples-19'>Examples</a></h1>
+<h1 id="examples-19" class="section-header"><a href=
+"#examples-19">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -1177,8 +1176,8 @@ key.</p>
 <a href="../../std/hash/trait.Hash.html"><code>Hash</code></a> and
 <a href="../../std/cmp/trait.Eq.html"><code>Eq</code></a> on the
 borrowed form <em>must</em> match those for the key type.</p>
-<h1 id='examples-20' class='section-header'><a href=
-'#examples-20'>Examples</a></h1>
+<h1 id="examples-20" class="section-header"><a href=
+"#examples-20">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -1221,8 +1220,8 @@ matters for types that can be <code>==</code> without being
 identical. See the <a href=
 "index.html#insert-and-complex-keys">module-level documentation</a>
 for more.</p>
-<h1 id='examples-21' class='section-header'><a href=
-'#examples-21'>Examples</a></h1>
+<h1 id="examples-21" class="section-header"><a href=
+"#examples-21">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -1274,8 +1273,8 @@ the key was previously in the map.</p>
 <a href="../../std/hash/trait.Hash.html"><code>Hash</code></a> and
 <a href="../../std/cmp/trait.Eq.html"><code>Eq</code></a> on the
 borrowed form <em>must</em> match those for the key type.</p>
-<h1 id='examples-22' class='section-header'><a href=
-'#examples-22'>Examples</a></h1>
+<h1 id="examples-22" class="section-header"><a href=
+"#examples-22">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=
@@ -1318,8 +1317,8 @@ is a nightly-only experimental API.
 <p>Retains only the elements specified by the predicate.</p>
 <p>In other words, remove all pairs <code>(k, v)</code> such that
 <code>f(&amp;k,&amp;mut v)</code> returns <code>false</code>.</p>
-<h1 id='examples-23' class='section-header'><a href=
-'#examples-23'>Examples</a></h1>
+<h1 id="examples-23" class="section-header"><a href=
+"#examples-23">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -1722,8 +1721,8 @@ V&gt;</code></span></h4>
 <p>Creates a consuming iterator, that is, one that moves each
 key-value pair out of the map in arbitrary order. The map cannot be
 used after calling this.</p>
-<h1 id='examples-24' class='section-header'><a href=
-'#examples-24'>Examples</a></h1>
+<h1 id="examples-24" class="section-header"><a href=
+"#examples-24">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class=

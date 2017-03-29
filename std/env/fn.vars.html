@@ -61,14 +61,14 @@ all the environment variables of the current process.</p>
 environment variables at the time of this invocation. Modifications
 to environment variables afterwards will not be reflected in the
 returned iterator.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>While iterating, the returned iterator will panic if any key or
 value in the environment is not valid unicode. If this is not
 desired, consider using the <a href=
 "fn.vars_os.html"><code>env::vars_os</code></a> function.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">env</span>;

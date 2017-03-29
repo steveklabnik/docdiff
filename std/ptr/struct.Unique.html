@@ -103,8 +103,8 @@ is a nightly-only experimental API. (<code>unique</code> <a href=
 </div>
 <div class='docblock'>
 <p>Creates a new <code>Unique</code>.</p>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p><code>ptr</code> must be non-null.</p>
 </div>
 <h4 id='method.get' class="method"><span id='get.v' class=
@@ -147,8 +147,8 @@ href="../primitive.pointer.html">*mut T</a>&gt;</h2>
 'invisible'></span>
 <p><span id='is_null.v' class='invisible'>Returns <code>true</code>
 if the pointer is null.</span></p>
-<h1 id='examples' class='section-header'><span id='is_null.v'
-class='invisible'><a href='#examples'>Examples</a></span></h1>
+<h1 id="examples" class="section-header"><span id='is_null.v'
+class='invisible'><a href="#examples">Examples</a></span></h1>
 <p><span id='is_null.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='is_null.v' class=
 'invisible'>
@@ -179,8 +179,8 @@ T&gt;</code></span></h4>
 <p><span id='as_ref.v' class='invisible'>Returns <code>None</code>
 if the pointer is null, or else returns a reference to the value
 wrapped in <code>Some</code>.</span></p>
-<h1 id='safety-1' class='section-header'><span id='as_ref.v' class=
-'invisible'><a href='#safety-1'>Safety</a></span></h1>
+<h1 id="safety-1" class="section-header"><span id='as_ref.v' class=
+'invisible'><a href="#safety-1">Safety</a></span></h1>
 <p><span id='as_ref.v' class='invisible'>While this method and its
 mutable counterpart are useful for null-safety, it is important to
 note that this is still an unsafe operation because the returned
@@ -188,8 +188,8 @@ value could be pointing to invalid memory.</span></p>
 <p><span id='as_ref.v' class='invisible'>Additionally, the lifetime
 <code>'a</code> returned is arbitrarily chosen and does not
 necessarily reflect the actual lifetime of the data.</span></p>
-<h1 id='examples-1' class='section-header'><span id='as_ref.v'
-class='invisible'><a href='#examples-1'>Examples</a></span></h1>
+<h1 id="examples-1" class="section-header"><span id='as_ref.v'
+class='invisible'><a href="#examples-1">Examples</a></span></h1>
 <p><span id='as_ref.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='as_ref.v' class=
 'invisible'>
@@ -226,15 +226,15 @@ href="../primitive.pointer.html">*const T</a></code></span></h4>
 a pointer. <code>count</code> is in units of T; e.g. a
 <code>count</code> of 3 represents a pointer offset of <code>3 *
 size_of::&lt;T&gt;()</code> bytes.</span></p>
-<h1 id='safety-2' class='section-header'><span id='offset.v' class=
-'invisible'><a href='#safety-2'>Safety</a></span></h1>
+<h1 id="safety-2" class="section-header"><span id='offset.v' class=
+'invisible'><a href="#safety-2">Safety</a></span></h1>
 <p><span id='offset.v' class='invisible'>Both the starting and
 resulting pointer must be either in bounds or one byte past the end
 of an allocated object. If either pointer is out of bounds or
 arithmetic overflow occurs then any further use of the returned
 value will result in undefined behavior.</span></p>
-<h1 id='examples-2' class='section-header'><span id='offset.v'
-class='invisible'><a href='#examples-2'>Examples</a></span></h1>
+<h1 id="examples-2" class="section-header"><span id='offset.v'
+class='invisible'><a href="#examples-2">Examples</a></span></h1>
 <p><span id='offset.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='offset.v' class=
 'invisible'>
@@ -277,9 +277,9 @@ offset from a pointer using wrapping arithmetic. <code>count</code>
 is in units of T; e.g. a <code>count</code> of 3 represents a
 pointer offset of <code>3 * size_of::&lt;T&gt;()</code>
 bytes.</span></p>
-<h1 id='safety-3' class='section-header'><span id=
+<h1 id="safety-3" class="section-header"><span id=
 'wrapping_offset.v' class='invisible'><a href=
-'#safety-3'>Safety</a></span></h1>
+"#safety-3">Safety</a></span></h1>
 <p><span id='wrapping_offset.v' class='invisible'>The resulting
 pointer does not need to be in bounds, but it is potentially
 hazardous to dereference (which requires
@@ -288,9 +288,9 @@ hazardous to dereference (which requires
 <code>.offset(count)</code> instead when possible, because
 <code>offset</code> allows the compiler to optimize
 better.</span></p>
-<h1 id='examples-3' class='section-header'><span id=
+<h1 id="examples-3" class="section-header"><span id=
 'wrapping_offset.v' class='invisible'><a href=
-'#examples-3'>Examples</a></span></h1>
+"#examples-3">Examples</a></span></h1>
 <p><span id='wrapping_offset.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id=
@@ -342,8 +342,8 @@ class='invisible'><code>fn <a href='#method.is_null-1' class=
 'invisible'></span>
 <p><span id='is_null.v-1' class='invisible'>Returns
 <code>true</code> if the pointer is null.</span></p>
-<h1 id='examples-4' class='section-header'><span id='is_null.v-1'
-class='invisible'><a href='#examples-4'>Examples</a></span></h1>
+<h1 id="examples-4" class="section-header"><span id='is_null.v-1'
+class='invisible'><a href="#examples-4">Examples</a></span></h1>
 <p><span id='is_null.v-1' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='is_null.v-1'
 class='invisible'>
@@ -375,8 +375,8 @@ T&gt;</code></span></h4>
 <p><span id='as_ref.v-1' class='invisible'>Returns
 <code>None</code> if the pointer is null, or else returns a
 reference to the value wrapped in <code>Some</code>.</span></p>
-<h1 id='safety-4' class='section-header'><span id='as_ref.v-1'
-class='invisible'><a href='#safety-4'>Safety</a></span></h1>
+<h1 id="safety-4" class="section-header"><span id='as_ref.v-1'
+class='invisible'><a href="#safety-4">Safety</a></span></h1>
 <p><span id='as_ref.v-1' class='invisible'>While this method and
 its mutable counterpart are useful for null-safety, it is important
 to note that this is still an unsafe operation because the returned
@@ -384,8 +384,8 @@ value could be pointing to invalid memory.</span></p>
 <p><span id='as_ref.v-1' class='invisible'>Additionally, the
 lifetime <code>'a</code> returned is arbitrarily chosen and does
 not necessarily reflect the actual lifetime of the data.</span></p>
-<h1 id='examples-5' class='section-header'><span id='as_ref.v-1'
-class='invisible'><a href='#examples-5'>Examples</a></span></h1>
+<h1 id="examples-5" class="section-header"><span id='as_ref.v-1'
+class='invisible'><a href="#examples-5">Examples</a></span></h1>
 <p><span id='as_ref.v-1' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='as_ref.v-1'
 class='invisible'>
@@ -423,14 +423,14 @@ href="../primitive.pointer.html">*mut T</a></code></span></h4>
 from a pointer. <code>count</code> is in units of T; e.g. a
 <code>count</code> of 3 represents a pointer offset of <code>3 *
 size_of::&lt;T&gt;()</code> bytes.</span></p>
-<h1 id='safety-5' class='section-header'><span id='offset.v-1'
-class='invisible'><a href='#safety-5'>Safety</a></span></h1>
+<h1 id="safety-5" class="section-header"><span id='offset.v-1'
+class='invisible'><a href="#safety-5">Safety</a></span></h1>
 <p><span id='offset.v-1' class='invisible'>The offset must be
 in-bounds of the object, or one-byte-past-the-end. Otherwise
 <code>offset</code> invokes Undefined Behavior, regardless of
 whether the pointer is used.</span></p>
-<h1 id='examples-6' class='section-header'><span id='offset.v-1'
-class='invisible'><a href='#examples-6'>Examples</a></span></h1>
+<h1 id="examples-6" class="section-header"><span id='offset.v-1'
+class='invisible'><a href="#examples-6">Examples</a></span></h1>
 <p><span id='offset.v-1' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='offset.v-1'
 class='invisible'>
@@ -472,9 +472,9 @@ offset from a pointer using wrapping arithmetic. <code>count</code>
 is in units of T; e.g. a <code>count</code> of 3 represents a
 pointer offset of <code>3 * size_of::&lt;T&gt;()</code>
 bytes.</span></p>
-<h1 id='safety-6' class='section-header'><span id=
+<h1 id="safety-6" class="section-header"><span id=
 'wrapping_offset.v-1' class='invisible'><a href=
-'#safety-6'>Safety</a></span></h1>
+"#safety-6">Safety</a></span></h1>
 <p><span id='wrapping_offset.v-1' class='invisible'>The resulting
 pointer does not need to be in bounds, but it is potentially
 hazardous to dereference (which requires
@@ -483,9 +483,9 @@ hazardous to dereference (which requires
 <code>.offset(count)</code> instead when possible, because
 <code>offset</code> allows the compiler to optimize
 better.</span></p>
-<h1 id='examples-7' class='section-header'><span id=
+<h1 id="examples-7" class="section-header"><span id=
 'wrapping_offset.v-1' class='invisible'><a href=
-'#examples-7'>Examples</a></span></h1>
+"#examples-7">Examples</a></span></h1>
 <p><span id='wrapping_offset.v-1' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id=
@@ -542,15 +542,15 @@ T&gt;</code></span></h4>
 <p><span id='as_mut.v' class='invisible'>Returns <code>None</code>
 if the pointer is null, or else returns a mutable reference to the
 value wrapped in <code>Some</code>.</span></p>
-<h1 id='safety-7' class='section-header'><span id='as_mut.v' class=
-'invisible'><a href='#safety-7'>Safety</a></span></h1>
+<h1 id="safety-7" class="section-header"><span id='as_mut.v' class=
+'invisible'><a href="#safety-7">Safety</a></span></h1>
 <p><span id='as_mut.v' class='invisible'>As with
 <code>as_ref</code>, this is unsafe because it cannot verify the
 validity of the returned pointer, nor can it ensure that the
 lifetime <code>'a</code> returned is indeed a valid lifetime for
 the contained data.</span></p>
-<h1 id='examples-8' class='section-header'><span id='as_mut.v'
-class='invisible'><a href='#examples-8'>Examples</a></span></h1>
+<h1 id="examples-8" class="section-header"><span id='as_mut.v'
+class='invisible'><a href="#examples-8">Examples</a></span></h1>
 <p><span id='as_mut.v' class='invisible'>Basic usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='as_mut.v' class=
 'invisible'>

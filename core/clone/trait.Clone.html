@@ -77,16 +77,16 @@ may reimplement <code>Clone</code> and run arbitrary code.</p>
 automatically make anything <a href=
 "../../std/marker/trait.Copy.html"><code>Copy</code></a> be
 <code>Clone</code> as well.</p>
-<h2 id='derivable' class='section-header'><a href=
-'#derivable'>Derivable</a></h2>
+<h2 id="derivable" class="section-header"><a href=
+"#derivable">Derivable</a></h2>
 <p>This trait can be used with <code>#[derive]</code> if all fields
 are <code>Clone</code>. The <code>derive</code>d implementation of
 <a href="trait.Clone.html#tymethod.clone"><code>clone</code></a>
 calls <a href=
 "trait.Clone.html#tymethod.clone"><code>clone</code></a> on each
 field.</p>
-<h2 id='how-can-i-implement-clone' class='section-header'><a href=
-'#how-can-i-implement-clone'>How can I implement
+<h2 id="how-can-i-implement-clone" class="section-header"><a href=
+"#how-can-i-implement-clone">How can I implement
 <code>Clone</code>?</a></h2>
 <p>Types that are <a href=
 "../../std/marker/trait.Copy.html"><code>Copy</code></a> should
@@ -126,8 +126,8 @@ implementation of <code>Clone</code> cannot be
 'fnname'>clone</a>(&amp;self) -&gt; Self</code></span></h3>
 <div class='docblock'>
 <p>Returns a copy of the value.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=
 "ident">hello</span> <span class="op">=</span> <span class=

@@ -66,8 +66,8 @@ system does not support that level of precision.</p>
 <a href="../../std/ops/trait.Sub.html"><code>Sub</code></a>, and
 other <a href="../../std/ops/index.html"><code>ops</code></a>
 traits.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -123,12 +123,12 @@ seconds and additional nanosecond precision.</p>
 <p>If the nanoseconds is greater than 1 billion (the number of
 nanoseconds in a second), then it will carry over into the seconds
 provided.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>This constructor will panic if the carry from the nanoseconds
 overflows the seconds counter.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -149,8 +149,8 @@ class='invisible'><code>fn <a href='#method.from_secs' class=
 <div class='docblock'>
 <p>Creates a new <code>Duration</code> from the specified number of
 seconds.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -171,8 +171,8 @@ class='invisible'><code>fn <a href='#method.from_millis' class=
 <div class='docblock'>
 <p>Creates a new <code>Duration</code> from the specified number of
 milliseconds.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -194,8 +194,8 @@ milliseconds.</p>
 <p>The extra precision represented by this duration is ignored
 (i.e. extra nanoseconds are not represented in the returned
 value).</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -224,8 +224,8 @@ value).</p>
 duration when represented by nanoseconds. The returned number
 always represents a fractional portion of a second (i.e. it is less
 than one billion).</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">time</span>::<span class=
@@ -260,8 +260,8 @@ href="../../std/option/enum.Option.html" title=
 returning <a href=
 "../../std/option/enum.Option.html#variant.None"><code>None</code></a>
 if overflow occurred.</span></p>
-<h1 id='examples-6' class='section-header'><span id='checked_add.v'
-class='invisible'><a href='#examples-6'>Examples</a></span></h1>
+<h1 id="examples-6" class="section-header"><span id='checked_add.v'
+class='invisible'><a href="#examples-6">Examples</a></span></h1>
 <p><span id='checked_add.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='checked_add.v'
@@ -314,8 +314,8 @@ other</code>, returning <a href=
 "../../std/option/enum.Option.html#variant.None"><code>None</code></a>
 if the result would be negative or if underflow
 occurred.</span></p>
-<h1 id='examples-7' class='section-header'><span id='checked_sub.v'
-class='invisible'><a href='#examples-7'>Examples</a></span></h1>
+<h1 id="examples-7" class="section-header"><span id='checked_sub.v'
+class='invisible'><a href="#examples-7">Examples</a></span></h1>
 <p><span id='checked_sub.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='checked_sub.v'
@@ -365,8 +365,8 @@ class='invisible'><code>fn <a href='#method.checked_mul' class=
 other</code>, returning <a href=
 "../../std/option/enum.Option.html#variant.None"><code>None</code></a>
 if overflow occurred.</span></p>
-<h1 id='examples-8' class='section-header'><span id='checked_mul.v'
-class='invisible'><a href='#examples-8'>Examples</a></span></h1>
+<h1 id="examples-8" class="section-header"><span id='checked_mul.v'
+class='invisible'><a href="#examples-8">Examples</a></span></h1>
 <p><span id='checked_mul.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='checked_mul.v'
@@ -414,8 +414,8 @@ class='invisible'><code>fn <a href='#method.checked_div' class=
 returning <a href=
 "../../std/option/enum.Option.html#variant.None"><code>None</code></a>
 if <code>other == 0</code>.</span></p>
-<h1 id='examples-9' class='section-header'><span id='checked_div.v'
-class='invisible'><a href='#examples-9'>Examples</a></span></h1>
+<h1 id="examples-9" class="section-header"><span id='checked_div.v'
+class='invisible'><a href="#examples-9">Examples</a></span></h1>
 <p><span id='checked_div.v' class='invisible'>Basic
 usage:</span></p>
 <pre class="rust rust-example-rendered"><span id='checked_div.v'

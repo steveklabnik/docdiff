@@ -48,21 +48,22 @@ title="collapse all docs">[<span class='inner'>−</span>]</a></span>
 <a class='srclink' href='../src/core/lib.rs.html#11-180' title=
 'goto source code'>[src]</a></span></h1>
 <div class='docblock'>
-<h1 id='the-rust-core-library' class='section-header'><a href=
-'#the-rust-core-library'>The Rust Core Library</a></h1>
-<p>The Rust Core Library is the dependency-free<sup id=
-"fnref1"><a href="#fn1" rel="footnote">1</a></sup> foundation of
-<a href="../std/index.html">The Rust Standard Library</a>. It is
+<h1 id="the-rust-core-library" class="section-header"><a href=
+"#the-rust-core-library">The Rust Core Library</a></h1>
+<p>The Rust Core Library is the dependency-free[^free] foundation
+of <a href="../std/index.html">The Rust Standard Library</a>. It is
 the portable glue between the language and its libraries, defining
 the intrinsic and primitive building blocks of all Rust code. It
 links to no upstream libraries, no system libraries, and no
 libc.</p>
+<p>[^free]: Strictly speaking, there are some symbols which are
+needed but they aren't always necessary.</p>
 <p>The core library is <em>minimal</em>: it isn't even aware of
 heap allocation, nor does it provide concurrency or I/O. These
 things require platform integration, and this library is
 platform-agnostic.</p>
-<h1 id='how-to-use-the-core-library' class='section-header'>
-<a href='#how-to-use-the-core-library'>How to use the core
+<h1 id="how-to-use-the-core-library" class="section-header">
+<a href="#how-to-use-the-core-library">How to use the core
 library</a></h1>
 <p>Please note that all of these details are currently not
 considered stable.</p>
@@ -96,16 +97,6 @@ be assured that this function is never called. The
 <code>eh_personality</code>.</p>
 </li>
 </ul>
-<div class="footnotes">
-<hr>
-<ol>
-<li id="fn1">
-<p>Strictly speaking, there are some symbols which are needed but
-they aren't always necessary.&nbsp;<a href="#fnref1" rev=
-"footnote">↩</a></p>
-</li>
-</ol>
-</div>
 </div>
 <h2 id='modules' class='section-header'><a href=
 "#modules">Modules</a></h2>

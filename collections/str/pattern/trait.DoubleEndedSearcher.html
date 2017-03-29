@@ -78,14 +78,14 @@ implementation.</p>
 <p>For this, the impl of <code>Searcher</code> and
 <code>ReverseSearcher</code> need to follow these conditions:</p>
 <ul>
-<li>All results of <code>next()</code> need to be identical to the
+<li>All results of <code>next()</code> need to be identicalto the
 results of <code>next_back()</code> in reverse order.</li>
 <li><code>next()</code> and <code>next_back()</code> need to behave
-as the two ends of a range of values, that is they can not "walk
-past each other".</li>
+asthe two ends of a range of values, that is theycan not "walk past
+each other".</li>
 </ul>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p><code>char::Searcher</code> is a
 <code>DoubleEndedSearcher</code> because searching for a
 <code>char</code> only requires looking at one at a time, which

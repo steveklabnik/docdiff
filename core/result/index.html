@@ -216,8 +216,8 @@ convenience methods that make working with it more succinct.</p>
 "op">=</span> <span class="ident">good_result</span>.<span class=
 "ident">unwrap</span>();<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20good_result%3A%20Result%3Ci32%2C%20i32%3E%20%3D%20Ok(10)%3B%0Alet%20bad_result%3A%20Result%3Ci32%2C%20i32%3E%20%3D%20Err(10)%3B%0A%0A%2F%2F%20The%20%60is_ok%60%20and%20%60is_err%60%20methods%20do%20what%20they%20say.%0Aassert!(good_result.is_ok()%20%26%26%20!good_result.is_err())%3B%0Aassert!(bad_result.is_err()%20%26%26%20!bad_result.is_ok())%3B%0A%0A%2F%2F%20%60map%60%20consumes%20the%20%60Result%60%20and%20produces%20another.%0Alet%20good_result%3A%20Result%3Ci32%2C%20i32%3E%20%3D%20good_result.map(%7Ci%7C%20i%20%2B%201)%3B%0Alet%20bad_result%3A%20Result%3Ci32%2C%20i32%3E%20%3D%20bad_result.map(%7Ci%7C%20i%20-%201)%3B%0A%0A%2F%2F%20Use%20%60and_then%60%20to%20continue%20the%20computation.%0Alet%20good_result%3A%20Result%3Cbool%2C%20i32%3E%20%3D%20good_result.and_then(%7Ci%7C%20Ok(i%20%3D%3D%2011))%3B%0A%0A%2F%2F%20Use%20%60or_else%60%20to%20handle%20the%20error.%0Alet%20bad_result%3A%20Result%3Ci32%2C%20i32%3E%20%3D%20bad_result.or_else(%7Ci%7C%20Ok(i%20%2B%2020))%3B%0A%0A%2F%2F%20Consume%20the%20result%20and%20return%20the%20contents%20with%20%60unwrap%60.%0Alet%20final_awesome_result%20%3D%20good_result.unwrap()%3B%0A%7D">Run</a></pre>
-<h1 id='results-must-be-used' class='section-header'><a href=
-'#results-must-be-used'>Results must be used</a></h1>
+<h1 id="results-must-be-used" class="section-header"><a href=
+"#results-must-be-used">Results must be used</a></h1>
 <p>A common problem with using return values to indicate errors is
 that it is easy to ignore the return value, thus failing to handle
 the error. <a href="enum.Result.html"><code>Result</code></a> is
@@ -334,8 +334,8 @@ target="_blank" href=
     <span class="prelude-val">Ok</span>(())
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Afs%3A%3AFile%3B%0Ause%20std%3A%3Aio%3A%3Aprelude%3A%3A*%3B%0Ause%20std%3A%3Aio%3B%0A%23%5Ballow(dead_code)%5D%0Afn%20write_message()%20-%3E%20io%3A%3AResult%3C()%3E%20%7B%0A%20%20%20%20let%20mut%20file%20%3D%20File%3A%3Acreate(%22valuable_data.txt%22)%3F%3B%0A%20%20%20%20file.write_all(b%22important%20message%22)%3F%3B%0A%20%20%20%20Ok(())%0A%7D%0A%7D">Run</a></pre>
-<h1 id='the--syntax' class='section-header'><a href=
-'#the--syntax'>The <code>?</code> syntax</a></h1>
+<h1 id="the--syntax" class="section-header"><a href=
+"#the--syntax">The <code>?</code> syntax</a></h1>
 <p>When writing code that calls many functions that return the
 <a href="enum.Result.html"><code>Result</code></a> type, the error
 handling can be tedious. The <a href=

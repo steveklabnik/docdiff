@@ -59,15 +59,15 @@ title='goto source code'>[src]</a></span></h1>
 time.</p>
 <p>The thread may sleep longer than the duration specified due to
 scheduling specifics or platform-dependent functionality.</p>
-<h1 id='platform-behavior' class='section-header'><a href=
-'#platform-behavior'>Platform behavior</a></h1>
+<h1 id="platform-behavior" class="section-header"><a href=
+"#platform-behavior">Platform behavior</a></h1>
 <p>On Unix platforms this function will not return early due to a
 signal being received or a spurious wakeup. Platforms which do not
 support nanosecond precision for sleeping will have
 <code>dur</code> rounded up to the nearest granularity of time they
 can sleep for.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::{<span class=

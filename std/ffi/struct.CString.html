@@ -69,8 +69,8 @@ that the underlying array is represented as an array of
 <code>as_bytes</code> method. Slices produced from a
 <code>CString</code> do <em>not</em> contain the trailing nul
 terminator unless otherwise specified.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">ffi</span>::<span class=
@@ -96,8 +96,8 @@ terminator unless otherwise specified.</p>
 "ident">c_to_print</span>.<span class="ident">as_ptr</span>());
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Affi%3A%3ACString%3B%0Ause%20std%3A%3Aos%3A%3Araw%3A%3Ac_char%3B%0A%0Aextern%20%7B%0A%20%20%20%20fn%20my_printer(s%3A%20*const%20c_char)%3B%0A%7D%0A%0Alet%20c_to_print%20%3D%20CString%3A%3Anew(%22Hello%2C%20world!%22).unwrap()%3B%0Aunsafe%20%7B%0A%20%20%20%20my_printer(c_to_print.as_ptr())%3B%0A%7D%0A%7D%0A">Run</a></pre>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p><code>CString</code> is intended for working with traditional
 C-style strings (a sequence of non-null bytes terminated by a
 single null byte); the primary use case for these kinds of strings
@@ -137,8 +137,8 @@ href="../../std/convert/trait.Into.html" title=
 <p>This method will consume the provided data and use the
 underlying bytes to construct a new string, ensuring that there is
 a trailing 0 byte.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">ffi</span>::<span class=
@@ -161,8 +161,8 @@ a trailing 0 byte.</p>
 "ident">to_print</span>.<span class="ident">as_ptr</span>());
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Affi%3A%3ACString%3B%0Ause%20std%3A%3Aos%3A%3Araw%3A%3Ac_char%3B%0A%0Aextern%20%7B%20fn%20puts(s%3A%20*const%20c_char)%3B%20%7D%0A%0Alet%20to_print%20%3D%20CString%3A%3Anew(%22Hello!%22).unwrap()%3B%0Aunsafe%20%7B%0A%20%20%20%20puts(to_print.as_ptr())%3B%0A%7D%0A%7D">Run</a></pre>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This function will return an error if the bytes yielded contain
 an internal 0 byte. The error returned will contain the bytes as
 well as the position of the nul byte.</p>
@@ -183,8 +183,8 @@ checking for interior 0 bytes.</p>
 runtime assertion is made that <code>v</code> contains no 0 bytes,
 and it requires an actual byte vector, not anything that can be
 converted to one with Into.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">ffi</span>::<span class=
@@ -217,8 +217,8 @@ href="../../std/ffi/struct.CString.html" title=
 <code>CString</code> that was transferred to C.</span></p>
 <p><span id='from_raw.v' class='invisible'>Additionally, the length
 of the string will be recalculated from the pointer.</span></p>
-<h1 id='safety-1' class='section-header'><span id='from_raw.v'
-class='invisible'><a href='#safety-1'>Safety</a></span></h1>
+<h1 id="safety-1" class="section-header"><span id='from_raw.v'
+class='invisible'><a href="#safety-1">Safety</a></span></h1>
 <p><span id='from_raw.v' class='invisible'>This should only ever be
 called with a pointer that was earlier obtained by calling
 <code>into_raw</code> on a <code>CString</code>. Other usage (e.g.

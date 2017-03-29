@@ -74,8 +74,8 @@ is an unordered, unreliable protocol; refer to <a href=
 and <a href=
 "../../std/net/struct.TcpStream.html"><code>TcpStream</code></a>
 for TCP primitives.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">net</span>::<span class=
@@ -141,8 +141,8 @@ href="../../std/net/trait.ToSocketAddrs.html" title=
 <p>The address type can be any implementor of <a href=
 "../../std/net/trait.ToSocketAddrs.html"><code>ToSocketAddrs</code></a>
 trait. See its documentation for concrete examples.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">net</span>::<span class=
@@ -173,8 +173,8 @@ href="../primitive.tuple.html">)</a>&gt;</code></span></h4>
 <div class='docblock'>
 <p>Receives data from the socket. On success, returns the number of
 bytes read and the address from whence the data came.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">net</span>::<span class=
@@ -228,8 +228,8 @@ passing <code>MSG_PEEK</code> as a flag to the underlying
 <code>recvfrom</code> system call.</p>
 <p>On success, returns the number of bytes peeked and the address
 from whence the data came.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class="ident">peek</span>)]</span>
@@ -280,11 +280,10 @@ trait. See its documentation for concrete examples.</p>
 <p>This will return an error when the IP version of the local
 socket does not match that returned from <a href=
 "../../std/net/trait.ToSocketAddrs.html"><code>ToSocketAddrs</code></a>.</p>
-<p>See <a href=
-"https://github.com/rust-lang/rust/issues/34202">https://github.com/rust-lang/rust/issues/34202</a>
-for more details.</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<p>See https://github.com/rust-lang/rust/issues/34202 for more
+details.</p>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">net</span>::<span class=
@@ -315,8 +314,8 @@ class='invisible'><code>fn <a href='#method.local_addr' class=
 <div class='docblock'>
 <p>Returns the socket address that this socket was created
 from.</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">net</span>::{<span class=
@@ -355,8 +354,8 @@ socket.</p>
 socket that this object references. Both handles will read and
 write the same port, and options set on one socket will be
 propagated to the other.</p>
-<h1 id='examples-6' class='section-header'><a href=
-'#examples-6'>Examples</a></h1>
+<h1 id="examples-6" class="section-header"><a href=
+"#examples-6">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">net</span>::<span class=
@@ -404,8 +403,8 @@ calls will block indefinitely. It is an error to pass the zero
 <a href=
 "../../std/time/struct.Duration.html"><code>Duration</code></a> to
 this method.</span></p>
-<h1 id='note' class='section-header'><span id='set_read_timeout.v'
-class='invisible'><a href='#note'>Note</a></span></h1>
+<h1 id="note" class="section-header"><span id='set_read_timeout.v'
+class='invisible'><a href="#note">Note</a></span></h1>
 <p><span id='set_read_timeout.v' class='invisible'>Platforms may
 return a different error code whenever a read times out as a result
 of setting this option. For example Unix typically returns an error
@@ -413,9 +412,9 @@ of the kind <a href=
 "../../std/io/enum.ErrorKind.html#variant.WouldBlock"><code>WouldBlock</code></a>,
 but Windows may return <a href=
 "../../std/io/enum.ErrorKind.html#variant.TimedOut"><code>TimedOut</code></a>.</span></p>
-<h1 id='examples-7' class='section-header'><span id=
+<h1 id="examples-7" class="section-header"><span id=
 'set_read_timeout.v' class='invisible'><a href=
-'#examples-7'>Examples</a></span></h1>
+"#examples-7">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'set_read_timeout.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -463,9 +462,9 @@ calls will block indefinitely. It is an error to pass the zero
 <a href=
 "../../std/time/struct.Duration.html"><code>Duration</code></a> to
 this method.</span></p>
-<h1 id='note-1' class='section-header'><span id=
+<h1 id="note-1" class="section-header"><span id=
 'set_write_timeout.v' class='invisible'><a href=
-'#note-1'>Note</a></span></h1>
+"#note-1">Note</a></span></h1>
 <p><span id='set_write_timeout.v' class='invisible'>Platforms may
 return a different error code whenever a write times out as a
 result of setting this option. For example Unix typically returns
@@ -473,9 +472,9 @@ an error of the kind <a href=
 "../../std/io/enum.ErrorKind.html#variant.WouldBlock"><code>WouldBlock</code></a>,
 but Windows may return <a href=
 "../../std/io/enum.ErrorKind.html#variant.TimedOut"><code>TimedOut</code></a>.</span></p>
-<h1 id='examples-8' class='section-header'><span id=
+<h1 id="examples-8" class="section-header"><span id=
 'set_write_timeout.v' class='invisible'><a href=
-'#examples-8'>Examples</a></span></h1>
+"#examples-8">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'set_write_timeout.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -518,9 +517,9 @@ timeout of this socket.</span></p>
 then <a href=
 "../../std/io/trait.Read.html#tymethod.read"><code>read</code></a>
 calls will block indefinitely.</span></p>
-<h1 id='examples-9' class='section-header'><span id=
+<h1 id="examples-9" class="section-header"><span id=
 'read_timeout.v' class='invisible'><a href=
-'#examples-9'>Examples</a></span></h1>
+"#examples-9">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='read_timeout.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -568,9 +567,9 @@ timeout of this socket.</span></p>
 then <a href=
 "../../std/io/trait.Write.html#tymethod.write"><code>write</code></a>
 calls will block indefinitely.</span></p>
-<h1 id='examples-10' class='section-header'><span id=
+<h1 id="examples-10" class="section-header"><span id=
 'write_timeout.v' class='invisible'><a href=
-'#examples-10'>Examples</a></span></h1>
+"#examples-10">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='write_timeout.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -614,9 +613,9 @@ the <code>SO_BROADCAST</code> option for this socket.</span></p>
 <p><span id='set_broadcast.v' class='invisible'>When enabled, this
 socket is allowed to send packets to a broadcast
 address.</span></p>
-<h1 id='examples-11' class='section-header'><span id=
+<h1 id="examples-11" class="section-header"><span id=
 'set_broadcast.v' class='invisible'><a href=
-'#examples-11'>Examples</a></span></h1>
+"#examples-11">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='set_broadcast.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -653,8 +652,8 @@ class='invisible'><code>fn <a href='#method.broadcast' class=
 <p><span id='broadcast.v' class='invisible'>For more information
 about this option, see <a href=
 "#method.set_broadcast"><code>set_broadcast</code></a>.</span></p>
-<h1 id='examples-12' class='section-header'><span id='broadcast.v'
-class='invisible'><a href='#examples-12'>Examples</a></span></h1>
+<h1 id="examples-12" class="section-header"><span id='broadcast.v'
+class='invisible'><a href="#examples-12">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='broadcast.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -698,9 +697,9 @@ socket.</span></p>
 <p><span id='set_multicast_loop_v4.v' class='invisible'>If enabled,
 multicast packets will be looped back to the local socket. Note
 that this may not have any affect on IPv6 sockets.</span></p>
-<h1 id='examples-13' class='section-header'><span id=
+<h1 id="examples-13" class="section-header"><span id=
 'set_multicast_loop_v4.v' class='invisible'><a href=
-'#examples-13'>Examples</a></span></h1>
+"#examples-13">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'set_multicast_loop_v4.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -739,9 +738,9 @@ socket.</span></p>
 <p><span id='multicast_loop_v4.v' class='invisible'>For more
 information about this option, see <a href=
 "#method.set_multicast_loop_v4"><code>set_multicast_loop_v4</code></a>.</span></p>
-<h1 id='examples-14' class='section-header'><span id=
+<h1 id="examples-14" class="section-header"><span id=
 'multicast_loop_v4.v' class='invisible'><a href=
-'#examples-14'>Examples</a></span></h1>
+"#examples-14">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'multicast_loop_v4.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -789,9 +788,9 @@ don't leave the local network unless explicitly
 requested.</span></p>
 <p><span id='set_multicast_ttl_v4.v' class='invisible'>Note that
 this may not have any affect on IPv6 sockets.</span></p>
-<h1 id='examples-15' class='section-header'><span id=
+<h1 id="examples-15" class="section-header"><span id=
 'set_multicast_ttl_v4.v' class='invisible'><a href=
-'#examples-15'>Examples</a></span></h1>
+"#examples-15">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'set_multicast_ttl_v4.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -829,9 +828,9 @@ socket.</span></p>
 <p><span id='multicast_ttl_v4.v' class='invisible'>For more
 information about this option, see <a href=
 "#method.set_multicast_ttl_v4"><code>set_multicast_ttl_v4</code></a>.</span></p>
-<h1 id='examples-16' class='section-header'><span id=
+<h1 id="examples-16" class="section-header"><span id=
 'multicast_ttl_v4.v' class='invisible'><a href=
-'#examples-16'>Examples</a></span></h1>
+"#examples-16">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'multicast_ttl_v4.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -874,9 +873,9 @@ socket.</span></p>
 <p><span id='set_multicast_loop_v6.v' class='invisible'>Controls
 whether this socket sees the multicast packets it sends itself.
 Note that this may not have any affect on IPv4 sockets.</span></p>
-<h1 id='examples-17' class='section-header'><span id=
+<h1 id="examples-17" class="section-header"><span id=
 'set_multicast_loop_v6.v' class='invisible'><a href=
-'#examples-17'>Examples</a></span></h1>
+"#examples-17">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'set_multicast_loop_v6.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -915,9 +914,9 @@ socket.</span></p>
 <p><span id='multicast_loop_v6.v' class='invisible'>For more
 information about this option, see <a href=
 "#method.set_multicast_loop_v6"><code>set_multicast_loop_v6</code></a>.</span></p>
-<h1 id='examples-18' class='section-header'><span id=
+<h1 id="examples-18" class="section-header"><span id=
 'multicast_loop_v6.v' class='invisible'><a href=
-'#examples-18'>Examples</a></span></h1>
+"#examples-18">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'multicast_loop_v6.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -959,8 +958,8 @@ href="https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Anet%3A
 <p><span id='set_ttl.v' class='invisible'>This value sets the
 time-to-live field that is used in every packet sent from this
 socket.</span></p>
-<h1 id='examples-19' class='section-header'><span id='set_ttl.v'
-class='invisible'><a href='#examples-19'>Examples</a></span></h1>
+<h1 id="examples-19" class="section-header"><span id='set_ttl.v'
+class='invisible'><a href="#examples-19">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='set_ttl.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -995,8 +994,8 @@ target="_blank" href=
 <p><span id='ttl.v' class='invisible'>For more information about
 this option, see <a href=
 "#method.set_ttl"><code>set_ttl</code></a>.</span></p>
-<h1 id='examples-20' class='section-header'><span id='ttl.v' class=
-'invisible'><a href='#examples-20'>Examples</a></span></h1>
+<h1 id="examples-20" class="section-header"><span id='ttl.v' class=
+'invisible'><a href="#examples-20">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='ttl.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -1146,9 +1145,9 @@ of the <code>SO_ERROR</code> option on this socket.</span></p>
 retrieve the stored error in the underlying socket, clearing the
 field in the process. This can be useful for checking errors
 between calls.</span></p>
-<h1 id='examples-21' class='section-header'><span id=
+<h1 id="examples-21" class="section-header"><span id=
 'join_multicast_v4.v' class='invisible'><a href=
-'#examples-21'>Examples</a></span></h1>
+"#examples-21">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'join_multicast_v4.v' class='invisible'>
 <span class="kw">use</span> <span class=
@@ -1198,8 +1197,8 @@ href="../primitive.tuple.html">()</a>&gt;</code></span></h4>
 to a remote address, allowing the <code>send</code> and
 <code>recv</code> syscalls to be used to send data and also applies
 filters to only receive data from the specified address.</span></p>
-<h1 id='examples-22' class='section-header'><span id='connect.v'
-class='invisible'><a href='#examples-22'>Examples</a></span></h1>
+<h1 id="examples-22" class="section-header"><span id='connect.v'
+class='invisible'><a href="#examples-22">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='connect.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -1239,8 +1238,8 @@ the remote address to which it is connected.</span></p>
 "#method.connect"><code>connect</code></a> method will connect this
 socket to a remote address. This method will fail if the socket is
 not connected.</span></p>
-<h1 id='examples-23' class='section-header'><span id='send.v'
-class='invisible'><a href='#examples-23'>Examples</a></span></h1>
+<h1 id="examples-23" class="section-header"><span id='send.v'
+class='invisible'><a href="#examples-23">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='send.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -1285,8 +1284,8 @@ from the remote address to which it is connected.</span></p>
 "#method.connect"><code>connect</code></a> method will connect this
 socket to a remote address. This method will fail if the socket is
 not connected.</span></p>
-<h1 id='examples-24' class='section-header'><span id='recv.v'
-class='invisible'><a href='#examples-24'>Examples</a></span></h1>
+<h1 id="examples-24" class="section-header"><span id='recv.v'
+class='invisible'><a href="#examples-24">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='recv.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -1346,13 +1345,13 @@ success, returns the number of bytes peeked.</p>
 <p>Successive calls return the same data. This is accomplished by
 passing <code>MSG_PEEK</code> as a flag to the underlying
 <code>recv</code> system call.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This method will fail if the socket is not connected. The
 <code>connect</code> method will connect this socket to a remote
 address.</p>
-<h1 id='examples-25' class='section-header'><a href=
-'#examples-25'>Examples</a></h1>
+<h1 id="examples-25" class="section-header"><a href=
+"#examples-25">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class="ident">peek</span>)]</span>
@@ -1410,9 +1409,9 @@ socket into or out of nonblocking mode.</span></p>
 <p><span id='set_nonblocking.v' class='invisible'>On Unix this
 corresponds to calling fcntl, and on Windows this corresponds to
 calling ioctlsocket.</span></p>
-<h1 id='examples-26' class='section-header'><span id=
+<h1 id="examples-26" class="section-header"><span id=
 'set_nonblocking.v' class='invisible'><a href=
-'#examples-26'>Examples</a></span></h1>
+"#examples-26">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id=
 'set_nonblocking.v' class='invisible'>
 <span class="kw">use</span> <span class=

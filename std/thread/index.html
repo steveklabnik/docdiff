@@ -51,8 +51,8 @@ title="collapse all docs">[<span class='inner'>−</span>]</a></span>
 title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <p>Native threads.</p>
-<h2 id='the-threading-model' class='section-header'><a href=
-'#the-threading-model'>The threading model</a></h2>
+<h2 id="the-threading-model" class="section-header"><a href=
+"#the-threading-model">The threading model</a></h2>
 <p>An executing Rust program consists of a collection of native OS
 threads, each with their own stack and local state. Threads can be
 named, and provide some built-in support for low-level
@@ -78,8 +78,8 @@ program shuts down, even if other threads are still running.
 However, this module provides convenient facilities for
 automatically waiting for the termination of a child thread (i.e.,
 join).</p>
-<h2 id='spawning-a-thread' class='section-header'><a href=
-'#spawning-a-thread'>Spawning a thread</a></h2>
+<h2 id="spawning-a-thread" class="section-header"><a href=
+"#spawning-a-thread">Spawning a thread</a></h2>
 <p>A new thread can be spawned using the <a href=
 "../../std/thread/fn.spawn.html"><code>thread::spawn</code></a>
 function:</p>
@@ -130,8 +130,8 @@ of the final value produced by the child thread, or <a href=
 of the value given to a call to <a href=
 "../../std/macro.panic.html"><code>panic!</code></a> if the child
 panicked.</p>
-<h2 id='configuring-threads' class='section-header'><a href=
-'#configuring-threads'>Configuring threads</a></h2>
+<h2 id="configuring-threads" class="section-header"><a href=
+"#configuring-threads">Configuring threads</a></h2>
 <p>A new thread can be configured before it is spawned via the
 <a href=
 "../../std/thread/struct.Builder.html"><code>Builder</code></a>
@@ -152,17 +152,17 @@ the child thread:</p>
 "macro">!</span>(<span class="string">"Hello, world!"</span>);
 });<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=%23!%5Ballow(unused_must_use)%5D%0Afn%20main()%20%7B%0Ause%20std%3A%3Athread%3B%0A%0Athread%3A%3ABuilder%3A%3Anew().name(%22child1%22.to_string()).spawn(move%20%7C%7C%20%7B%0A%20%20%20%20println!(%22Hello%2C%20world!%22)%3B%0A%7D)%3B%0A%7D">Run</a></pre>
-<h2 id='the-thread-type' class='section-header'><a href=
-'#the-thread-type'>The <code>Thread</code> type</a></h2>
+<h2 id="the-thread-type" class="section-header"><a href=
+"#the-thread-type">The <code>Thread</code> type</a></h2>
 <p>Threads are represented via the <a href=
-"../../std/thread/struct.Thread.html"><code>Thread</code></a> type,
-which you can get in one of two ways:</p>
+"../../std/thread/struct.JoinHandle.html#method.thread"><code>Thread</code></a>
+type, which you can get in one of two ways:</p>
 <ul>
 <li>By spawning a new thread, e.g. using the <a href=
-"../../std/thread/fn.spawn.html"><code>thread::spawn</code></a>
-function, and calling <a href=
-"../../std/thread/struct.Thread.html"><code>thread</code></a> on
-the <a href=
+"../../std/thread/fn.spawn.html"><code>thread::spawn</code></a>function,
+and calling <a href=
+"../../std/thread/struct.JoinHandle.html#method.thread"><code>thread</code></a>
+on the <a href=
 "../../std/thread/struct.JoinHandle.html"><code>JoinHandle</code></a>.</li>
 <li>By requesting the current thread, using the <a href=
 "../../std/thread/fn.spawn.html"><code>thread::current</code></a>
@@ -172,8 +172,8 @@ function.</li>
 "../../std/thread/fn.spawn.html"><code>thread::current</code></a>
 function is available even for threads not spawned by the APIs of
 this module.</p>
-<h2 id='blocking-support-park-and-unpark' class='section-header'>
-<a href='#blocking-support-park-and-unpark'>Blocking support: park
+<h2 id="blocking-support-park-and-unpark" class="section-header">
+<a href="#blocking-support-park-and-unpark">Blocking support: park
 and unpark</a></h2>
 <p>Every thread is equipped with some basic low-level blocking
 support, via the <a href=
@@ -187,7 +187,7 @@ calling the <a href=
 "../../std/thread/struct.Thread.html#method.unpark"><code>unpark</code></a>
 method on the blocked thread's handle.</p>
 <p>Conceptually, each <a href=
-"../../std/thread/struct.Thread.html"><code>Thread</code></a>
+"../../std/thread/struct.JoinHandle.html#method.thread"><code>Thread</code></a>
 handle has an associated token, which is initially not present:</p>
 <ul>
 <li>
@@ -205,13 +205,13 @@ thread for.</p>
 <p>The <a href=
 "../../std/thread/struct.Thread.html#method.unpark"><code>unpark</code></a>
 method on a <a href=
-"../../std/thread/struct.Thread.html"><code>Thread</code></a>
+"../../std/thread/struct.JoinHandle.html#method.thread"><code>Thread</code></a>
 atomically makes the token available if it wasn't already.</p>
 </li>
 </ul>
 <p>In other words, each <a href=
-"../../std/thread/struct.Thread.html"><code>Thread</code></a> acts
-a bit like a semaphore with initial count 0, except that the
+"../../std/thread/struct.JoinHandle.html#method.thread"><code>Thread</code></a>
+acts a bit like a semaphore with initial count 0, except that the
 semaphore is <em>saturating</em> (the count cannot go above 1), and
 can return spuriously.</p>
 <p>The API is typically used by acquiring a handle to the current
@@ -231,8 +231,8 @@ provide basic blocking/signaling.</p>
 <p>It can be implemented very efficiently on many platforms.</p>
 </li>
 </ul>
-<h2 id='thread-local-storage' class='section-header'><a href=
-'#thread-local-storage'>Thread-local storage</a></h2>
+<h2 id="thread-local-storage" class="section-header"><a href=
+"#thread-local-storage">Thread-local storage</a></h2>
 <p>This module also provides an implementation of thread-local
 storage for Rust programs. Thread-local storage is a method of
 storing data into a global variable that each thread in the program

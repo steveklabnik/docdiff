@@ -74,8 +74,8 @@ are used in almost every single Rust program.</p>
 "kw-2">*</span>;<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Aprelude%3A%3Av1%3A%3A*%3B%0A%7D">Run</a></pre>
 <p>into every module.</p>
-<h1 id='other-preludes' class='section-header'><a href=
-'#other-preludes'>Other preludes</a></h1>
+<h1 id="other-preludes" class="section-header"><a href=
+"#other-preludes">Other preludes</a></h1>
 <p>Preludes can be seen as a pattern to make using multiple types
 more convenient. As such, you'll find other preludes in the
 standard library, such as <a href=
@@ -86,8 +86,8 @@ preludes.</p>
 that they are not automatically <code>use</code>'d, and must be
 imported manually. This is still easier than importing all of their
 constituent components.</p>
-<h1 id='prelude-contents' class='section-header'><a href=
-'#prelude-contents'>Prelude contents</a></h1>
+<h1 id="prelude-contents" class="section-header"><a href=
+"#prelude-contents">Prelude contents</a></h1>
 <p>The current version of the prelude (version 1) lives in <a href=
 "v1/index.html"><code>std::prelude::v1</code></a>, and reexports
 the following.</p>
@@ -97,18 +97,18 @@ the following.</p>
 "../marker/trait.Copy.html"><code>Copy</code></a>, <a href=
 "../marker/trait.Send.html"><code>Send</code></a>, <a href=
 "../marker/trait.Sized.html"><code>Sized</code></a>, <a href=
-"../marker/trait.Sync.html"><code>Sync</code></a>}. The marker
-traits indicate fundamental properties of types.</li>
+"../marker/trait.Sync.html"><code>Sync</code></a>}. The
+markertraits indicate fundamental properties of types.</li>
 <li><a href=
-"../ops/index.html"><code>std::ops</code></a>::{<a href="../mem/fn.drop.html"><code>Drop</code></a>,
+"../ops/index.html"><code>std::ops</code></a>::{<a href="../ops/trait.Drop.html"><code>Drop</code></a>,
 <a href="../ops/trait.Fn.html"><code>Fn</code></a>, <a href=
 "../ops/trait.FnMut.html"><code>FnMut</code></a>, <a href=
-"../ops/trait.FnOnce.html"><code>FnOnce</code></a>}. Various
-operations for both destructors and overloading
+"../ops/trait.FnOnce.html"><code>FnOnce</code></a>}.
+Variousoperations for both destructors and overloading
 <code>()</code>.</li>
 <li><a href="../mem/index.html"><code>std::mem</code></a>::<a href=
-"../mem/fn.drop.html"><code>drop</code></a>, a convenience function
-for explicitly dropping a value.</li>
+"../ops/trait.Drop.html"><code>drop</code></a>, a convenience
+function for explicitly dropping avalue.</li>
 <li><a href=
 "../boxed/index.html"><code>std::boxed</code></a>::<a href=
 "../boxed/struct.Box.html"><code>Box</code></a>, a way to allocate
@@ -116,30 +116,30 @@ values on the heap.</li>
 <li><a href=
 "../borrow/index.html"><code>std::borrow</code></a>::<a href=
 "../borrow/trait.ToOwned.html"><code>ToOwned</code></a>, The
-conversion trait that defines <a href=
+conversion trait that defines<a href=
 "../borrow/trait.ToOwned.html#tymethod.to_owned"><code>to_owned</code></a>,
-the generic method for creating an owned type from a borrowed
+the generic method for creating an owned type from aborrowed
 type.</li>
 <li><a href=
 "../clone/index.html"><code>std::clone</code></a>::<a href=
-"../clone/trait.Clone.html#tymethod.clone"><code>Clone</code></a>,
-the ubiquitous trait that defines <a href=
-"../clone/trait.Clone.html#tymethod.clone"><code>clone</code></a>,
-the method for producing a copy of a value.</li>
+"../clone/trait.Clone.html"><code>Clone</code></a>, the ubiquitous
+trait that defines <a href=
+"../clone/trait.Clone.html"><code>clone</code></a>,the method for
+producing a copy of a value.</li>
 <li><a href=
 "../cmp/index.html"><code>std::cmp</code></a>::{<a href="../cmp/trait.PartialEq.html"><code>PartialEq</code></a>,
 <a href="../cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>,
 <a href="../cmp/trait.Eq.html"><code>Eq</code></a>, <a href=
-"../cmp/trait.Ord.html"><code>Ord</code></a> }. The comparison
-traits, which implement the comparison operators and are often seen
+"../cmp/trait.Ord.html"><code>Ord</code></a> }. Thecomparison
+traits, which implement the comparison operators and are oftenseen
 in trait bounds.</li>
 <li><a href=
 "../convert/index.html"><code>std::convert</code></a>::{<a href=
 "../convert/trait.AsRef.html"><code>AsRef</code></a>, <a href=
 "../convert/trait.AsMut.html"><code>AsMut</code></a>, <a href=
 "../convert/trait.Into.html"><code>Into</code></a>, <a href=
-"../convert/trait.From.html"><code>From</code></a>}. Generic
-conversions, used by savvy API authors to create overloaded
+"../convert/trait.From.html"><code>From</code></a>}.
+Genericconversions, used by savvy API authors to create overloaded
 methods.</li>
 <li><a href=
 "../default/index.html"><code>std::default</code></a>::<a href=
@@ -149,30 +149,28 @@ that have default values.</li>
 "../iter/index.html"><code>std::iter</code></a>::{<a href=
 "../iter/trait.Iterator.html"><code>Iterator</code></a>, <a href=
 "../iter/trait.Extend.html"><code>Extend</code></a>, <a href=
-"../iter/trait.IntoIterator.html"><code>IntoIterator</code></a>,
-<a href=
-"../iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>,
+"../iter/trait.IntoIterator.html"><code>IntoIterator</code></a>,<a href="../iter/trait.DoubleEndedIterator.html"><code>DoubleEndedIterator</code></a>,
 <a href=
 "../iter/trait.ExactSizeIterator.html"><code>ExactSizeIterator</code></a>}.
-Iterators of various kinds.</li>
+Iterators of variouskinds.</li>
 <li><a href=
 "../option/index.html"><code>std::option</code></a>::<a href=
 "../option/enum.Option.html"><code>Option</code></a>::{<code>self</code>,
-<code>Some</code>, <code>None</code>}. A type which expresses the
-presence or absence of a value. This type is so commonly used, its
+<code>Some</code>, <code>None</code>}. A type whichexpresses the
+presence or absence of a value. This type is so commonlyused, its
 variants are also exported.</li>
 <li><a href=
 "../result/index.html"><code>std::result</code></a>::<a href=
 "../result/enum.Result.html"><code>Result</code></a>::{<code>self</code>,
-<code>Ok</code>, <code>Err</code>}. A type for functions that may
+<code>Ok</code>, <code>Err</code>}. A type for functionsthat may
 succeed or fail. Like <a href=
 "../option/enum.Option.html"><code>Option</code></a>, its variants
-are exported as well.</li>
+are exported aswell.</li>
 <li><a href=
 "../slice/index.html"><code>std::slice</code></a>::<a href=
 "../slice/trait.SliceConcatExt.html"><code>SliceConcatExt</code></a>,
-a trait that exists for technical reasons, but shouldn't have to
-exist. It provides a few useful methods on slices.</li>
+a trait that exists for technicalreasons, but shouldn't have to
+exist. It provides a few useful methods onslices.</li>
 <li><a href=
 "../string/index.html"><code>std::string</code></a>::{<a href=
 "../string/struct.String.html"><code>String</code></a>, <a href=
@@ -180,7 +178,7 @@ exist. It provides a few useful methods on slices.</li>
 allocated strings.</li>
 <li><a href="../vec/index.html"><code>std::vec</code></a>::<a href=
 "../vec/struct.Vec.html"><code>Vec</code></a>, a growable,
-heap-allocated vector.</li>
+heap-allocatedvector.</li>
 </ul>
 </div>
 <h2 id='modules' class='section-header'><a href=

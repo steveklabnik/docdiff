@@ -82,8 +82,8 @@ and <code>Debug</code> value, then <code>}</code>. For
 <code>enum</code>s, it will use the name of the variant and, if
 applicable, <code>(</code>, then the <code>Debug</code> values of
 the fields, then <code>)</code>.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>Deriving an implementation:</p>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class=
@@ -146,8 +146,7 @@ the fields, then <code>)</code>.</p>
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Afmt%3B%0A%0Astruct%20Point%20%7B%0A%20%20%20%20x%3A%20i32%2C%0A%20%20%20%20y%3A%20i32%2C%0A%7D%0A%0Aimpl%20fmt%3A%3ADebug%20for%20Point%20%7B%0A%20%20%20%20fn%20fmt(%26self%2C%20f%3A%20%26mut%20fmt%3A%3AFormatter)%20-%3E%20fmt%3A%3AResult%20%7B%0A%20%20%20%20%20%20%20%20write!(f%2C%20%22Point%20%7B%7B%20x%3A%20%7B%7D%2C%20y%3A%20%7B%7D%20%7D%7D%22%2C%20self.x%2C%20self.y)%0A%20%20%20%20%7D%0A%7D%0A%0Alet%20origin%20%3D%20Point%20%7B%20x%3A%200%2C%20y%3A%200%20%7D%3B%0A%0Aprintln!(%22The%20origin%20is%3A%20%7B%3A%3F%7D%22%2C%20origin)%3B%0A%7D">Run</a></pre>
 <p>This outputs:</p>
 <pre><code class=
-"language-text">The origin is: Point { x: 0, y: 0 }
-</code></pre>
+"language-text">The origin is: Point { x: 0, y: 0 }</code></pre>
 <p>There are a number of <code>debug_*</code> methods on
 <code>Formatter</code> to help you with manual implementations,
 such as <a href=
@@ -180,8 +179,7 @@ flag: <code>{:#?}</code>.</p>
 <pre><code class="language-text">The origin is: Point {
     x: 0,
     y: 0
-}
-</code></pre></div>
+}</code></pre></div>
 <h2 id='required-methods'>Required Methods</h2>
 <div class='methods'>
 <h3 id='tymethod.fmt' class='method'><span id='fmt.v' class=

@@ -59,15 +59,15 @@ pub unsafe extern "rust-intrinsic" fn copy&lt;T&gt;(src: *const T,<br>          
 may overlap.</p>
 <p><code>copy</code> is semantically equivalent to C's
 <code>memmove</code>.</p>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p>Care must be taken with the ownership of <code>src</code> and
 <code>dst</code>. This method semantically moves the values of
 <code>src</code> into <code>dst</code>. However it does not drop
 the contents of <code>dst</code>, or prevent the contents of
 <code>src</code> from being dropped or used.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>Efficiently create a Rust vector from an unsafe buffer:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=

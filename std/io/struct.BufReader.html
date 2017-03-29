@@ -59,18 +59,16 @@ pub struct BufReader&lt;R&gt; { /* fields omitted */ }</pre>
 <p>The <code>BufReader</code> struct adds buffering to any
 reader.</p>
 <p>It can be excessively inefficient to work directly with a
-<a href=
-"../../std/net/struct.TcpStream.html#method.read"><code>Read</code></a>
+<a href="../../std/io/trait.Read.html"><code>Read</code></a>
 instance. For example, every call to <a href=
-"../../std/net/struct.TcpStream.html#method.read"><code>read</code></a>
-on <a href=
+"../../std/io/trait.Read.html"><code>read</code></a> on <a href=
 "../../std/net/struct.TcpStream.html"><code>TcpStream</code></a>
 results in a system call. A <code>BufReader</code> performs large,
 infrequent reads on the underlying <a href=
-"../../std/net/struct.TcpStream.html#method.read"><code>Read</code></a>
-and maintains an in-memory buffer of the results.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+"../../std/io/trait.Read.html"><code>Read</code></a> and maintains
+an in-memory buffer of the results.</p>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">io</span>::<span class=
@@ -128,8 +126,8 @@ and maintains an in-memory buffer of the results.</p>
 <div class='docblock'>
 <p>Creates a new <code>BufReader</code> with a default buffer
 capacity.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">io</span>::<span class=
@@ -159,8 +157,8 @@ inner: R) -&gt; <a class="struct" href=
 <div class='docblock'>
 <p>Creates a new <code>BufReader</code> with the specified buffer
 capacity.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <p>Creating a buffer with ten bytes of capacity:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
@@ -189,8 +187,8 @@ capacity.</p>
 <p>Gets a reference to the underlying reader.</p>
 <p>It is inadvisable to directly read from the underlying
 reader.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">io</span>::<span class=
@@ -222,8 +220,8 @@ R</code></span></h4>
 <p>Gets a mutable reference to the underlying reader.</p>
 <p>It is inadvisable to directly read from the underlying
 reader.</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">io</span>::<span class=
@@ -254,8 +252,8 @@ class='invisible'><code>fn <a href='#method.into_inner' class=
 <p>Unwraps this <code>BufReader</code>, returning the underlying
 reader.</p>
 <p>Note that any leftover data in the internal buffer is lost.</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">io</span>::<span class=

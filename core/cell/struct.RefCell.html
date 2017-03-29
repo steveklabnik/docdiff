@@ -78,8 +78,8 @@ more.</p>
 <div class='docblock'>
 <p>Creates a new <code>RefCell</code> containing
 <code>value</code>.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">cell</span>::<span class=
@@ -96,8 +96,8 @@ class='invisible'><code>fn <a href='#method.into_inner' class=
 <div class='docblock'>
 <p>Consumes the <code>RefCell</code>, returning the wrapped
 value.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">cell</span>::<span class=
@@ -146,8 +146,8 @@ is a nightly-only experimental API. (<code>borrow_state</code>
 <p>The returned value can be dispatched on to determine if a call
 to <code>borrow</code> or <code>borrow_mut</code> would
 succeed.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -188,13 +188,13 @@ succeed.</p>
 <p>The borrow lasts until the returned <code>Ref</code> exits
 scope. Multiple immutable borrows can be taken out at the same
 time.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>Panics if the value is currently mutably borrowed. For a
 non-panicking variant, use <a href=
 "#method.try_borrow"><code>try_borrow</code></a>.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">cell</span>::<span class=
@@ -267,8 +267,8 @@ borrows can be taken out at the same time.</span></p>
 <p><span id='try_borrow.v' class='invisible'>This is the
 non-panicking variant of <a href=
 "#method.borrow"><code>borrow</code></a>.</span></p>
-<h1 id='examples-4' class='section-header'><span id='try_borrow.v'
-class='invisible'><a href='#examples-4'>Examples</a></span></h1>
+<h1 id="examples-4" class="section-header"><span id='try_borrow.v'
+class='invisible'><a href="#examples-4">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='try_borrow.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -308,13 +308,13 @@ class='invisible'><code>fn <a href='#method.borrow_mut' class=
 <p>The borrow lasts until the returned <code>RefMut</code> exits
 scope. The value cannot be borrowed while this borrow is
 active.</p>
-<h1 id='panics-1' class='section-header'><a href=
-'#panics-1'>Panics</a></h1>
+<h1 id="panics-1" class="section-header"><a href=
+"#panics-1">Panics</a></h1>
 <p>Panics if the value is currently borrowed. For a non-panicking
 variant, use <a href=
 "#method.try_borrow_mut"><code>try_borrow_mut</code></a>.</p>
-<h1 id='examples-5' class='section-header'><a href=
-'#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href=
+"#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">cell</span>::<span class=
@@ -389,9 +389,9 @@ cannot be borrowed while this borrow is active.</span></p>
 <p><span id='try_borrow_mut.v' class='invisible'>This is the
 non-panicking variant of <a href=
 "#method.borrow_mut"><code>borrow_mut</code></a>.</span></p>
-<h1 id='examples-6' class='section-header'><span id=
+<h1 id="examples-6" class="section-header"><span id=
 'try_borrow_mut.v' class='invisible'><a href=
-'#examples-6'>Examples</a></span></h1>
+"#examples-6">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='try_borrow_mut.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -440,8 +440,8 @@ is a nightly-only experimental API. (<code>as_unsafe_cell</code>
 checks.</p>
 <p>This function is <code>unsafe</code> because
 <code>UnsafeCell</code>'s field is public.</p>
-<h1 id='examples-7' class='section-header'><a href=
-'#examples-7'>Examples</a></h1>
+<h1 id="examples-7" class="section-header"><a href=
+"#examples-7">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#<span class="op">!</span>[<span class=
 "ident">feature</span>(<span class=
@@ -470,8 +470,8 @@ checks.</p>
 <div class='docblock'><span id='as_ptr.v' class='invisible'></span>
 <p><span id='as_ptr.v' class='invisible'>Returns a raw pointer to
 the underlying data in this cell.</span></p>
-<h1 id='examples-8' class='section-header'><span id='as_ptr.v'
-class='invisible'><a href='#examples-8'>Examples</a></span></h1>
+<h1 id="examples-8" class="section-header"><span id='as_ptr.v'
+class='invisible'><a href="#examples-8">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='as_ptr.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=
@@ -502,8 +502,8 @@ reference to the underlying data.</span></p>
 <p><span id='get_mut.v' class='invisible'>This call borrows
 <code>RefCell</code> mutably (at compile-time) so there is no need
 for dynamic checks.</span></p>
-<h1 id='examples-9' class='section-header'><span id='get_mut.v'
-class='invisible'><a href='#examples-9'>Examples</a></span></h1>
+<h1 id="examples-9" class="section-header"><span id='get_mut.v'
+class='invisible'><a href="#examples-9">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='get_mut.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=

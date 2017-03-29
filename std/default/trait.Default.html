@@ -98,14 +98,14 @@ the other defaults:</p>
 "ident">Default</span>::<span class="ident">default</span>() };
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=%23%5Ballow(dead_code)%5D%0A%23%5Bderive(Default)%5D%0Astruct%20SomeOptions%20%7B%0A%20%20%20%20foo%3A%20i32%2C%0A%20%20%20%20bar%3A%20f32%2C%0A%7D%0Afn%20main()%20%7B%0A%20%20%20%20let%20options%20%3D%20SomeOptions%20%7B%20foo%3A%2042%2C%20..Default%3A%3Adefault()%20%7D%3B%0A%7D%0A">Run</a></pre>
-<h2 id='derivable' class='section-header'><a href=
-'#derivable'>Derivable</a></h2>
+<h2 id="derivable" class="section-header"><a href=
+"#derivable">Derivable</a></h2>
 <p>This trait can be used with <code>#[derive]</code> if all of the
 type's fields implement <code>Default</code>. When
 <code>derive</code>d, it will use the default value for each
 field's type.</p>
-<h2 id='how-can-i-implement-default' class='section-header'>
-<a href='#how-can-i-implement-default'>How can I implement
+<h2 id="how-can-i-implement-default" class="section-header">
+<a href="#how-can-i-implement-default">How can I implement
 <code>Default</code>?</a></h2>
 <p>Provide an implementation for the <code>default()</code> method
 that returns the value of your type that should be the default:</p>
@@ -125,8 +125,8 @@ that returns the value of your type that should be the default:</p>
 "ident">A</span> }
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=%23!%5Ballow(dead_code)%5D%0Afn%20main()%20%7B%0Aenum%20Kind%20%7B%0A%20%20%20%20A%2C%0A%20%20%20%20B%2C%0A%20%20%20%20C%2C%0A%7D%0A%0Aimpl%20Default%20for%20Kind%20%7B%0A%20%20%20%20fn%20default()%20-%3E%20Kind%20%7B%20Kind%3A%3AA%20%7D%0A%7D%0A%7D">Run</a></pre>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class=
 "ident">derive</span>(<span class="ident">Default</span>)]</span>
@@ -145,8 +145,8 @@ class='invisible'><code>fn <a href='#tymethod.default' class=
 <p>Returns the "default value" for a type.</p>
 <p>Default values are often some kind of initial value, identity
 value, or anything else that may make sense as a default.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <p>Using built-in default values:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class=

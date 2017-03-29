@@ -112,8 +112,8 @@ difference is whether you are allowed to access <code>x</code>
 after the assignment. Under the hood, both a copy and a move can
 result in bits being copied in memory, although this is sometimes
 optimized away.</p>
-<h2 id='how-can-i-implement-copy' class='section-header'><a href=
-'#how-can-i-implement-copy'>How can I implement
+<h2 id="how-can-i-implement-copy" class="section-header"><a href=
+"#how-can-i-implement-copy">How can I implement
 <code>Copy</code>?</a></h2>
 <p>There are two ways to implement <code>Copy</code> on your type.
 The simplest is to use <code>derive</code>:</p>
@@ -147,9 +147,9 @@ manually:</p>
 <p>There is a small difference between the two: the
 <code>derive</code> strategy will also place a <code>Copy</code>
 bound on type parameters, which isn't always desired.</p>
-<h2 id='whats-the-difference-between-copy-and-clone' class=
-'section-header'><a href=
-'#whats-the-difference-between-copy-and-clone'>What's the
+<h2 id="whats-the-difference-between-copy-and-clone" class=
+"section-header"><a href=
+"#whats-the-difference-between-copy-and-clone">What's the
 difference between <code>Copy</code> and
 <code>Clone</code>?</a></h2>
 <p>Copies happen implicitly, for example as part of an assignment
@@ -177,8 +177,8 @@ supertrait of <code>Copy</code>, so everything which is
 <code>Copy</code> then its <a href=
 "../clone/trait.Clone.html"><code>Clone</code></a> implementation
 need only return <code>*self</code> (see the example above).</p>
-<h2 id='when-can-my-type-be-copy' class='section-header'><a href=
-'#when-can-my-type-be-copy'>When can my type be
+<h2 id="when-can-my-type-be-copy" class="section-header"><a href=
+"#when-can-my-type-be-copy">When can my type be
 <code>Copy</code>?</a></h2>
 <p>A type can implement <code>Copy</code> if all of its components
 implement <code>Copy</code>. For example, this struct can be
@@ -207,10 +207,9 @@ implement <code>Copy</code>. For example, this struct can be
 not <code>Copy</code>. If we attempt to derive a <code>Copy</code>
 implementation, we'll get an error:</p>
 <pre><code class=
-"language-text">the trait `Copy` may not be implemented for this type; field `points` does not implement `Copy`
-</code></pre>
-<h2 id='when-cant-my-type-be-copy' class='section-header'><a href=
-'#when-cant-my-type-be-copy'>When <em>can't</em> my type be
+"language-text">the trait `Copy` may not be implemented for this type; field `points` does not implement `Copy`</code></pre>
+<h2 id="when-cant-my-type-be-copy" class="section-header"><a href=
+"#when-cant-my-type-be-copy">When <em>can't</em> my type be
 <code>Copy</code>?</a></h2>
 <p>Some types can't be copied safely. For example, copying
 <code>&amp;mut T</code> would create an aliased mutable reference.
@@ -228,8 +227,8 @@ bytes.</p>
 <p>If you try to implement <code>Copy</code> on a struct or enum
 containing non-<code>Copy</code> data, you will get the error
 <a href="../../error-index.html#E0204">E0204</a>.</p>
-<h2 id='when-should-my-type-be-copy' class='section-header'>
-<a href='#when-should-my-type-be-copy'>When <em>should</em> my type
+<h2 id="when-should-my-type-be-copy" class="section-header">
+<a href="#when-should-my-type-be-copy">When <em>should</em> my type
 be <code>Copy</code>?</a></h2>
 <p>Generally speaking, if your type <em>can</em> implement
 <code>Copy</code>, it should. Keep in mind, though, that

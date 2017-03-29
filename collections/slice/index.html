@@ -96,13 +96,13 @@ a mutable slice points to:</p>
 "test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Alet%20x%20%3D%20%26mut%20%5B1%2C%202%2C%203%5D%3B%0Ax%5B1%5D%20%3D%207%3B%0Aassert_eq!(x%2C%20%26%5B1%2C%207%2C%203%5D)%3B%0A%7D">Run</a></pre>
 <p>Here are some of the things this module contains:</p>
-<h2 id='structs' class='section-header'><a href=
-'#structs'>Structs</a></h2>
+<h2 id="structs" class="section-header"><a href=
+"#structs">Structs</a></h2>
 <p>There are several structs that are useful for slices, such as
 <a href="struct.Iter.html"><code>Iter</code></a>, which represents
 iteration over a slice.</p>
-<h2 id='trait-implementations' class='section-header'><a href=
-'#trait-implementations'>Trait Implementations</a></h2>
+<h2 id="trait-implementations" class="section-header"><a href=
+"#trait-implementations">Trait Implementations</a></h2>
 <p>There are several implementations of common traits for slices.
 Some examples include:</p>
 <ul>
@@ -117,8 +117,8 @@ slices whose element type are <a href=
 - for slices whose element type is <a href=
 "../../std/hash/trait.Hash.html"><code>Hash</code></a>.</li>
 </ul>
-<h2 id='iteration' class='section-header'><a href=
-'#iteration'>Iteration</a></h2>
+<h2 id="iteration" class="section-header"><a href=
+"#iteration">Iteration</a></h2>
 <p>The slices implement <code>IntoIterator</code>. The iterator
 yields references to the slice elements.</p>
 <pre class="rust rust-example-rendered">
@@ -157,13 +157,11 @@ element type of the iterator is <code>&amp;mut i32</code>.</p>
 "../../std/primitive.slice.html#method.iter"><code>.iter</code></a>
 and <a href=
 "../../std/primitive.slice.html#method.iter_mut"><code>.iter_mut</code></a>
-are the explicit methods to return the default iterators.</li>
+are the explicit methods to return the defaultiterators.</li>
 <li>Further methods that return iterators are <a href=
 "../../std/primitive.slice.html#method.split"><code>.split</code></a>,
 <a href=
-"../../std/primitive.slice.html#method.splitn"><code>.splitn</code></a>,
-<a href=
-"../../std/primitive.slice.html#method.chunks"><code>.chunks</code></a>,
+"../../std/primitive.slice.html#method.splitn"><code>.splitn</code></a>,<a href="../../std/primitive.slice.html#method.chunks"><code>.chunks</code></a>,
 <a href=
 "../../std/primitive.slice.html#method.windows"><code>.windows</code></a>
 and more.</li>

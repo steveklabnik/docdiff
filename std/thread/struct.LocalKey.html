@@ -63,15 +63,15 @@ it for the target platform. It is instantiated with the
 <p>The <code>with</code> method yields a reference to the contained
 value which cannot be sent across threads or escape the given
 closure.</p>
-<h1 id='initialization-and-destruction' class='section-header'>
-<a href='#initialization-and-destruction'>Initialization and
+<h1 id="initialization-and-destruction" class="section-header">
+<a href="#initialization-and-destruction">Initialization and
 Destruction</a></h1>
 <p>Initialization is dynamically performed on the first call to
 <code>with()</code> within a thread, and values that implement
 <code>Drop</code> get destructed when a thread exits. Some caveats
 apply, which are explained below.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">cell</span>::<span class=
@@ -130,29 +130,29 @@ apply, which are explained below.</p>
 "number">2</span>);
 });<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Acell%3A%3ARefCell%3B%0Ause%20std%3A%3Athread%3B%0A%0Athread_local!(static%20FOO%3A%20RefCell%3Cu32%3E%20%3D%20RefCell%3A%3Anew(1))%3B%0A%0AFOO.with(%7Cf%7C%20%7B%0A%20%20%20%20assert_eq!(*f.borrow()%2C%201)%3B%0A%20%20%20%20*f.borrow_mut()%20%3D%202%3B%0A%7D)%3B%0A%0A%2F%2F%20each%20thread%20starts%20out%20with%20the%20initial%20value%20of%201%0Athread%3A%3Aspawn(move%7C%7C%20%7B%0A%20%20%20%20FOO.with(%7Cf%7C%20%7B%0A%20%20%20%20%20%20%20%20assert_eq!(*f.borrow()%2C%201)%3B%0A%20%20%20%20%20%20%20%20*f.borrow_mut()%20%3D%203%3B%0A%20%20%20%20%7D)%3B%0A%7D)%3B%0A%0A%2F%2F%20we%20retain%20our%20original%20value%20of%202%20despite%20the%20child%20thread%0AFOO.with(%7Cf%7C%20%7B%0A%20%20%20%20assert_eq!(*f.borrow()%2C%202)%3B%0A%7D)%3B%0A%7D">Run</a></pre>
-<h1 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h1>
+<h1 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h1>
 <p>Note that a "best effort" is made to ensure that destructors for
 types stored in thread local storage are run, but not all platforms
 can guarantee that destructors will be run for all types in thread
 local storage. For example, there are a number of known caveats
 where destructors are not run:</p>
-<ol>
+<ul>
 <li>On Unix systems when pthread-based TLS is being used,
-destructors will not be run for TLS values on the main thread when
-it exits. Note that the application will exit immediately after the
+destructors willnot be run for TLS values on the main thread when
+it exits. Note that theapplication will exit immediately after the
 main thread exits as well.</li>
 <li>On all platforms it's possible for TLS to re-initialize other
-TLS slots during destruction. Some platforms ensure that this
-cannot happen infinitely by preventing re-initialization of any
-slot that has been destroyed, but not all platforms have this
-guard. Those platforms that do not guard typically have a synthetic
-limit after which point no more destructors are run.</li>
+TLS slotsduring destruction. Some platforms ensure that this cannot
+happeninfinitely by preventing re-initialization of any slot that
+has beendestroyed, but not all platforms have this guard. Those
+platforms that donot guard typically have a synthetic limit after
+which point no moredestructors are run.</li>
 <li>On macOS, initializing TLS during destruction of other TLS
-slots can sometimes cancel <em>all</em> destructors for the current
-thread, whether or not the slots have already had their destructors
+slots cansometimes cancel <em>all</em> destructors for the current
+thread, whether or notthe slots have already had their destructors
 run or not.</li>
-</ol>
+</ul>
 </div>
 <h2 id='methods'>Methods</h2>
 <h3 class='impl'><span class=
@@ -176,8 +176,8 @@ R</span></code></span></span></h4>
 <p>Acquires a reference to the value in this TLS key.</p>
 <p>This will lazily initialize the value if this thread has not
 referenced this key yet.</p>
-<h1 id='panics' class='section-header'><a href=
-'#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href=
+"#panics">Panics</a></h1>
 <p>This function will <code>panic!()</code> if the key currently
 has its destructor running, and it <strong>may</strong> panic if
 the destructor has previously been run for this thread.</p>

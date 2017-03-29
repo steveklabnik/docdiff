@@ -64,14 +64,14 @@ terminates the process, no destructors on the current stack or any
 other thread's stack will be run. If a clean shutdown is needed it
 is recommended to only call this function at a known point where
 there are no more destructors left to run.</p>
-<h2 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h2>
+<h2 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h2>
 <p><strong>Unix</strong>: On Unix-like platforms, it is unlikely
 that all 32 bits of <code>exit</code> will be visible to a parent
 process inspecting the exit code. On most Unix-like platforms, only
 the eight least-significant bits are considered.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>Due to this function’s behavior regarding destructors, a
 conventional way to use the function is to extract the actual
 computation to another function and compute the exit code from its

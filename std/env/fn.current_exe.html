@@ -63,14 +63,14 @@ href="../../std/io/type.Result.html" title=
 executable.</p>
 <p>The path returned is not necessarily a "real path" of the
 executable as there may be intermediate symlinks.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>Acquiring the path of the current executable is a
 platform-specific operation that can fail for a good number of
 reasons. Some errors can include, but not be limited to, filesystem
 operations failing or general syscall failures.</p>
-<h1 id='security' class='section-header'><a href=
-'#security'>Security</a></h1>
+<h1 id="security" class="section-header"><a href=
+"#security">Security</a></h1>
 <p>The output of this function should not be used in anything that
 might have security implications. For example:</p>
 <pre class="rust rust-example-rendered">
@@ -84,21 +84,18 @@ might have security implications. For example:</p>
 <p>On Linux systems, if this is compiled as <code>foo</code>:</p>
 <pre><code class="language-bash">$ rustc foo.rs
 $ ./foo
-Ok("/home/alex/foo")
-</code></pre>
+Ok("/home/alex/foo")</code></pre>
 <p>And you make a symbolic link of the program:</p>
-<pre><code class="language-bash">$ ln foo bar
-</code></pre>
+<pre><code class="language-bash">$ ln foo bar</code></pre>
 <p>When you run it, you won't get the original executable, you'll
 get the symlink:</p>
 <pre><code class="language-bash">$ ./bar
-Ok("/home/alex/bar")
-</code></pre>
+Ok("/home/alex/bar")</code></pre>
 <p>This sort of behavior has been known to <a href=
 "http://securityvulns.com/Wdocument183.html">lead to privilege
 escalation</a> when used incorrectly, for example.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">env</span>;

@@ -65,25 +65,24 @@ window.sidebarCurrent = {name: 'read_link', ty: 'fn', relpath: ''};
 <div class='docblock'>
 <p>Reads a symbolic link, returning the file that the link points
 to.</p>
-<h1 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h1>
+<h1 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h1>
 <p>This function currently corresponds to the <code>readlink</code>
 function on Unix and the <code>CreateFile</code> function with
 <code>FILE_FLAG_OPEN_REPARSE_POINT</code> and
 <code>FILE_FLAG_BACKUP_SEMANTICS</code> flags on Windows. Note
-that, this <a href=
-"../io/index.html#platform-specific-behavior">may change in the
-future</a>.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+that, this [may change in the future][changes]. [changes]:
+../io/index.html#platform-specific-behavior</p>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This function will return an error in the following situations,
 but is not limited to just these cases:</p>
 <ul>
 <li><code>path</code> is not a symbolic link.</li>
 <li><code>path</code> does not exist.</li>
 </ul>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;

@@ -89,15 +89,15 @@ naturally unwind safe without <code>unsafe</code> code. If it
 becomes a problem the associated <code>AssertUnwindSafe</code>
 wrapper type in this module can be used to quickly assert that the
 usage here is indeed unwind safe.</p>
-<h1 id='notes' class='section-header'><a href=
-'#notes'>Notes</a></h1>
+<h1 id="notes" class="section-header"><a href=
+"#notes">Notes</a></h1>
 <p>Note that this function <strong>may not catch all
 panics</strong> in Rust. A panic in Rust is not always implemented
 via unwinding, but can be implemented by aborting the process as
 well. This function <em>only</em> catches unwinding panics, not
 those that abort the process.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">panic</span>;

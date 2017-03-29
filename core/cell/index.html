@@ -70,15 +70,15 @@ methods to retrieve and change the current interior value:</p>
 <li>For types that implement <code>Copy</code>, the
 <code>get</code> method retrieves the current interior value.</li>
 <li>For types that implement <code>Default</code>, the
-<code>take</code> method replaces the current interior value with
+<code>take</code> method replaces the current interior valuewith
 <code>Default::default()</code> and returns the replaced
 value.</li>
 <li>For all types, the <code>replace</code> method replaces the
-current interior value and returns the replaced value and the
+current interior value and returns thereplaced value and the
 <code>into_inner</code> method consumes the
-<code>Cell&lt;T&gt;</code> and returns the interior value.
+<code>Cell&lt;T&gt;</code> and returns the interiorvalue.
 Additionally, the <code>set</code> method replaces the interior
-value, dropping the replaced value.</li>
+value, dropping the replacedvalue.</li>
 </ul>
 <p><code>RefCell&lt;T&gt;</code> uses Rust's lifetimes to implement
 'dynamic borrowing', a process whereby one can claim temporary,
@@ -89,8 +89,8 @@ statically, at compile time. Because <code>RefCell&lt;T&gt;</code>
 borrows are dynamic it is possible to attempt to borrow a value
 that is already mutably borrowed; when this happens it results in
 thread panic.</p>
-<h1 id='when-to-choose-interior-mutability' class='section-header'>
-<a href='#when-to-choose-interior-mutability'>When to choose
+<h1 id="when-to-choose-interior-mutability" class="section-header">
+<a href="#when-to-choose-interior-mutability">When to choose
 interior mutability</a></h1>
 <p>The more common inherited mutability, where one must have unique
 access to mutate a value, is one of the key language elements that
@@ -105,9 +105,9 @@ might be appropriate, or even <em>must</em> be used, e.g.</p>
 <li>Implementation details of logically-immutable methods.</li>
 <li>Mutating implementations of <code>Clone</code>.</li>
 </ul>
-<h2 id='introducing-mutability-inside-of-something-immutable'
-class='section-header'><a href=
-'#introducing-mutability-inside-of-something-immutable'>Introducing
+<h2 id="introducing-mutability-inside-of-something-immutable"
+class="section-header"><a href=
+"#introducing-mutability-inside-of-something-immutable">Introducing
 mutability 'inside' of something immutable</a></h2>
 <p>Many shared smart pointer types, including
 <code>Rc&lt;T&gt;</code> and <code>Arc&lt;T&gt;</code>, provide
@@ -161,9 +161,9 @@ inside shared pointer types to reintroduce mutability:</p>
 single-threaded scenarios. Consider using
 <code>RwLock&lt;T&gt;</code> or <code>Mutex&lt;T&gt;</code> if you
 need shared mutability in a multi-threaded situation.</p>
-<h2 id='implementation-details-of-logically-immutable-methods'
-class='section-header'><a href=
-'#implementation-details-of-logically-immutable-methods'>Implementation
+<h2 id="implementation-details-of-logically-immutable-methods"
+class="section-header"><a href=
+"#implementation-details-of-logically-immutable-methods">Implementation
 details of logically-immutable methods</a></h2>
 <p>Occasionally it may be desirable not to expose in an API that
 there is mutation happening "under the hood". This may be because
@@ -238,8 +238,8 @@ take <code>&amp;self</code>.</p>
     }
 }<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=%23!%5Ballow(dead_code)%5D%0Afn%20main()%20%7B%0Ause%20std%3A%3Acell%3A%3ARefCell%3B%0A%0Astruct%20Graph%20%7B%0A%20%20%20%20edges%3A%20Vec%3C(i32%2C%20i32)%3E%2C%0A%20%20%20%20span_tree_cache%3A%20RefCell%3COption%3CVec%3C(i32%2C%20i32)%3E%3E%3E%0A%7D%0A%0Aimpl%20Graph%20%7B%0A%20%20%20%20fn%20minimum_spanning_tree(%26self)%20-%3E%20Vec%3C(i32%2C%20i32)%3E%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Create%20a%20new%20scope%20to%20contain%20the%20lifetime%20of%20the%0A%20%20%20%20%20%20%20%20%2F%2F%20dynamic%20borrow%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20Take%20a%20reference%20to%20the%20inside%20of%20cache%20cell%0A%20%20%20%20%20%20%20%20%20%20%20%20let%20mut%20cache%20%3D%20self.span_tree_cache.borrow_mut()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20cache.is_some()%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20cache.as_ref().unwrap().clone()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20let%20span_tree%20%3D%20self.calc_span_tree()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20*cache%20%3D%20Some(span_tree)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%2F%2F%20Recursive%20call%20to%20return%20the%20just-cached%20value.%0A%20%20%20%20%20%20%20%20%2F%2F%20Note%20that%20if%20we%20had%20not%20let%20the%20previous%20borrow%0A%20%20%20%20%20%20%20%20%2F%2F%20of%20the%20cache%20fall%20out%20of%20scope%20then%20the%20subsequent%0A%20%20%20%20%20%20%20%20%2F%2F%20recursive%20borrow%20would%20cause%20a%20dynamic%20thread%20panic.%0A%20%20%20%20%20%20%20%20%2F%2F%20This%20is%20the%20major%20hazard%20of%20using%20%60RefCell%60.%0A%20%20%20%20%20%20%20%20self.minimum_spanning_tree()%0A%20%20%20%20%7D%0A%20%20fn%20calc_span_tree(%26self)%20-%3E%20Vec%3C(i32%2C%20i32)%3E%20%7B%20vec!%5B%5D%20%7D%0A%7D%0A%7D">Run</a></pre>
-<h2 id='mutating-implementations-of-clone' class='section-header'>
-<a href='#mutating-implementations-of-clone'>Mutating
+<h2 id="mutating-implementations-of-clone" class="section-header">
+<a href="#mutating-implementations-of-clone">Mutating
 implementations of <code>Clone</code></a></h2>
 <p>This is simply a special - but common - case of the previous:
 hiding mutability for operations that appear to be immutable. The

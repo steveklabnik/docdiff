@@ -83,8 +83,8 @@ title=
 <div class='docblock'>
 <p><span class='out-of-band'>Returns the file type for this
 metadata.</span></p>
-<h1 id='examples' class='section-header'><span class=
-'out-of-band'><a href='#examples'>Examples</a></span></h1>
+<h1 id="examples" class="section-header"><span class=
+'out-of-band'><a href="#examples">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span class='out-of-band'>
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;
@@ -106,8 +106,8 @@ href=
 "../primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'>
 <p>Returns whether this metadata is for a directory.</p>
-<h1 id='examples-1' class='section-header'><a href=
-'#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href=
+"#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;
@@ -128,8 +128,8 @@ href="https://play.rust-lang.org/?code=fn%20main()%20%7B%0Afn%20foo()%20-%3E%20s
 "../primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'>
 <p>Returns whether this metadata is for a regular file.</p>
-<h1 id='examples-2' class='section-header'><a href=
-'#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href=
+"#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;
@@ -151,8 +151,8 @@ href=
 <div class='docblock'>
 <p>Returns the size of the file, in bytes, this metadata is
 for.</p>
-<h1 id='examples-3' class='section-header'><a href=
-'#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href=
+"#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;
@@ -174,8 +174,8 @@ class='invisible'><code>fn <a href='#method.permissions' class=
 "struct std::fs::Permissions">Permissions</a></code></span></h4>
 <div class='docblock'>
 <p>Returns the permissions of the file this metadata is for.</p>
-<h1 id='examples-4' class='section-header'><a href=
-'#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href=
+"#examples-4">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;
@@ -210,13 +210,13 @@ modification time listed in this metadata.</span></p>
 corresponds to the <code>mtime</code> field of <code>stat</code> on
 Unix platforms and the <code>ftLastWriteTime</code> field on
 Windows platforms.</span></p>
-<h1 id='errors' class='section-header'><span id='modified.v' class=
-'invisible'><a href='#errors'>Errors</a></span></h1>
+<h1 id="errors" class="section-header"><span id='modified.v' class=
+'invisible'><a href="#errors">Errors</a></span></h1>
 <p><span id='modified.v' class='invisible'>This field may not be
 available on all platforms, and will return an <code>Err</code> on
 platforms where it is not available.</span></p>
-<h1 id='examples-5' class='section-header'><span id='modified.v'
-class='invisible'><a href='#examples-5'>Examples</a></span></h1>
+<h1 id="examples-5" class="section-header"><span id='modified.v'
+class='invisible'><a href="#examples-5">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='modified.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -263,13 +263,13 @@ platforms will keep this field update in a file's metadata, for
 example Windows has an option to disable updating this time when
 files are accessed and Linux similarly has
 <code>noatime</code>.</span></p>
-<h1 id='errors-1' class='section-header'><span id='accessed.v'
-class='invisible'><a href='#errors-1'>Errors</a></span></h1>
+<h1 id="errors-1" class="section-header"><span id='accessed.v'
+class='invisible'><a href="#errors-1">Errors</a></span></h1>
 <p><span id='accessed.v' class='invisible'>This field may not be
 available on all platforms, and will return an <code>Err</code> on
 platforms where it is not available.</span></p>
-<h1 id='examples-6' class='section-header'><span id='accessed.v'
-class='invisible'><a href='#examples-6'>Examples</a></span></h1>
+<h1 id="examples-6" class="section-header"><span id='accessed.v'
+class='invisible'><a href="#examples-6">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='accessed.v'
 class='invisible'>
 <span class="kw">use</span> <span class=
@@ -311,13 +311,13 @@ listed in the this metadata.</span></p>
 corresponds to the <code>birthtime</code> field of
 <code>stat</code> on Unix platforms and the
 <code>ftCreationTime</code> field on Windows platforms.</span></p>
-<h1 id='errors-2' class='section-header'><span id='created.v'
-class='invisible'><a href='#errors-2'>Errors</a></span></h1>
+<h1 id="errors-2" class="section-header"><span id='created.v'
+class='invisible'><a href="#errors-2">Errors</a></span></h1>
 <p><span id='created.v' class='invisible'>This field may not be
 available on all platforms, and will return an <code>Err</code> on
 platforms where it is not available.</span></p>
-<h1 id='examples-7' class='section-header'><span id='created.v'
-class='invisible'><a href='#examples-7'>Examples</a></span></h1>
+<h1 id="examples-7" class="section-header"><span id='created.v'
+class='invisible'><a href="#examples-7">Examples</a></span></h1>
 <pre class="rust rust-example-rendered"><span id='created.v' class=
 'invisible'>
 <span class="kw">use</span> <span class=

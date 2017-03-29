@@ -72,22 +72,21 @@ is used by the <code>Hash</code> to compute the hash.</p>
 "../../std/cmp/trait.Eq.html"><code>Eq</code></a>, there is an
 additional property that is important:</p>
 <pre><code class=
-"language-text">k1 == k2 -&gt; hash(k1) == hash(k2)
-</code></pre>
+"language-text">k1 == k2 -&gt; hash(k1) == hash(k2)</code></pre>
 <p>In other words, if two keys are equal, their hashes should also
 be equal. <a href=
 "../../std/collections/struct.HashMap.html"><code>HashMap</code></a>
 and <a href=
 "../../std/collections/struct.HashSet.html"><code>HashSet</code></a>
 both rely on this behavior.</p>
-<h2 id='derivable' class='section-header'><a href=
-'#derivable'>Derivable</a></h2>
+<h2 id="derivable" class="section-header"><a href=
+"#derivable">Derivable</a></h2>
 <p>This trait can be used with <code>#[derive]</code> if all fields
 implement <code>Hash</code>. When <code>derive</code>d, the
 resulting hash will be the combination of the values from calling
 <a href="#tymethod.hash"><code>.hash</code></a> on each field.</p>
-<h2 id='how-can-i-implement-hash' class='section-header'><a href=
-'#how-can-i-implement-hash'>How can I implement
+<h2 id="how-can-i-implement-hash" class="section-header"><a href=
+"#how-can-i-implement-hash">How can I implement
 <code>Hash</code>?</a></h2>
 <p>If you need more control over how a value is hashed, you need to
 implement the <code>Hash</code> trait:</p>

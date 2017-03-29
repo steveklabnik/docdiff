@@ -66,8 +66,8 @@ href="../primitive.usize.html">usize</a>)</pre>
 may <em>not</em> overlap.</p>
 <p><code>copy_nonoverlapping</code> is semantically equivalent to
 C's <code>memcpy</code>.</p>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p>Beyond requiring that the program must be allowed to access both
 regions of memory, it is Undefined Behavior for source and
 destination to overlap. Care must also be taken with the ownership
@@ -75,8 +75,8 @@ of <code>src</code> and <code>dst</code>. This method semantically
 moves the values of <code>src</code> into <code>dst</code>. However
 it does not drop the contents of <code>dst</code>, or prevent the
 contents of <code>src</code> from being dropped or used.</p>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <p>A safe swap function:</p>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=

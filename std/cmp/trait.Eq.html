@@ -71,16 +71,16 @@ and</li>
 <p>This property cannot be checked by the compiler, and therefore
 <code>Eq</code> implies <code>PartialEq</code>, and has no extra
 methods.</p>
-<h2 id='derivable' class='section-header'><a href=
-'#derivable'>Derivable</a></h2>
+<h2 id="derivable" class="section-header"><a href=
+"#derivable">Derivable</a></h2>
 <p>This trait can be used with <code>#[derive]</code>. When
 <code>derive</code>d, because <code>Eq</code> has no extra methods,
 it is only informing the compiler that this is an equivalence
 relation rather than a partial equivalence relation. Note that the
 <code>derive</code> strategy requires all fields are
 <code>Eq</code>, which isn't always desired.</p>
-<h2 id='how-can-i-implement-eq' class='section-header'><a href=
-'#how-can-i-implement-eq'>How can I implement
+<h2 id="how-can-i-implement-eq" class="section-header"><a href=
+"#how-can-i-implement-eq">How can I implement
 <code>Eq</code>?</a></h2>
 <p>If you cannot use the <code>derive</code> strategy, specify that
 your type implements <code>Eq</code>, which has no methods:</p>

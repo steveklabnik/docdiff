@@ -57,8 +57,8 @@ pub unsafe fn swap&lt;T&gt;(x: *mut T, y: *mut T)</pre>
 <p>Swaps the values at two mutable locations of the same type,
 without deinitializing either. They may overlap, unlike
 <code>mem::swap</code> which is otherwise equivalent.</p>
-<h1 id='safety' class='section-header'><a href=
-'#safety'>Safety</a></h1>
+<h1 id="safety" class="section-header"><a href=
+"#safety">Safety</a></h1>
 <p>This function copies the memory through the raw pointers passed
 to it as arguments.</p>
 <p>Ensure that these pointers are valid before calling

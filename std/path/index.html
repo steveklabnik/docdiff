@@ -63,8 +63,8 @@ working with paths abstractly. These types are thin wrappers around
 <a href="../../std/ffi/struct.OsStr.html"><code>OsStr</code></a>
 respectively, meaning that they work directly on strings according
 to the local platform's path syntax.</p>
-<h2 id='simple-usage' class='section-header'><a href=
-'#simple-usage'>Simple usage</a></h2>
+<h2 id="simple-usage" class="section-header"><a href=
+"#simple-usage">Simple usage</a></h2>
 <p>Path manipulation includes both parsing components from slices
 and building new owned paths.</p>
 <p>To parse a path, you can create a <a href=
@@ -130,8 +130,8 @@ href="https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Apath%3
 "ident">set_extension</span>(<span class=
 "string">"dll"</span>);<a class="test-arrow" target="_blank" href=
 "https://play.rust-lang.org/?code=fn%20main()%20%7B%0Ause%20std%3A%3Apath%3A%3APathBuf%3B%0A%0Alet%20mut%20path%20%3D%20PathBuf%3A%3Afrom(%22c%3A%5C%5C%22)%3B%0Apath.push(%22windows%22)%3B%0Apath.push(%22system32%22)%3B%0Apath.set_extension(%22dll%22)%3B%0A%7D">Run</a></pre>
-<h2 id='path-components-and-normalization' class='section-header'>
-<a href='#path-components-and-normalization'>Path components and
+<h2 id="path-components-and-normalization" class="section-header">
+<a href="#path-components-and-normalization">Path components and
 normalization</a></h2>
 <p>The path APIs are built around the notion of "components", which
 roughly correspond to the substrings between path separators
@@ -142,8 +142,8 @@ it's important to clearly understand how those are determined.</p>
 path by putting together its components via <code>push</code>.
 Syntactically, the paths may differ by the normalization described
 below.</p>
-<h3 id='component-types' class='section-header'><a href=
-'#component-types'>Component types</a></h3>
+<h3 id="component-types" class="section-header"><a href=
+"#component-types">Component types</a></h3>
 <p>Components come in several types:</p>
 <ul>
 <li>
@@ -166,15 +166,15 @@ root directory component followed by normal components
 <p>On Windows, an additional component type comes into play:</p>
 <ul>
 <li>Prefix components, of which there is a large variety. For
-example, <code>C:</code> and <code>\\server\share</code> are
-prefixes. The path <code>C:windows</code> has a prefix component
+example, <code>C:</code>and <code>\\server\share</code> are
+prefixes. The path <code>C:windows</code> has a prefixcomponent
 <code>C:</code> and a normal component <code>windows</code>; the
-path <code>C:\windows</code> has a prefix component
-<code>C:</code>, a root directory component, and a normal component
-<code>windows</code>.</li>
+path <code>C:\windows</code> has aprefix component <code>C:</code>,
+a root directory component, and a normal
+component<code>windows</code>.</li>
 </ul>
-<h3 id='normalization' class='section-header'><a href=
-'#normalization'>Normalization</a></h3>
+<h3 id="normalization" class="section-header"><a href=
+"#normalization">Normalization</a></h3>
 <p>Aside from splitting on the separator(s), there is a small
 amount of "normalization":</p>
 <ul>

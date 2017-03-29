@@ -70,22 +70,21 @@ href="../../std/io/type.Result.html" title=
 <p>The <code>dst</code> path will be a link pointing to the
 <code>src</code> path. Note that systems often require these two
 paths to both be located on the same filesystem.</p>
-<h1 id='platform-specific-behavior' class='section-header'><a href=
-'#platform-specific-behavior'>Platform-specific behavior</a></h1>
+<h1 id="platform-specific-behavior" class="section-header"><a href=
+"#platform-specific-behavior">Platform-specific behavior</a></h1>
 <p>This function currently corresponds to the <code>link</code>
 function on Unix and the <code>CreateHardLink</code> function on
-Windows. Note that, this <a href=
-"../io/index.html#platform-specific-behavior">may change in the
-future</a>.</p>
-<h1 id='errors' class='section-header'><a href=
-'#errors'>Errors</a></h1>
+Windows. Note that, this [may change in the future][changes].
+[changes]: ../io/index.html#platform-specific-behavior</p>
+<h1 id="errors" class="section-header"><a href=
+"#errors">Errors</a></h1>
 <p>This function will return an error in the following situations,
 but is not limited to just these cases:</p>
 <ul>
 <li>The <code>src</code> path is not a file or doesn't exist.</li>
 </ul>
-<h1 id='examples' class='section-header'><a href=
-'#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href=
+"#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class=
 "ident">std</span>::<span class="ident">fs</span>;
