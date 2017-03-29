@@ -51,17 +51,10 @@
                </span><a class='srclink' href='../../../../src/std/sys/windows/ext/io.rs.html#57-65' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait IntoRawHandle {
     fn <a href='#tymethod.into_raw_handle' class='fnname'>into_raw_handle</a>(self) -&gt; <a class="type" href="../../../../std/os/windows/io/type.RawHandle.html" title="type std::os::windows::io::RawHandle">RawHandle</a>;
-}</pre><div class='docblock'><p>A trait to express the ability to consume an object and acquire ownership of
-its raw <code>HANDLE</code>.</p>
-</div>
+}</pre><div class='docblock'><p>A trait to express the ability to consume an object and acquire ownership of its raw <code>HANDLE</code>.</p></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.into_raw_handle' class='method'><span id='into_raw_handle.v' class='invisible'><code>fn <a href='#tymethod.into_raw_handle' class='fnname'>into_raw_handle</a>(self) -&gt; <a class="type" href="../../../../std/os/windows/io/type.RawHandle.html" title="type std::os::windows::io::RawHandle">RawHandle</a></code></span></h3><div class='docblock'><p>Consumes this object, returning the raw underlying handle.</p>
-
-<p>This function <strong>transfers ownership</strong> of the underlying handle to the
-caller. Callers are then the unique owners of the handle and must close
-it once it&#39;s no longer needed.</p>
-</div></div>
+        <h3 id='tymethod.into_raw_handle' class='method'><span id='into_raw_handle.v' class='invisible'><code>fn <a href='#tymethod.into_raw_handle' class='fnname'>into_raw_handle</a>(self) -&gt; <a class="type" href="../../../../std/os/windows/io/type.RawHandle.html" title="type std::os::windows::io::RawHandle">RawHandle</a></code></span></h3><div class='docblock'><p>Consumes this object, returning the raw underlying handle.</p><p>This function <strong>transfers ownership</strong> of the underlying handle to the caller. Callers are then the unique owners of the handle and must close it once it&#39;s no longer needed.</p></div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl IntoRawHandle for <a class="struct" href="../../../../std/fs/struct.File.html" title="struct std::fs::File">File</a></code></li>

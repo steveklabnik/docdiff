@@ -49,17 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/std/process.rs.html#1060-1062' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn abort() -&gt; !</pre><div class='docblock'><p>Terminates the process in an abnormal fashion.</p>
-
-<p>The function will never return and will immediately terminate the current
-process in a platform specific &quot;abnormal&quot; manner.</p>
-
-<p>Note that because this function never returns, and that it terminates the
-process, no destructors on the current stack or any other thread&#39;s stack
-will be run. If a clean shutdown is needed it is recommended to only call
-this function at a known point where there are no more destructors left
-to run.</p>
-</div></section>
+<pre class='rust fn'>pub fn abort() -&gt; !</pre><div class='docblock'><p>Terminates the process in an abnormal fashion.</p><p>The function will never return and will immediately terminate the current process in a platform specific &quot;abnormal&quot; manner.</p><p>Note that because this function never returns, and that it terminates the process, no destructors on the current stack or any other thread&#39;s stack will be run. If a clean shutdown is needed it is recommended to only call this function at a known point where there are no more destructors left to run.</p></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

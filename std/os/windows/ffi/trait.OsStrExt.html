@@ -51,16 +51,10 @@
                </span><a class='srclink' href='../../../../src/std/sys/windows/ext/ffi.rs.html#44-52' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait OsStrExt {
     fn <a href='#tymethod.encode_wide' class='fnname'>encode_wide</a>(&amp;self) -&gt; <a class="struct" href="../../../../std/os/windows/ffi/struct.EncodeWide.html" title="struct std::os::windows::ffi::EncodeWide">EncodeWide</a>;
-}</pre><div class='docblock'><p>Windows-specific extensions to <code>OsStr</code>.</p>
-</div>
+}</pre><div class='docblock'><p>Windows-specific extensions to <code>OsStr</code>.</p></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.encode_wide' class='method'><span id='encode_wide.v' class='invisible'><code>fn <a href='#tymethod.encode_wide' class='fnname'>encode_wide</a>(&amp;self) -&gt; <a class="struct" href="../../../../std/os/windows/ffi/struct.EncodeWide.html" title="struct std::os::windows::ffi::EncodeWide">EncodeWide</a></code></span></h3><div class='docblock'><p>Re-encodes an <code>OsStr</code> as a wide character sequence,
-i.e. potentially ill-formed UTF-16.</p>
-
-<p>This is lossless. Note that the encoding does not include a final
-null.</p>
-</div></div>
+        <h3 id='tymethod.encode_wide' class='method'><span id='encode_wide.v' class='invisible'><code>fn <a href='#tymethod.encode_wide' class='fnname'>encode_wide</a>(&amp;self) -&gt; <a class="struct" href="../../../../std/os/windows/ffi/struct.EncodeWide.html" title="struct std::os::windows::ffi::EncodeWide">EncodeWide</a></code></span></h3><div class='docblock'><p>Re-encodes an <code>OsStr</code> as a wide character sequence, i.e. potentially ill-formed UTF-16.</p><p>This is lossless. Note that the encoding does not include a final null.</p></div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl OsStrExt for <a class="struct" href="../../../../std/ffi/struct.OsStr.html" title="struct std::ffi::OsStr">OsStr</a></code></li>
