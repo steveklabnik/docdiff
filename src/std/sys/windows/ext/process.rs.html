@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="generator" content=
-"HTML Tidy for HTML5 for Windows version 5.5.12">
-<meta charset="utf-8">
-<meta name="viewport" content=
-"width=device-width, initial-scale=1.0">
-<meta name="generator" content="rustdoc">
-<meta name="description" content=
-"Source to the Rust file `src\libstd\sys\windows\ext\process.rs`.">
-<meta name="keywords" content="rust, rustlang, rust-lang">
-<title>process.rs.html -- source</title>
-<link rel="stylesheet" type="text/css" href=
-"../../../../../normalize.css">
-<link rel="stylesheet" type="text/css" href=
-"../../../../../rustdoc.css">
-<link rel="stylesheet" type="text/css" href=
-"../../../../../main.css">
-<link rel="shortcut icon" href=
-"https://doc.rust-lang.org/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src\libstd\sys\windows\ext\process.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>process.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../../../main.css">
+    
+
+    <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
+    
 </head>
 <body class="rustdoc">
-<!--[if lte IE 8]>
+    <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
         things.
     </div>
     <![endif]-->
-<nav class="sidebar"><a href=
-'../../../../../std/index.html'><img src=
-'https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt=
-'logo' width='100'></a></nav>
-<nav class="sub">
-<form class="search-form js-only">
-<div class="search-container"><input class="search-input" name=
-"search" autocomplete="off" placeholder=
-"Click or press ‘S’ to search, ‘?’ for more options…" type=
-"search"></div>
-</form>
-</nav>
-<section id='main' class="content source">
-<pre class="line-numbers"><span id="1">  1</span>
+
+    
+
+    <nav class="sidebar">
+        <a href='../../../../../std/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -158,396 +161,185 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
-</pre>
-<pre class="rust">
-<span class=
-"comment">// Copyright 2015 The Rust Project Developers. See the COPYRIGHT</span>
-<span class=
-"comment">// file at the top-level directory of this distribution and at</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2015 The Rust Project Developers. See the COPYRIGHT</span>
+<span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
-<span class=
-"comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
-<span class=
-"comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
-<span class=
-"comment">// option. This file may not be copied, modified, or distributed</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class=
-"doccomment">//! Extensions to `std::process` for Windows.</span>
+<span class="doccomment">//! Extensions to `std::process` for Windows.</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.2.0"</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.2.0&quot;</span>)]</span>
 
-<span class="kw">use</span> <span class=
-"ident">os</span>::<span class="ident">windows</span>::<span class=
-"ident">io</span>::{<span class=
-"ident">FromRawHandle</span>, <span class=
-"ident">RawHandle</span>, <span class=
-"ident">AsRawHandle</span>, <span class=
-"ident">IntoRawHandle</span>};
+<span class="kw">use</span> <span class="ident">os</span>::<span class="ident">windows</span>::<span class="ident">io</span>::{<span class="ident">FromRawHandle</span>, <span class="ident">RawHandle</span>, <span class="ident">AsRawHandle</span>, <span class="ident">IntoRawHandle</span>};
 <span class="kw">use</span> <span class="ident">process</span>;
 <span class="kw">use</span> <span class="ident">sys</span>;
-<span class="kw">use</span> <span class=
-"ident">sys_common</span>::{<span class=
-"ident">AsInnerMut</span>, <span class=
-"ident">AsInner</span>, <span class=
-"ident">FromInner</span>, <span class="ident">IntoInner</span>};
+<span class="kw">use</span> <span class="ident">sys_common</span>::{<span class="ident">AsInnerMut</span>, <span class="ident">AsInner</span>, <span class="ident">FromInner</span>, <span class="ident">IntoInner</span>};
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.2.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">FromRawHandle</span> <span class=
-"kw">for</span> <span class="ident">process</span>::<span class=
-"ident">Stdio</span> {
-    <span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class=
-"ident">from_raw_handle</span>(<span class=
-"ident">handle</span>: <span class=
-"ident">RawHandle</span>) <span class=
-"op">-&gt;</span> <span class="ident">process</span>::<span class=
-"ident">Stdio</span> {
-        <span class="kw">let</span> <span class=
-"ident">handle</span> <span class="op">=</span> <span class=
-"ident">sys</span>::<span class="ident">handle</span>::<span class=
-"ident">Handle</span>::<span class="ident">new</span>(<span class=
-"ident">handle</span> <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _);
-        <span class="kw">let</span> <span class=
-"ident">io</span> <span class="op">=</span> <span class=
-"ident">sys</span>::<span class=
-"ident">process</span>::<span class="ident">Stdio</span>::<span class="ident">Handle</span>(<span class="ident">handle</span>);
-        <span class="ident">process</span>::<span class=
-"ident">Stdio</span>::<span class=
-"ident">from_inner</span>(<span class="ident">io</span>)
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.2.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">FromRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">Stdio</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw_handle</span>(<span class="ident">handle</span>: <span class="ident">RawHandle</span>) <span class="op">-&gt;</span> <span class="ident">process</span>::<span class="ident">Stdio</span> {
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">handle</span>::<span class="ident">Handle</span>::<span class="ident">new</span>(<span class="ident">handle</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _);
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">sys</span>::<span class="ident">process</span>::<span class="ident">Stdio</span>::<span class="ident">Handle</span>(<span class="ident">handle</span>);
+        <span class="ident">process</span>::<span class="ident">Stdio</span>::<span class="ident">from_inner</span>(<span class="ident">io</span>)
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.2.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">AsRawHandle</span> <span class="kw">for</span> <span class=
-"ident">process</span>::<span class="ident">Child</span> {
-    <span class="kw">fn</span> <span class=
-"ident">as_raw_handle</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">as_inner</span>().<span class=
-"ident">handle</span>().<span class=
-"ident">raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.2.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">AsRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">Child</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">as_inner</span>().<span class="ident">handle</span>().<span class="ident">raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"into_raw_os"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.4.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">IntoRawHandle</span> <span class=
-"kw">for</span> <span class="ident">process</span>::<span class=
-"ident">Child</span> {
-    <span class="kw">fn</span> <span class=
-"ident">into_raw_handle</span>(<span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">into_inner</span>().<span class=
-"ident">into_handle</span>().<span class=
-"ident">into_raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;into_raw_os&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.4.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">IntoRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">Child</span> {
+    <span class="kw">fn</span> <span class="ident">into_raw_handle</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">into_inner</span>().<span class="ident">into_handle</span>().<span class="ident">into_raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.2.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">AsRawHandle</span> <span class="kw">for</span> <span class=
-"ident">process</span>::<span class="ident">ChildStdin</span> {
-    <span class="kw">fn</span> <span class=
-"ident">as_raw_handle</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">as_inner</span>().<span class=
-"ident">handle</span>().<span class=
-"ident">raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.2.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">AsRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ChildStdin</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">as_inner</span>().<span class="ident">handle</span>().<span class="ident">raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.2.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">AsRawHandle</span> <span class="kw">for</span> <span class=
-"ident">process</span>::<span class="ident">ChildStdout</span> {
-    <span class="kw">fn</span> <span class=
-"ident">as_raw_handle</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">as_inner</span>().<span class=
-"ident">handle</span>().<span class=
-"ident">raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.2.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">AsRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ChildStdout</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">as_inner</span>().<span class="ident">handle</span>().<span class="ident">raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.2.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">AsRawHandle</span> <span class="kw">for</span> <span class=
-"ident">process</span>::<span class="ident">ChildStderr</span> {
-    <span class="kw">fn</span> <span class=
-"ident">as_raw_handle</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">as_inner</span>().<span class=
-"ident">handle</span>().<span class=
-"ident">raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.2.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">AsRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ChildStderr</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">as_inner</span>().<span class="ident">handle</span>().<span class="ident">raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"into_raw_os"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.4.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">IntoRawHandle</span> <span class=
-"kw">for</span> <span class="ident">process</span>::<span class=
-"ident">ChildStdin</span> {
-    <span class="kw">fn</span> <span class=
-"ident">into_raw_handle</span>(<span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">into_inner</span>().<span class=
-"ident">into_handle</span>().<span class=
-"ident">into_raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;into_raw_os&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.4.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">IntoRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ChildStdin</span> {
+    <span class="kw">fn</span> <span class="ident">into_raw_handle</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">into_inner</span>().<span class="ident">into_handle</span>().<span class="ident">into_raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"into_raw_os"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.4.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">IntoRawHandle</span> <span class=
-"kw">for</span> <span class="ident">process</span>::<span class=
-"ident">ChildStdout</span> {
-    <span class="kw">fn</span> <span class=
-"ident">into_raw_handle</span>(<span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">into_inner</span>().<span class=
-"ident">into_handle</span>().<span class=
-"ident">into_raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;into_raw_os&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.4.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">IntoRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ChildStdout</span> {
+    <span class="kw">fn</span> <span class="ident">into_raw_handle</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">into_inner</span>().<span class="ident">into_handle</span>().<span class="ident">into_raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"into_raw_os"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.4.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">IntoRawHandle</span> <span class=
-"kw">for</span> <span class="ident">process</span>::<span class=
-"ident">ChildStderr</span> {
-    <span class="kw">fn</span> <span class=
-"ident">into_raw_handle</span>(<span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">RawHandle</span> {
-        <span class="self">self</span>.<span class=
-"ident">into_inner</span>().<span class=
-"ident">into_handle</span>().<span class=
-"ident">into_raw</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;into_raw_os&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.4.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">IntoRawHandle</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ChildStderr</span> {
+    <span class="kw">fn</span> <span class="ident">into_raw_handle</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawHandle</span> {
+        <span class="self">self</span>.<span class="ident">into_inner</span>().<span class="ident">into_handle</span>().<span class="ident">into_raw</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class=
-"doccomment">/// Windows-specific extensions to `std::process::ExitStatus`</span>
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"exit_status_from"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.12.0"</span>)]</span>
-<span class="kw">pub</span> <span class=
-"kw">trait</span> <span class="ident">ExitStatusExt</span> {
-    <span class=
-"doccomment">/// Creates a new `ExitStatus` from the raw underlying `u32` return value of</span>
+<span class="doccomment">/// Windows-specific extensions to `std::process::ExitStatus`</span>
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;exit_status_from&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.12.0&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ExitStatusExt</span> {
+    <span class="doccomment">/// Creates a new `ExitStatus` from the raw underlying `u32` return value of</span>
     <span class="doccomment">/// a process.</span>
-    <span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"exit_status_from"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.12.0"</span>)]</span>
-    <span class="kw">fn</span> <span class=
-"ident">from_raw</span>(<span class=
-"ident">raw</span>: <span class="ident">u32</span>) <span class=
-"op">-&gt;</span> <span class="self">Self</span>;
+    <span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;exit_status_from&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.12.0&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"exit_status_from"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.12.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">ExitStatusExt</span> <span class=
-"kw">for</span> <span class="ident">process</span>::<span class=
-"ident">ExitStatus</span> {
-    <span class="kw">fn</span> <span class=
-"ident">from_raw</span>(<span class=
-"ident">raw</span>: <span class="ident">u32</span>) <span class=
-"op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">process</span>::<span class=
-"ident">ExitStatus</span>::<span class=
-"ident">from_inner</span>(<span class=
-"ident">From</span>::<span class="ident">from</span>(<span class=
-"ident">raw</span>))
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;exit_status_from&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.12.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">ExitStatusExt</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">ExitStatus</span> {
+    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">process</span>::<span class="ident">ExitStatus</span>::<span class="ident">from_inner</span>(<span class="ident">From</span>::<span class="ident">from</span>(<span class="ident">raw</span>))
     }
 }
 
-<span class=
-"doccomment">/// Windows-specific extensions to the `std::process::Command` builder</span>
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"windows_process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.16.0"</span>)]</span>
-<span class="kw">pub</span> <span class=
-"kw">trait</span> <span class="ident">CommandExt</span> {
-    <span class=
-"doccomment">/// Sets the [process creation flags][1] to be passed to `CreateProcess`.</span>
+<span class="doccomment">/// Windows-specific extensions to the `std::process::Command` builder</span>
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;windows_process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.16.0&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CommandExt</span> {
+    <span class="doccomment">/// Sets the [process creation flags][1] to be passed to `CreateProcess`.</span>
     <span class="doccomment">///</span>
-    <span class=
-"doccomment">/// These will always be ORed with `CREATE_UNICODE_ENVIRONMENT`.</span>
-    <span class=
-"doccomment">/// [1]: https://msdn.microsoft.com/en-us/library/windows/desktop/ms684863(v=vs.85).aspx</span>
-    <span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"windows_process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.16.0"</span>)]</span>
-    <span class="kw">fn</span> <span class=
-"ident">creation_flags</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">flags</span>: <span class=
-"ident">u32</span>) <span class="op">-&gt;</span> <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">process</span>::<span class="ident">Command</span>;
+    <span class="doccomment">/// These will always be ORed with `CREATE_UNICODE_ENVIRONMENT`.</span>
+    <span class="doccomment">/// [1]: https://msdn.microsoft.com/en-us/library/windows/desktop/ms684863(v=vs.85).aspx</span>
+    <span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;windows_process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.16.0&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">creation_flags</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">process</span>::<span class="ident">Command</span>;
 }
 
-<span class="attribute">#[<span class=
-"ident">stable</span>(<span class=
-"ident">feature</span> <span class="op">=</span> <span class=
-"string">"windows_process_extensions"</span>, <span class=
-"ident">since</span> <span class="op">=</span> <span class=
-"string">"1.16.0"</span>)]</span>
-<span class="kw">impl</span> <span class=
-"ident">CommandExt</span> <span class="kw">for</span> <span class=
-"ident">process</span>::<span class="ident">Command</span> {
-    <span class="kw">fn</span> <span class=
-"ident">creation_flags</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">flags</span>: <span class=
-"ident">u32</span>) <span class="op">-&gt;</span> <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">process</span>::<span class="ident">Command</span> {
-        <span class="self">self</span>.<span class=
-"ident">as_inner_mut</span>().<span class=
-"ident">creation_flags</span>(<span class="ident">flags</span>);
+<span class="attribute">#[<span class="ident">stable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;windows_process_extensions&quot;</span>, <span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.16.0&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">CommandExt</span> <span class="kw">for</span> <span class="ident">process</span>::<span class="ident">Command</span> {
+    <span class="kw">fn</span> <span class="ident">creation_flags</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">process</span>::<span class="ident">Command</span> {
+        <span class="self">self</span>.<span class="ident">as_inner_mut</span>().<span class="ident">creation_flags</span>(<span class="ident">flags</span>);
         <span class="self">self</span>
     }
 }
-</pre></section>
-<section id='search' class="content hidden"></section>
-<section class="footer"></section>
-<aside id="help" class="hidden">
-<div>
-<h1 class="hidden">Help</h1>
-<div class="shortcuts">
-<h2>Keyboard Shortcuts</h2>
-<dl>
-<dt>?</dt>
-<dd>Show this help dialog</dd>
-<dt>S</dt>
-<dd>Focus the search field</dd>
-<dt>&amp;larrb;</dt>
-<dd>Move up in search results</dd>
-<dt>&amp;rarrb;</dt>
-<dd>Move down in search results</dd>
-<dt>⏎</dt>
-<dd>Go to active search result</dd>
-<dt>+</dt>
-<dd>Collapse/expand all sections</dd>
-</dl>
-</div>
-<div class="infos">
-<h2>Search Tricks</h2>
-<p>Prefix searches with a type followed by a colon (e.g.
-<code>fn:</code>) to restrict the search to a given type.</p>
-<p>Accepted types are: <code>fn</code>, <code>mod</code>,
-<code>struct</code>, <code>enum</code>, <code>trait</code>,
-<code>type</code>, <code>macro</code>, and <code>const</code>.</p>
-<p>Search functions by type signature (e.g. <code>vec -&gt;
-usize</code> or <code>* -&gt; vec</code>)</p>
-</div>
-</div>
-</aside>
-<script>
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
         window.rootPath = "../../../../../";
         window.currentCrate = "std";
-</script> 
-<script src="../../../../../jquery.js"></script> 
-<script src="../../../../../main.js"></script> 
-<script defer src="../../../../../search-index.js"></script>
+    </script>
+    <script src="../../../../../jquery.js"></script>
+    <script src="../../../../../main.js"></script>
+    <script defer src="../../../../../search-index.js"></script>
 </body>
 </html>

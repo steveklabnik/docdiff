@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="generator" content=
-"HTML Tidy for HTML5 for Windows version 5.5.12">
-<meta charset="utf-8">
-<meta name="viewport" content=
-"width=device-width, initial-scale=1.0">
-<meta name="generator" content="rustdoc">
-<meta name="description" content=
-"Source to the Rust file `src\libstd\sys\windows\process.rs`.">
-<meta name="keywords" content="rust, rustlang, rust-lang">
-<title>process.rs.html -- source</title>
-<link rel="stylesheet" type="text/css" href=
-"../../../../normalize.css">
-<link rel="stylesheet" type="text/css" href=
-"../../../../rustdoc.css">
-<link rel="stylesheet" type="text/css" href="../../../../main.css">
-<link rel="shortcut icon" href=
-"https://doc.rust-lang.org/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src\libstd\sys\windows\process.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>process.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
+
+    <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
+    
 </head>
 <body class="rustdoc">
-<!--[if lte IE 8]>
+    <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
         things.
     </div>
     <![endif]-->
-<nav class="sidebar"><a href='../../../../std/index.html'><img src=
-'https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt=
-'logo' width='100'></a></nav>
-<nav class="sub">
-<form class="search-form js-only">
-<div class="search-container"><input class="search-input" name=
-"search" autocomplete="off" placeholder=
-"Click or press ‘S’ to search, ‘?’ for more options…" type=
-"search"></div>
-</form>
-</nav>
-<section id='main' class="content source">
-<pre class="line-numbers"><span id="1">  1</span>
+
+    
+
+    <nav class="sidebar">
+        <a href='../../../../std/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -591,382 +596,155 @@
 <span id="551">551</span>
 <span id="552">552</span>
 <span id="553">553</span>
-</pre>
-<pre class="rust">
-<span class=
-"comment">// Copyright 2012-2014 The Rust Project Developers. See the COPYRIGHT</span>
-<span class=
-"comment">// file at the top-level directory of this distribution and at</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2012-2014 The Rust Project Developers. See the COPYRIGHT</span>
+<span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
-<span class=
-"comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
-<span class=
-"comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
-<span class=
-"comment">// option. This file may not be copied, modified, or distributed</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="kw">use</span> <span class=
-"ident">ascii</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class=
-"ident">collections</span>::<span class="ident">HashMap</span>;
+<span class="kw">use</span> <span class="ident">ascii</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">collections</span>::<span class="ident">HashMap</span>;
 <span class="kw">use</span> <span class="ident">collections</span>;
-<span class="kw">use</span> <span class=
-"ident">env</span>::<span class="ident">split_paths</span>;
+<span class="kw">use</span> <span class="ident">env</span>::<span class="ident">split_paths</span>;
 <span class="kw">use</span> <span class="ident">env</span>;
-<span class="kw">use</span> <span class=
-"ident">ffi</span>::{<span class=
-"ident">OsString</span>, <span class="ident">OsStr</span>};
+<span class="kw">use</span> <span class="ident">ffi</span>::{<span class="ident">OsString</span>, <span class="ident">OsStr</span>};
 <span class="kw">use</span> <span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">fs</span>;
-<span class="kw">use</span> <span class=
-"ident">io</span>::{<span class="self">self</span>, <span class=
-"ident">Error</span>, <span class="ident">ErrorKind</span>};
-<span class="kw">use</span> <span class=
-"ident">libc</span>::<span class="ident">c_void</span>;
+<span class="kw">use</span> <span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Error</span>, <span class="ident">ErrorKind</span>};
+<span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">mem</span>;
-<span class="kw">use</span> <span class=
-"ident">os</span>::<span class="ident">windows</span>::<span class=
-"ident">ffi</span>::<span class="ident">OsStrExt</span>;
-<span class="kw">use</span> <span class=
-"ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">os</span>::<span class="ident">windows</span>::<span class="ident">ffi</span>::<span class="ident">OsStrExt</span>;
+<span class="kw">use</span> <span class="ident">path</span>::<span class="ident">Path</span>;
 <span class="kw">use</span> <span class="ident">ptr</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">mutex</span>::<span class=
-"ident">Mutex</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">c</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">fs</span>::{<span class=
-"ident">OpenOptions</span>, <span class="ident">File</span>};
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">handle</span>::<span class=
-"ident">Handle</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">pipe</span>::{<span class=
-"self">self</span>, <span class="ident">AnonPipe</span>};
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">stdio</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::{<span class="self">self</span>, <span class=
-"ident">cvt</span>};
-<span class="kw">use</span> <span class=
-"ident">sys_common</span>::{<span class=
-"ident">AsInner</span>, <span class="ident">FromInner</span>};
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">mutex</span>::<span class="ident">Mutex</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">c</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">fs</span>::{<span class="ident">OpenOptions</span>, <span class="ident">File</span>};
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">handle</span>::<span class="ident">Handle</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">pipe</span>::{<span class="self">self</span>, <span class="ident">AnonPipe</span>};
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">stdio</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::{<span class="self">self</span>, <span class="ident">cvt</span>};
+<span class="kw">use</span> <span class="ident">sys_common</span>::{<span class="ident">AsInner</span>, <span class="ident">FromInner</span>};
 
-<span class=
-"comment">////////////////////////////////////////////////////////////////////////////////</span>
+<span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 <span class="comment">// Command</span>
-<span class=
-"comment">////////////////////////////////////////////////////////////////////////////////</span>
+<span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
-<span class="kw">fn</span> <span class=
-"ident">mk_key</span>(<span class="ident">s</span>: <span class=
-"kw-2">&</span><span class="ident">OsStr</span>) <span class=
-"op">-&gt;</span> <span class="ident">OsString</span> {
-    <span class="ident">FromInner</span>::<span class=
-"ident">from_inner</span>(<span class=
-"ident">sys</span>::<span class="ident">os_str</span>::<span class=
-"ident">Buf</span> {
-        <span class="ident">inner</span>: <span class=
-"ident">s</span>.<span class="ident">as_inner</span>().<span class=
-"ident">inner</span>.<span class=
-"ident">to_ascii_uppercase</span>()
+<span class="kw">fn</span> <span class="ident">mk_key</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-&gt;</span> <span class="ident">OsString</span> {
+    <span class="ident">FromInner</span>::<span class="ident">from_inner</span>(<span class="ident">sys</span>::<span class="ident">os_str</span>::<span class="ident">Buf</span> {
+        <span class="ident">inner</span>: <span class="ident">s</span>.<span class="ident">as_inner</span>().<span class="ident">inner</span>.<span class="ident">to_ascii_uppercase</span>()
     })
 }
 
-<span class="kw">fn</span> <span class=
-"ident">ensure_no_nuls</span><span class=
-"op">&lt;</span><span class="ident">T</span>: <span class=
-"ident">AsRef</span><span class="op">&lt;</span><span class=
-"ident">OsStr</span><span class="op">&gt;&gt;</span>(<span class=
-"ident">str</span>: <span class="ident">T</span>) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class=
-"ident">str</span>.<span class="ident">as_ref</span>().<span class=
-"ident">encode_wide</span>().<span class=
-"ident">any</span>(<span class="op">|</span><span class=
-"ident">b</span><span class="op">|</span> <span class=
-"ident">b</span> <span class="op">==</span> <span class=
-"number">0</span>) {
-        <span class="prelude-val">Err</span>(<span class=
-"ident">io</span>::<span class="ident">Error</span>::<span class=
-"ident">new</span>(<span class=
-"ident">ErrorKind</span>::<span class=
-"ident">InvalidInput</span>, <span class=
-"string">"nul byte found in provided data"</span>))
+<span class="kw">fn</span> <span class="ident">ensure_no_nuls</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">OsStr</span><span class="op">&gt;&gt;</span>(<span class="ident">str</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="ident">str</span>.<span class="ident">as_ref</span>().<span class="ident">encode_wide</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>) {
+        <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">InvalidInput</span>, <span class="string">&quot;nul byte found in provided data&quot;</span>))
     } <span class="kw">else</span> {
-        <span class="prelude-val">Ok</span>(<span class=
-"ident">str</span>)
+        <span class="prelude-val">Ok</span>(<span class="ident">str</span>)
     }
 }
 
-<span class="kw">pub</span> <span class=
-"kw">struct</span> <span class="ident">Command</span> {
-    <span class="ident">program</span>: <span class=
-"ident">OsString</span>,
-    <span class="ident">args</span>: <span class=
-"ident">Vec</span><span class="op">&lt;</span><span class=
-"ident">OsString</span><span class="op">&gt;</span>,
-    <span class="ident">env</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">HashMap</span><span class="op">&lt;</span><span class=
-"ident">OsString</span>, <span class=
-"ident">OsString</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">cwd</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">OsString</span><span class="op">&gt;</span>,
-    <span class="ident">flags</span>: <span class=
-"ident">u32</span>,
-    <span class="ident">detach</span>: <span class=
-"ident">bool</span>, <span class=
-"comment">// not currently exposed in std::process</span>
-    <span class="ident">stdin</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">Stdio</span><span class="op">&gt;</span>,
-    <span class="ident">stdout</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">Stdio</span><span class="op">&gt;</span>,
-    <span class="ident">stderr</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">Stdio</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Command</span> {
+    <span class="ident">program</span>: <span class="ident">OsString</span>,
+    <span class="ident">args</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>,
+    <span class="ident">env</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">OsString</span>, <span class="ident">OsString</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">cwd</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span>,
+    <span class="ident">flags</span>: <span class="ident">u32</span>,
+    <span class="ident">detach</span>: <span class="ident">bool</span>, <span class="comment">// not currently exposed in std::process</span>
+    <span class="ident">stdin</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Stdio</span><span class="op">&gt;</span>,
+    <span class="ident">stdout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Stdio</span><span class="op">&gt;</span>,
+    <span class="ident">stderr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Stdio</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">pub</span> <span class=
-"kw">enum</span> <span class="ident">Stdio</span> {
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Stdio</span> {
     <span class="ident">Inherit</span>,
     <span class="ident">Null</span>,
     <span class="ident">MakePipe</span>,
-    <span class="ident">Handle</span>(<span class=
-"ident">Handle</span>),
+    <span class="ident">Handle</span>(<span class="ident">Handle</span>),
 }
 
-<span class="kw">pub</span> <span class=
-"kw">struct</span> <span class="ident">StdioPipes</span> {
-    <span class="kw">pub</span> <span class=
-"ident">stdin</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">AnonPipe</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class=
-"ident">stdout</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">AnonPipe</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class=
-"ident">stderr</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">AnonPipe</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StdioPipes</span> {
+    <span class="kw">pub</span> <span class="ident">stdin</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AnonPipe</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">stdout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AnonPipe</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">stderr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AnonPipe</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">struct</span> <span class=
-"ident">DropGuard</span><span class="op">&lt;</span><span class=
-"lifetime">'a</span><span class="op">&gt;</span> {
-    <span class="ident">lock</span>: <span class=
-"kw-2">&</span><span class="lifetime">'a</span> <span class=
-"ident">Mutex</span>,
+<span class="kw">struct</span> <span class="ident">DropGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">lock</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Mutex</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Command</span> {
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">new</span>(<span class=
-"ident">program</span>: <span class="kw-2">&</span><span class=
-"ident">OsStr</span>) <span class="op">-&gt;</span> <span class=
-"ident">Command</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">program</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-&gt;</span> <span class="ident">Command</span> {
         <span class="ident">Command</span> {
-            <span class="ident">program</span>: <span class=
-"ident">program</span>.<span class="ident">to_os_string</span>(),
-            <span class="ident">args</span>: <span class=
-"ident">Vec</span>::<span class="ident">new</span>(),
-            <span class="ident">env</span>: <span class=
-"prelude-val">None</span>,
-            <span class="ident">cwd</span>: <span class=
-"prelude-val">None</span>,
-            <span class="ident">flags</span>: <span class=
-"number">0</span>,
-            <span class="ident">detach</span>: <span class=
-"bool-val">false</span>,
-            <span class="ident">stdin</span>: <span class=
-"prelude-val">None</span>,
-            <span class="ident">stdout</span>: <span class=
-"prelude-val">None</span>,
-            <span class="ident">stderr</span>: <span class=
-"prelude-val">None</span>,
+            <span class="ident">program</span>: <span class="ident">program</span>.<span class="ident">to_os_string</span>(),
+            <span class="ident">args</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">env</span>: <span class="prelude-val">None</span>,
+            <span class="ident">cwd</span>: <span class="prelude-val">None</span>,
+            <span class="ident">flags</span>: <span class="number">0</span>,
+            <span class="ident">detach</span>: <span class="bool-val">false</span>,
+            <span class="ident">stdin</span>: <span class="prelude-val">None</span>,
+            <span class="ident">stdout</span>: <span class="prelude-val">None</span>,
+            <span class="ident">stderr</span>: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">arg</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">arg</span>: <span class=
-"kw-2">&</span><span class="ident">OsStr</span>) {
-        <span class="self">self</span>.<span class=
-"ident">args</span>.<span class="ident">push</span>(<span class=
-"ident">arg</span>.<span class="ident">to_os_string</span>())
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) {
+        <span class="self">self</span>.<span class="ident">args</span>.<span class="ident">push</span>(<span class="ident">arg</span>.<span class="ident">to_os_string</span>())
     }
-    <span class="kw">fn</span> <span class=
-"ident">init_env_map</span>(<span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="self">self</span>){
-        <span class="kw">if</span> <span class=
-"self">self</span>.<span class="ident">env</span>.<span class=
-"ident">is_none</span>() {
-            <span class="self">self</span>.<span class=
-"ident">env</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">env</span>::<span class=
-"ident">vars_os</span>().<span class=
-"ident">map</span>(<span class="op">|</span>(<span class=
-"ident">key</span>, <span class="ident">val</span>)<span class=
-"op">|</span> {
-                (<span class="ident">mk_key</span>(<span class=
-"kw-2">&</span><span class="ident">key</span>), <span class=
-"ident">val</span>)
+    <span class="kw">fn</span> <span class="ident">init_env_map</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>){
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">env</span>.<span class="ident">is_none</span>() {
+            <span class="self">self</span>.<span class="ident">env</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">env</span>::<span class="ident">vars_os</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">key</span>, <span class="ident">val</span>)<span class="op">|</span> {
+                (<span class="ident">mk_key</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>), <span class="ident">val</span>)
             }).<span class="ident">collect</span>());
         }
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">env</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">key</span>: <span class=
-"kw-2">&</span><span class="ident">OsStr</span>, <span class=
-"ident">val</span>: <span class="kw-2">&</span><span class=
-"ident">OsStr</span>) {
-        <span class="self">self</span>.<span class=
-"ident">init_env_map</span>();
-        <span class="self">self</span>.<span class=
-"ident">env</span>.<span class="ident">as_mut</span>().<span class=
-"ident">unwrap</span>().<span class=
-"ident">insert</span>(<span class=
-"ident">mk_key</span>(<span class="ident">key</span>), <span class=
-"ident">val</span>.<span class="ident">to_os_string</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">env</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) {
+        <span class="self">self</span>.<span class="ident">init_env_map</span>();
+        <span class="self">self</span>.<span class="ident">env</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">insert</span>(<span class="ident">mk_key</span>(<span class="ident">key</span>), <span class="ident">val</span>.<span class="ident">to_os_string</span>());
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">env_remove</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">key</span>: <span class=
-"kw-2">&</span><span class="ident">OsStr</span>) {
-        <span class="self">self</span>.<span class=
-"ident">init_env_map</span>();
-        <span class="self">self</span>.<span class=
-"ident">env</span>.<span class="ident">as_mut</span>().<span class=
-"ident">unwrap</span>().<span class=
-"ident">remove</span>(<span class="kw-2">&</span><span class=
-"ident">mk_key</span>(<span class="ident">key</span>));
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">env_remove</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) {
+        <span class="self">self</span>.<span class="ident">init_env_map</span>();
+        <span class="self">self</span>.<span class="ident">env</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="ident">mk_key</span>(<span class="ident">key</span>));
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">env_clear</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>) {
-        <span class="self">self</span>.<span class=
-"ident">env</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">HashMap</span>::<span class="ident">new</span>())
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">env_clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">env</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">HashMap</span>::<span class="ident">new</span>())
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">cwd</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">dir</span>: <span class=
-"kw-2">&</span><span class="ident">OsStr</span>) {
-        <span class="self">self</span>.<span class=
-"ident">cwd</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">dir</span>.<span class="ident">to_os_string</span>())
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cwd</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) {
+        <span class="self">self</span>.<span class="ident">cwd</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dir</span>.<span class="ident">to_os_string</span>())
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">stdin</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">stdin</span>: <span class=
-"ident">Stdio</span>) {
-        <span class="self">self</span>.<span class=
-"ident">stdin</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class="ident">stdin</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stdin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">stdin</span>: <span class="ident">Stdio</span>) {
+        <span class="self">self</span>.<span class="ident">stdin</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">stdin</span>);
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">stdout</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">stdout</span>: <span class=
-"ident">Stdio</span>) {
-        <span class="self">self</span>.<span class=
-"ident">stdout</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class="ident">stdout</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stdout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">stdout</span>: <span class="ident">Stdio</span>) {
+        <span class="self">self</span>.<span class="ident">stdout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">stdout</span>);
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">stderr</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">stderr</span>: <span class=
-"ident">Stdio</span>) {
-        <span class="self">self</span>.<span class=
-"ident">stderr</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class="ident">stderr</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stderr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">stderr</span>: <span class="ident">Stdio</span>) {
+        <span class="self">self</span>.<span class="ident">stderr</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">stderr</span>);
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class=
-"ident">creation_flags</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class="ident">flags</span>: <span class=
-"ident">u32</span>) {
-        <span class="self">self</span>.<span class=
-"ident">flags</span> <span class="op">=</span> <span class=
-"ident">flags</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">creation_flags</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">u32</span>) {
+        <span class="self">self</span>.<span class="ident">flags</span> <span class="op">=</span> <span class="ident">flags</span>;
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">spawn</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>, <span class=
-"ident">default</span>: <span class="ident">Stdio</span>, <span class="ident">needs_stdin</span>: <span class="ident">bool</span>)
-                 <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span>(<span class=
-"ident">Process</span>, <span class=
-"ident">StdioPipes</span>)<span class="op">&gt;</span> {
-        <span class=
-"comment">// To have the spawning semantics of unix/windows stay the same, we need</span>
-        <span class=
-"comment">// to read the *child's* PATH if one is provided. See #15149 for more</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">default</span>: <span class="ident">Stdio</span>, <span class="ident">needs_stdin</span>: <span class="ident">bool</span>)
+                 <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Process</span>, <span class="ident">StdioPipes</span>)<span class="op">&gt;</span> {
+        <span class="comment">// To have the spawning semantics of unix/windows stay the same, we need</span>
+        <span class="comment">// to read the *child&#39;s* PATH if one is provided. See #15149 for more</span>
         <span class="comment">// details.</span>
-        <span class="kw">let</span> <span class=
-"ident">program</span> <span class="op">=</span> <span class=
-"self">self</span>.<span class="ident">env</span>.<span class=
-"ident">as_ref</span>().<span class=
-"ident">and_then</span>(<span class="op">|</span><span class=
-"ident">env</span><span class="op">|</span> {
-            <span class="kw">for</span> (<span class=
-"ident">key</span>, <span class="ident">v</span>) <span class=
-"kw">in</span> <span class="ident">env</span> {
-                <span class="kw">if</span> <span class=
-"ident">OsStr</span>::<span class="ident">new</span>(<span class=
-"string">"PATH"</span>) <span class="op">!=</span> <span class=
-"kw-2">&</span><span class="kw-2">*</span><span class=
-"kw-2">*</span><span class="ident">key</span> { <span class=
-"kw">continue</span> }
+        <span class="kw">let</span> <span class="ident">program</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">env</span>.<span class="ident">as_ref</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">env</span><span class="op">|</span> {
+            <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">env</span> {
+                <span class="kw">if</span> <span class="ident">OsStr</span>::<span class="ident">new</span>(<span class="string">&quot;PATH&quot;</span>) <span class="op">!=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">key</span> { <span class="kw">continue</span> }
 
-                <span class=
-"comment">// Split the value and test each path to see if the</span>
+                <span class="comment">// Split the value and test each path to see if the</span>
                 <span class="comment">// program exists.</span>
-                <span class="kw">for</span> <span class=
-"ident">path</span> <span class="kw">in</span> <span class=
-"ident">split_paths</span>(<span class="kw-2">&</span><span class=
-"ident">v</span>) {
-                    <span class="kw">let</span> <span class=
-"ident">path</span> <span class="op">=</span> <span class=
-"ident">path</span>.<span class="ident">join</span>(<span class=
-"self">self</span>.<span class="ident">program</span>.<span class=
-"ident">to_str</span>().<span class="ident">unwrap</span>())
-                                   .<span class=
-"ident">with_extension</span>(<span class=
-"ident">env</span>::<span class="ident">consts</span>::<span class=
-"ident">EXE_EXTENSION</span>);
-                    <span class="kw">if</span> <span class=
-"ident">fs</span>::<span class="ident">metadata</span>(<span class=
-"kw-2">&</span><span class="ident">path</span>).<span class=
-"ident">is_ok</span>() {
-                        <span class="kw">return</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">path</span>.<span class="ident">into_os_string</span>())
+                <span class="kw">for</span> <span class="ident">path</span> <span class="kw">in</span> <span class="ident">split_paths</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>) {
+                    <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">join</span>(<span class="self">self</span>.<span class="ident">program</span>.<span class="ident">to_str</span>().<span class="ident">unwrap</span>())
+                                   .<span class="ident">with_extension</span>(<span class="ident">env</span>::<span class="ident">consts</span>::<span class="ident">EXE_EXTENSION</span>);
+                    <span class="kw">if</span> <span class="ident">fs</span>::<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>).<span class="ident">is_ok</span>() {
+                        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">path</span>.<span class="ident">into_os_string</span>())
                     }
                 }
                 <span class="kw">break</span>
@@ -974,1058 +752,464 @@
             <span class="prelude-val">None</span>
         });
 
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">si</span> <span class=
-"op">=</span> <span class="ident">zeroed_startupinfo</span>();
-        <span class="ident">si</span>.<span class=
-"ident">cb</span> <span class="op">=</span> <span class=
-"ident">mem</span>::<span class=
-"ident">size_of</span>::<span class="op">&lt;</span><span class=
-"ident">c</span>::<span class=
-"ident">STARTUPINFO</span><span class="op">&gt;</span>() <span class="kw">as</span> <span class="ident">c</span>::<span class="ident">DWORD</span>;
-        <span class="ident">si</span>.<span class=
-"ident">dwFlags</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class="ident">STARTF_USESTDHANDLES</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">si</span> <span class="op">=</span> <span class="ident">zeroed_startupinfo</span>();
+        <span class="ident">si</span>.<span class="ident">cb</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">c</span>::<span class="ident">STARTUPINFO</span><span class="op">&gt;</span>() <span class="kw">as</span> <span class="ident">c</span>::<span class="ident">DWORD</span>;
+        <span class="ident">si</span>.<span class="ident">dwFlags</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">STARTF_USESTDHANDLES</span>;
 
-        <span class="kw">let</span> <span class=
-"ident">program</span> <span class="op">=</span> <span class=
-"ident">program</span>.<span class=
-"ident">as_ref</span>().<span class=
-"ident">unwrap_or</span>(<span class="kw-2">&</span><span class=
-"self">self</span>.<span class="ident">program</span>);
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">cmd_str</span> <span class=
-"op">=</span> <span class=
-"ident">make_command_line</span>(<span class=
-"ident">program</span>, <span class="kw-2">&</span><span class=
-"self">self</span>.<span class="ident">args</span>)<span class=
-"question-mark">?</span>;
-        <span class="ident">cmd_str</span>.<span class=
-"ident">push</span>(<span class="number">0</span>); <span class=
-"comment">// add null terminator</span>
+        <span class="kw">let</span> <span class="ident">program</span> <span class="op">=</span> <span class="ident">program</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">program</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmd_str</span> <span class="op">=</span> <span class="ident">make_command_line</span>(<span class="ident">program</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">args</span>)<span class="question-mark">?</span>;
+        <span class="ident">cmd_str</span>.<span class="ident">push</span>(<span class="number">0</span>); <span class="comment">// add null terminator</span>
 
         <span class="comment">// stolen from the libuv code.</span>
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">flags</span> <span class=
-"op">=</span> <span class="self">self</span>.<span class=
-"ident">flags</span> <span class="op">|</span> <span class=
-"ident">c</span>::<span class=
-"ident">CREATE_UNICODE_ENVIRONMENT</span>;
-        <span class="kw">if</span> <span class=
-"self">self</span>.<span class="ident">detach</span> {
-            <span class="ident">flags</span> <span class=
-"op">|=</span> <span class="ident">c</span>::<span class=
-"ident">DETACHED_PROCESS</span> <span class=
-"op">|</span> <span class="ident">c</span>::<span class=
-"ident">CREATE_NEW_PROCESS_GROUP</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">flags</span> <span class="op">|</span> <span class="ident">c</span>::<span class="ident">CREATE_UNICODE_ENVIRONMENT</span>;
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">detach</span> {
+            <span class="ident">flags</span> <span class="op">|=</span> <span class="ident">c</span>::<span class="ident">DETACHED_PROCESS</span> <span class="op">|</span> <span class="ident">c</span>::<span class="ident">CREATE_NEW_PROCESS_GROUP</span>;
         }
 
-        <span class="kw">let</span> (<span class=
-"ident">envp</span>, <span class="ident">_data</span>) <span class=
-"op">=</span> <span class="ident">make_envp</span>(<span class=
-"self">self</span>.<span class="ident">env</span>.<span class=
-"ident">as_ref</span>())<span class="question-mark">?</span>;
-        <span class="kw">let</span> (<span class=
-"ident">dirp</span>, <span class="ident">_data</span>) <span class=
-"op">=</span> <span class="ident">make_dirp</span>(<span class=
-"self">self</span>.<span class="ident">cwd</span>.<span class=
-"ident">as_ref</span>())<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">pi</span> <span class=
-"op">=</span> <span class=
-"ident">zeroed_process_information</span>();
+        <span class="kw">let</span> (<span class="ident">envp</span>, <span class="ident">_data</span>) <span class="op">=</span> <span class="ident">make_envp</span>(<span class="self">self</span>.<span class="ident">env</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> (<span class="ident">dirp</span>, <span class="ident">_data</span>) <span class="op">=</span> <span class="ident">make_dirp</span>(<span class="self">self</span>.<span class="ident">cwd</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pi</span> <span class="op">=</span> <span class="ident">zeroed_process_information</span>();
 
-        <span class=
-"comment">// Prepare all stdio handles to be inherited by the child. This</span>
-        <span class=
-"comment">// currently involves duplicating any existing ones with the ability to</span>
-        <span class=
-"comment">// be inherited by child processes. Note, however, that once an</span>
-        <span class=
-"comment">// inheritable handle is created, *any* spawned child will inherit that</span>
-        <span class=
-"comment">// handle. We only want our own child to inherit this handle, so we wrap</span>
-        <span class=
-"comment">// the remaining portion of this spawn in a mutex.</span>
+        <span class="comment">// Prepare all stdio handles to be inherited by the child. This</span>
+        <span class="comment">// currently involves duplicating any existing ones with the ability to</span>
+        <span class="comment">// be inherited by child processes. Note, however, that once an</span>
+        <span class="comment">// inheritable handle is created, *any* spawned child will inherit that</span>
+        <span class="comment">// handle. We only want our own child to inherit this handle, so we wrap</span>
+        <span class="comment">// the remaining portion of this spawn in a mutex.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// For more information, msdn also has an article about this race:</span>
-        <span class=
-"comment">// http://support.microsoft.com/kb/315939</span>
-        <span class="kw">static</span> <span class=
-"ident">CREATE_PROCESS_LOCK</span>: <span class=
-"ident">Mutex</span> <span class="op">=</span> <span class=
-"ident">Mutex</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class=
-"ident">_guard</span> <span class="op">=</span> <span class=
-"ident">DropGuard</span>::<span class=
-"ident">new</span>(<span class="kw-2">&</span><span class=
-"ident">CREATE_PROCESS_LOCK</span>);
+        <span class="comment">// For more information, msdn also has an article about this race:</span>
+        <span class="comment">// http://support.microsoft.com/kb/315939</span>
+        <span class="kw">static</span> <span class="ident">CREATE_PROCESS_LOCK</span>: <span class="ident">Mutex</span> <span class="op">=</span> <span class="ident">Mutex</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="ident">_guard</span> <span class="op">=</span> <span class="ident">DropGuard</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">CREATE_PROCESS_LOCK</span>);
 
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">pipes</span> <span class=
-"op">=</span> <span class="ident">StdioPipes</span> {
-            <span class="ident">stdin</span>: <span class=
-"prelude-val">None</span>,
-            <span class="ident">stdout</span>: <span class=
-"prelude-val">None</span>,
-            <span class="ident">stderr</span>: <span class=
-"prelude-val">None</span>,
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pipes</span> <span class="op">=</span> <span class="ident">StdioPipes</span> {
+            <span class="ident">stdin</span>: <span class="prelude-val">None</span>,
+            <span class="ident">stdout</span>: <span class="prelude-val">None</span>,
+            <span class="ident">stderr</span>: <span class="prelude-val">None</span>,
         };
-        <span class="kw">let</span> <span class=
-"ident">null</span> <span class="op">=</span> <span class=
-"ident">Stdio</span>::<span class="ident">Null</span>;
-        <span class="kw">let</span> <span class=
-"ident">default_stdin</span> <span class="op">=</span> <span class=
-"kw">if</span> <span class="ident">needs_stdin</span> {<span class=
-"kw-2">&</span><span class="ident">default</span>} <span class=
-"kw">else</span> {<span class="kw-2">&</span><span class=
-"ident">null</span>};
-        <span class="kw">let</span> <span class=
-"ident">stdin</span> <span class="op">=</span> <span class=
-"self">self</span>.<span class="ident">stdin</span>.<span class=
-"ident">as_ref</span>().<span class=
-"ident">unwrap_or</span>(<span class="ident">default_stdin</span>);
-        <span class="kw">let</span> <span class=
-"ident">stdout</span> <span class="op">=</span> <span class=
-"self">self</span>.<span class="ident">stdout</span>.<span class=
-"ident">as_ref</span>().<span class=
-"ident">unwrap_or</span>(<span class="kw-2">&</span><span class=
-"ident">default</span>);
-        <span class="kw">let</span> <span class=
-"ident">stderr</span> <span class="op">=</span> <span class=
-"self">self</span>.<span class="ident">stderr</span>.<span class=
-"ident">as_ref</span>().<span class=
-"ident">unwrap_or</span>(<span class="kw-2">&</span><span class=
-"ident">default</span>);
-        <span class="kw">let</span> <span class=
-"ident">stdin</span> <span class="op">=</span> <span class=
-"ident">stdin</span>.<span class=
-"ident">to_handle</span>(<span class="ident">c</span>::<span class=
-"ident">STD_INPUT_HANDLE</span>, <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">pipes</span>.<span class="ident">stdin</span>)<span class=
-"question-mark">?</span>;
-        <span class="kw">let</span> <span class=
-"ident">stdout</span> <span class="op">=</span> <span class=
-"ident">stdout</span>.<span class=
-"ident">to_handle</span>(<span class="ident">c</span>::<span class=
-"ident">STD_OUTPUT_HANDLE</span>,
-                                      <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">pipes</span>.<span class="ident">stdout</span>)<span class=
-"question-mark">?</span>;
-        <span class="kw">let</span> <span class=
-"ident">stderr</span> <span class="op">=</span> <span class=
-"ident">stderr</span>.<span class=
-"ident">to_handle</span>(<span class="ident">c</span>::<span class=
-"ident">STD_ERROR_HANDLE</span>,
-                                      <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">pipes</span>.<span class="ident">stderr</span>)<span class=
-"question-mark">?</span>;
-        <span class="ident">si</span>.<span class=
-"ident">hStdInput</span> <span class="op">=</span> <span class=
-"ident">stdin</span>.<span class="ident">raw</span>();
-        <span class="ident">si</span>.<span class=
-"ident">hStdOutput</span> <span class="op">=</span> <span class=
-"ident">stdout</span>.<span class="ident">raw</span>();
-        <span class="ident">si</span>.<span class=
-"ident">hStdError</span> <span class="op">=</span> <span class=
-"ident">stderr</span>.<span class="ident">raw</span>();
+        <span class="kw">let</span> <span class="ident">null</span> <span class="op">=</span> <span class="ident">Stdio</span>::<span class="ident">Null</span>;
+        <span class="kw">let</span> <span class="ident">default_stdin</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">needs_stdin</span> {<span class="kw-2">&amp;</span><span class="ident">default</span>} <span class="kw">else</span> {<span class="kw-2">&amp;</span><span class="ident">null</span>};
+        <span class="kw">let</span> <span class="ident">stdin</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">stdin</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap_or</span>(<span class="ident">default_stdin</span>);
+        <span class="kw">let</span> <span class="ident">stdout</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">stdout</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="ident">default</span>);
+        <span class="kw">let</span> <span class="ident">stderr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">stderr</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap_or</span>(<span class="kw-2">&amp;</span><span class="ident">default</span>);
+        <span class="kw">let</span> <span class="ident">stdin</span> <span class="op">=</span> <span class="ident">stdin</span>.<span class="ident">to_handle</span>(<span class="ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pipes</span>.<span class="ident">stdin</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">stdout</span> <span class="op">=</span> <span class="ident">stdout</span>.<span class="ident">to_handle</span>(<span class="ident">c</span>::<span class="ident">STD_OUTPUT_HANDLE</span>,
+                                      <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pipes</span>.<span class="ident">stdout</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">stderr</span> <span class="op">=</span> <span class="ident">stderr</span>.<span class="ident">to_handle</span>(<span class="ident">c</span>::<span class="ident">STD_ERROR_HANDLE</span>,
+                                      <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pipes</span>.<span class="ident">stderr</span>)<span class="question-mark">?</span>;
+        <span class="ident">si</span>.<span class="ident">hStdInput</span> <span class="op">=</span> <span class="ident">stdin</span>.<span class="ident">raw</span>();
+        <span class="ident">si</span>.<span class="ident">hStdOutput</span> <span class="op">=</span> <span class="ident">stdout</span>.<span class="ident">raw</span>();
+        <span class="ident">si</span>.<span class="ident">hStdError</span> <span class="op">=</span> <span class="ident">stderr</span>.<span class="ident">raw</span>();
 
         <span class="kw">unsafe</span> {
-            <span class="ident">cvt</span>(<span class=
-"ident">c</span>::<span class=
-"ident">CreateProcessW</span>(<span class=
-"ident">ptr</span>::<span class="ident">null</span>(),
-                                  <span class=
-"ident">cmd_str</span>.<span class="ident">as_mut_ptr</span>(),
-                                  <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                  <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                  <span class=
-"ident">c</span>::<span class="ident">TRUE</span>, <span class=
-"ident">flags</span>, <span class="ident">envp</span>, <span class=
-"ident">dirp</span>,
-                                  <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">si</span>, <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="ident">pi</span>))
+            <span class="ident">cvt</span>(<span class="ident">c</span>::<span class="ident">CreateProcessW</span>(<span class="ident">ptr</span>::<span class="ident">null</span>(),
+                                  <span class="ident">cmd_str</span>.<span class="ident">as_mut_ptr</span>(),
+                                  <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                                  <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                                  <span class="ident">c</span>::<span class="ident">TRUE</span>, <span class="ident">flags</span>, <span class="ident">envp</span>, <span class="ident">dirp</span>,
+                                  <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">si</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pi</span>))
         }<span class="question-mark">?</span>;
 
-        <span class=
-"comment">// We close the thread handle because we don't care about keeping</span>
-        <span class=
-"comment">// the thread id valid, and we aren't keeping the thread handle</span>
-        <span class=
-"comment">// around to be able to close it later.</span>
-        <span class="ident">drop</span>(<span class=
-"ident">Handle</span>::<span class="ident">new</span>(<span class=
-"ident">pi</span>.<span class="ident">hThread</span>));
+        <span class="comment">// We close the thread handle because we don&#39;t care about keeping</span>
+        <span class="comment">// the thread id valid, and we aren&#39;t keeping the thread handle</span>
+        <span class="comment">// around to be able to close it later.</span>
+        <span class="ident">drop</span>(<span class="ident">Handle</span>::<span class="ident">new</span>(<span class="ident">pi</span>.<span class="ident">hThread</span>));
 
-        <span class="prelude-val">Ok</span>((<span class=
-"ident">Process</span> { <span class=
-"ident">handle</span>: <span class=
-"ident">Handle</span>::<span class="ident">new</span>(<span class=
-"ident">pi</span>.<span class=
-"ident">hProcess</span>) }, <span class="ident">pipes</span>))
+        <span class="prelude-val">Ok</span>((<span class="ident">Process</span> { <span class="ident">handle</span>: <span class="ident">Handle</span>::<span class="ident">new</span>(<span class="ident">pi</span>.<span class="ident">hProcess</span>) }, <span class="ident">pipes</span>))
     }
 
 }
 
-<span class="kw">impl</span> <span class=
-"ident">fmt</span>::<span class="ident">Debug</span> <span class=
-"kw">for</span> <span class="ident">Command</span> {
-    <span class="kw">fn</span> <span class=
-"ident">fmt</span>(<span class="kw-2">&</span><span class=
-"self">self</span>, <span class="ident">f</span>: <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">fmt</span>::<span class=
-"ident">Formatter</span>) <span class=
-"op">-&gt;</span> <span class="ident">fmt</span>::<span class=
-"prelude-ty">Result</span> {
-        <span class="macro">write</span><span class=
-"macro">!</span>(<span class="ident">f</span>, <span class=
-"string">"{:?}"</span>, <span class="self">self</span>.<span class=
-"ident">program</span>)<span class="question-mark">?</span>;
-        <span class="kw">for</span> <span class=
-"ident">arg</span> <span class="kw">in</span> <span class=
-"kw-2">&</span><span class="self">self</span>.<span class=
-"ident">args</span> {
-            <span class="macro">write</span><span class=
-"macro">!</span>(<span class="ident">f</span>, <span class=
-"string">" {:?}"</span>, <span class=
-"ident">arg</span>)<span class="question-mark">?</span>;
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Command</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.<span class="ident">program</span>)<span class="question-mark">?</span>;
+        <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">args</span> {
+            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot; {:?}&quot;</span>, <span class="ident">arg</span>)<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> <span class="ident">DropGuard</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> {
-    <span class="kw">fn</span> <span class=
-"ident">new</span>(<span class="ident">lock</span>: <span class=
-"kw-2">&</span><span class="lifetime">'a</span> <span class=
-"ident">Mutex</span>) <span class="op">-&gt;</span> <span class=
-"ident">DropGuard</span><span class="op">&lt;</span><span class=
-"lifetime">'a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DropGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">lock</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Mutex</span>) <span class="op">-&gt;</span> <span class="ident">DropGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="ident">lock</span>.<span class=
-"ident">lock</span>();
-            <span class="ident">DropGuard</span> { <span class=
-"ident">lock</span>: <span class="ident">lock</span> }
+            <span class="ident">lock</span>.<span class="ident">lock</span>();
+            <span class="ident">DropGuard</span> { <span class="ident">lock</span>: <span class="ident">lock</span> }
         }
     }
 }
 
-<span class="kw">impl</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> <span class="ident">Drop</span> <span class=
-"kw">for</span> <span class="ident">DropGuard</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> {
-    <span class="kw">fn</span> <span class=
-"ident">drop</span>(<span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="self">self</span>) {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">DropGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">unsafe</span> {
-            <span class="self">self</span>.<span class=
-"ident">lock</span>.<span class="ident">unlock</span>();
+            <span class="self">self</span>.<span class="ident">lock</span>.<span class="ident">unlock</span>();
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Stdio</span> {
-    <span class="kw">fn</span> <span class=
-"ident">to_handle</span>(<span class="kw-2">&</span><span class=
-"self">self</span>, <span class=
-"ident">stdio_id</span>: <span class="ident">c</span>::<span class=
-"ident">DWORD</span>, <span class="ident">pipe</span>: <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">AnonPipe</span><span class="op">&gt;</span>)
-                 <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">Handle</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class=
-"kw-2">*</span><span class="self">self</span> {
-            <span class=
-"comment">// If no stdio handle is available, then inherit means that it</span>
-            <span class=
-"comment">// should still be unavailable so propagate the</span>
+    <span class="kw">fn</span> <span class="ident">to_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stdio_id</span>: <span class="ident">c</span>::<span class="ident">DWORD</span>, <span class="ident">pipe</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AnonPipe</span><span class="op">&gt;</span>)
+                 <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Handle</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="comment">// If no stdio handle is available, then inherit means that it</span>
+            <span class="comment">// should still be unavailable so propagate the</span>
             <span class="comment">// INVALID_HANDLE_VALUE.</span>
-            <span class="ident">Stdio</span>::<span class=
-"ident">Inherit</span> <span class="op">=&gt;</span> {
-                <span class="kw">match</span> <span class=
-"ident">stdio</span>::<span class="ident">get</span>(<span class=
-"ident">stdio_id</span>) {
-                    <span class=
-"prelude-val">Ok</span>(<span class="ident">io</span>) <span class=
-"op">=&gt;</span> {
-                        <span class="kw">let</span> <span class=
-"ident">io</span> <span class="op">=</span> <span class=
-"ident">Handle</span>::<span class="ident">new</span>(<span class=
-"ident">io</span>.<span class="ident">handle</span>());
-                        <span class="kw">let</span> <span class=
-"ident">ret</span> <span class="op">=</span> <span class=
-"ident">io</span>.<span class="ident">duplicate</span>(<span class=
-"number">0</span>, <span class="bool-val">true</span>,
-                                               <span class=
-"ident">c</span>::<span class=
-"ident">DUPLICATE_SAME_ACCESS</span>);
-                        <span class="ident">io</span>.<span class=
-"ident">into_raw</span>();
-                        <span class="kw">return</span> <span class=
-"ident">ret</span>
+            <span class="ident">Stdio</span>::<span class="ident">Inherit</span> <span class="op">=&gt;</span> {
+                <span class="kw">match</span> <span class="ident">stdio</span>::<span class="ident">get</span>(<span class="ident">stdio_id</span>) {
+                    <span class="prelude-val">Ok</span>(<span class="ident">io</span>) <span class="op">=&gt;</span> {
+                        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">Handle</span>::<span class="ident">new</span>(<span class="ident">io</span>.<span class="ident">handle</span>());
+                        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">io</span>.<span class="ident">duplicate</span>(<span class="number">0</span>, <span class="bool-val">true</span>,
+                                               <span class="ident">c</span>::<span class="ident">DUPLICATE_SAME_ACCESS</span>);
+                        <span class="ident">io</span>.<span class="ident">into_raw</span>();
+                        <span class="kw">return</span> <span class="ident">ret</span>
                     }
-                    <span class=
-"prelude-val">Err</span>(..) <span class=
-"op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class=
-"ident">Handle</span>::<span class="ident">new</span>(<span class=
-"ident">c</span>::<span class=
-"ident">INVALID_HANDLE_VALUE</span>)),
+                    <span class="prelude-val">Err</span>(..) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Handle</span>::<span class="ident">new</span>(<span class="ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>)),
                 }
             }
 
-            <span class="ident">Stdio</span>::<span class=
-"ident">MakePipe</span> <span class="op">=&gt;</span> {
-                <span class="kw">let</span> <span class=
-"ident">ours_readable</span> <span class="op">=</span> <span class=
-"ident">stdio_id</span> <span class="op">!=</span> <span class=
-"ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>;
-                <span class="kw">let</span> <span class=
-"ident">pipes</span> <span class="op">=</span> <span class=
-"ident">pipe</span>::<span class=
-"ident">anon_pipe</span>(<span class=
-"ident">ours_readable</span>)<span class="question-mark">?</span>;
-                <span class="kw-2">*</span><span class=
-"ident">pipe</span> <span class="op">=</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">pipes</span>.<span class="ident">ours</span>);
-                <span class="ident">cvt</span>(<span class=
-"kw">unsafe</span> {
-                    <span class="ident">c</span>::<span class=
-"ident">SetHandleInformation</span>(<span class=
-"ident">pipes</span>.<span class="ident">theirs</span>.<span class=
-"ident">handle</span>().<span class="ident">raw</span>(),
-                                            <span class=
-"ident">c</span>::<span class="ident">HANDLE_FLAG_INHERIT</span>,
-                                            <span class=
-"ident">c</span>::<span class="ident">HANDLE_FLAG_INHERIT</span>)
+            <span class="ident">Stdio</span>::<span class="ident">MakePipe</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">ours_readable</span> <span class="op">=</span> <span class="ident">stdio_id</span> <span class="op">!=</span> <span class="ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>;
+                <span class="kw">let</span> <span class="ident">pipes</span> <span class="op">=</span> <span class="ident">pipe</span>::<span class="ident">anon_pipe</span>(<span class="ident">ours_readable</span>)<span class="question-mark">?</span>;
+                <span class="kw-2">*</span><span class="ident">pipe</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pipes</span>.<span class="ident">ours</span>);
+                <span class="ident">cvt</span>(<span class="kw">unsafe</span> {
+                    <span class="ident">c</span>::<span class="ident">SetHandleInformation</span>(<span class="ident">pipes</span>.<span class="ident">theirs</span>.<span class="ident">handle</span>().<span class="ident">raw</span>(),
+                                            <span class="ident">c</span>::<span class="ident">HANDLE_FLAG_INHERIT</span>,
+                                            <span class="ident">c</span>::<span class="ident">HANDLE_FLAG_INHERIT</span>)
                 })<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(<span class=
-"ident">pipes</span>.<span class="ident">theirs</span>.<span class=
-"ident">into_handle</span>())
+                <span class="prelude-val">Ok</span>(<span class="ident">pipes</span>.<span class="ident">theirs</span>.<span class="ident">into_handle</span>())
             }
 
-            <span class="ident">Stdio</span>::<span class=
-"ident">Handle</span>(<span class="kw-2">ref</span> <span class=
-"ident">handle</span>) <span class="op">=&gt;</span> {
-                <span class="ident">handle</span>.<span class=
-"ident">duplicate</span>(<span class=
-"number">0</span>, <span class="bool-val">true</span>, <span class=
-"ident">c</span>::<span class="ident">DUPLICATE_SAME_ACCESS</span>)
+            <span class="ident">Stdio</span>::<span class="ident">Handle</span>(<span class="kw-2">ref</span> <span class="ident">handle</span>) <span class="op">=&gt;</span> {
+                <span class="ident">handle</span>.<span class="ident">duplicate</span>(<span class="number">0</span>, <span class="bool-val">true</span>, <span class="ident">c</span>::<span class="ident">DUPLICATE_SAME_ACCESS</span>)
             }
 
-            <span class=
-"comment">// Open up a reference to NUL with appropriate read/write</span>
-            <span class=
-"comment">// permissions as well as the ability to be inherited to child</span>
-            <span class=
-"comment">// processes (as this is about to be inherited).</span>
-            <span class="ident">Stdio</span>::<span class=
-"ident">Null</span> <span class="op">=&gt;</span> {
-                <span class="kw">let</span> <span class=
-"ident">size</span> <span class="op">=</span> <span class=
-"ident">mem</span>::<span class=
-"ident">size_of</span>::<span class="op">&lt;</span><span class=
-"ident">c</span>::<span class=
-"ident">SECURITY_ATTRIBUTES</span><span class="op">&gt;</span>();
-                <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">sa</span> <span class=
-"op">=</span> <span class="ident">c</span>::<span class=
-"ident">SECURITY_ATTRIBUTES</span> {
-                    <span class=
-"ident">nLength</span>: <span class="ident">size</span> <span class="kw">as</span> <span class="ident">c</span>::<span class="ident">DWORD</span>,
-                    <span class=
-"ident">lpSecurityDescriptor</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-                    <span class=
-"ident">bInheritHandle</span>: <span class="number">1</span>,
+            <span class="comment">// Open up a reference to NUL with appropriate read/write</span>
+            <span class="comment">// permissions as well as the ability to be inherited to child</span>
+            <span class="comment">// processes (as this is about to be inherited).</span>
+            <span class="ident">Stdio</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">c</span>::<span class="ident">SECURITY_ATTRIBUTES</span><span class="op">&gt;</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sa</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">SECURITY_ATTRIBUTES</span> {
+                    <span class="ident">nLength</span>: <span class="ident">size</span> <span class="kw">as</span> <span class="ident">c</span>::<span class="ident">DWORD</span>,
+                    <span class="ident">lpSecurityDescriptor</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                    <span class="ident">bInheritHandle</span>: <span class="number">1</span>,
                 };
-                <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">opts</span> <span class=
-"op">=</span> <span class="ident">OpenOptions</span>::<span class=
-"ident">new</span>();
-                <span class="ident">opts</span>.<span class=
-"ident">read</span>(<span class=
-"ident">stdio_id</span> <span class="op">==</span> <span class=
-"ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>);
-                <span class="ident">opts</span>.<span class=
-"ident">write</span>(<span class=
-"ident">stdio_id</span> <span class="op">!=</span> <span class=
-"ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>);
-                <span class="ident">opts</span>.<span class=
-"ident">security_attributes</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">sa</span>);
-                <span class="ident">File</span>::<span class=
-"ident">open</span>(<span class="ident">Path</span>::<span class=
-"ident">new</span>(<span class="string">"NUL"</span>), <span class=
-"kw-2">&</span><span class="ident">opts</span>).<span class=
-"ident">map</span>(<span class="op">|</span><span class=
-"ident">file</span><span class="op">|</span> {
-                    <span class="ident">file</span>.<span class=
-"ident">into_handle</span>()
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">OpenOptions</span>::<span class="ident">new</span>();
+                <span class="ident">opts</span>.<span class="ident">read</span>(<span class="ident">stdio_id</span> <span class="op">==</span> <span class="ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>);
+                <span class="ident">opts</span>.<span class="ident">write</span>(<span class="ident">stdio_id</span> <span class="op">!=</span> <span class="ident">c</span>::<span class="ident">STD_INPUT_HANDLE</span>);
+                <span class="ident">opts</span>.<span class="ident">security_attributes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sa</span>);
+                <span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;NUL&quot;</span>), <span class="kw-2">&amp;</span><span class="ident">opts</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">file</span><span class="op">|</span> {
+                    <span class="ident">file</span>.<span class="ident">into_handle</span>()
                 })
             }
         }
     }
 }
 
-<span class=
-"comment">////////////////////////////////////////////////////////////////////////////////</span>
+<span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 <span class="comment">// Processes</span>
-<span class=
-"comment">////////////////////////////////////////////////////////////////////////////////</span>
+<span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
-<span class=
-"doccomment">/// A value representing a child process.</span>
+<span class="doccomment">/// A value representing a child process.</span>
 <span class="doccomment">///</span>
-<span class=
-"doccomment">/// The lifetime of this value is linked to the lifetime of the actual</span>
-<span class=
-"doccomment">/// process - the Process destructor calls self.finish() which waits</span>
+<span class="doccomment">/// The lifetime of this value is linked to the lifetime of the actual</span>
+<span class="doccomment">/// process - the Process destructor calls self.finish() which waits</span>
 <span class="doccomment">/// for the process to terminate.</span>
-<span class="kw">pub</span> <span class=
-"kw">struct</span> <span class="ident">Process</span> {
-    <span class="ident">handle</span>: <span class=
-"ident">Handle</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Process</span> {
+    <span class="ident">handle</span>: <span class="ident">Handle</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Process</span> {
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">kill</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class=
-"op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="ident">cvt</span>(<span class=
-"kw">unsafe</span> {
-            <span class="ident">c</span>::<span class=
-"ident">TerminateProcess</span>(<span class=
-"self">self</span>.<span class="ident">handle</span>.<span class=
-"ident">raw</span>(), <span class="number">1</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kill</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">cvt</span>(<span class="kw">unsafe</span> {
+            <span class="ident">c</span>::<span class="ident">TerminateProcess</span>(<span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">raw</span>(), <span class="number">1</span>)
         })<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">id</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
         <span class="kw">unsafe</span> {
-            <span class="ident">c</span>::<span class=
-"ident">GetProcessId</span>(<span class=
-"self">self</span>.<span class="ident">handle</span>.<span class=
-"ident">raw</span>()) <span class="kw">as</span> <span class=
-"ident">u32</span>
+            <span class="ident">c</span>::<span class="ident">GetProcessId</span>(<span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">raw</span>()) <span class="kw">as</span> <span class="ident">u32</span>
         }
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">wait</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">ExitStatus</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ExitStatus</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class=
-"ident">res</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class=
-"ident">WaitForSingleObject</span>(<span class=
-"self">self</span>.<span class="ident">handle</span>.<span class=
-"ident">raw</span>(), <span class="ident">c</span>::<span class=
-"ident">INFINITE</span>);
-            <span class="kw">if</span> <span class=
-"ident">res</span> <span class="op">!=</span> <span class=
-"ident">c</span>::<span class="ident">WAIT_OBJECT_0</span> {
-                <span class="kw">return</span> <span class=
-"prelude-val">Err</span>(<span class=
-"ident">Error</span>::<span class="ident">last_os_error</span>())
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">WaitForSingleObject</span>(<span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">raw</span>(), <span class="ident">c</span>::<span class="ident">INFINITE</span>);
+            <span class="kw">if</span> <span class="ident">res</span> <span class="op">!=</span> <span class="ident">c</span>::<span class="ident">WAIT_OBJECT_0</span> {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">last_os_error</span>())
             }
-            <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">status</span> <span class=
-"op">=</span> <span class="number">0</span>;
-            <span class="ident">cvt</span>(<span class=
-"ident">c</span>::<span class=
-"ident">GetExitCodeProcess</span>(<span class=
-"self">self</span>.<span class="ident">handle</span>.<span class=
-"ident">raw</span>(), <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="ident">status</span>))<span class=
-"question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class=
-"ident">ExitStatus</span>(<span class="ident">status</span>))
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">status</span> <span class="op">=</span> <span class="number">0</span>;
+            <span class="ident">cvt</span>(<span class="ident">c</span>::<span class="ident">GetExitCodeProcess</span>(<span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">status</span>))<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="ident">ExitStatus</span>(<span class="ident">status</span>))
         }
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">try_wait</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">ExitStatus</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ExitStatus</span><span class="op">&gt;&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="kw">match</span> <span class=
-"ident">c</span>::<span class=
-"ident">WaitForSingleObject</span>(<span class=
-"self">self</span>.<span class="ident">handle</span>.<span class=
-"ident">raw</span>(), <span class="number">0</span>) {
-                <span class="ident">c</span>::<span class=
-"ident">WAIT_OBJECT_0</span> <span class="op">=&gt;</span> {}
-                <span class="ident">c</span>::<span class=
-"ident">WAIT_TIMEOUT</span> <span class="op">=&gt;</span> {
-                    <span class="kw">return</span> <span class=
-"prelude-val">Ok</span>(<span class="prelude-val">None</span>);
+            <span class="kw">match</span> <span class="ident">c</span>::<span class="ident">WaitForSingleObject</span>(<span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">raw</span>(), <span class="number">0</span>) {
+                <span class="ident">c</span>::<span class="ident">WAIT_OBJECT_0</span> <span class="op">=&gt;</span> {}
+                <span class="ident">c</span>::<span class="ident">WAIT_TIMEOUT</span> <span class="op">=&gt;</span> {
+                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
                 }
-                _ <span class="op">=&gt;</span> <span class=
-"kw">return</span> <span class=
-"prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>()),
+                _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>()),
             }
-            <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">status</span> <span class=
-"op">=</span> <span class="number">0</span>;
-            <span class="ident">cvt</span>(<span class=
-"ident">c</span>::<span class=
-"ident">GetExitCodeProcess</span>(<span class=
-"self">self</span>.<span class="ident">handle</span>.<span class=
-"ident">raw</span>(), <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="ident">status</span>))<span class=
-"question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class=
-"prelude-val">Some</span>(<span class=
-"ident">ExitStatus</span>(<span class="ident">status</span>)))
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">status</span> <span class="op">=</span> <span class="number">0</span>;
+            <span class="ident">cvt</span>(<span class="ident">c</span>::<span class="ident">GetExitCodeProcess</span>(<span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">status</span>))<span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">ExitStatus</span>(<span class="ident">status</span>)))
         }
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">handle</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="kw-2">&</span><span class=
-"ident">Handle</span> { <span class="kw-2">&</span><span class=
-"self">self</span>.<span class="ident">handle</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Handle</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">handle</span> }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">into_handle</span>(<span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">Handle</span> { <span class="self">self</span>.<span class=
-"ident">handle</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_handle</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Handle</span> { <span class="self">self</span>.<span class="ident">handle</span> }
 }
 
-<span class="attribute">#[<span class=
-"ident">derive</span>(<span class=
-"ident">PartialEq</span>, <span class=
-"ident">Eq</span>, <span class="ident">Clone</span>, <span class=
-"ident">Copy</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class=
-"kw">struct</span> <span class=
-"ident">ExitStatus</span>(<span class=
-"ident">c</span>::<span class="ident">DWORD</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ExitStatus</span>(<span class="ident">c</span>::<span class="ident">DWORD</span>);
 
-<span class="kw">impl</span> <span class=
-"ident">ExitStatus</span> {
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">success</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class=
-"number">0</span> <span class="op">==</span> <span class=
-"number">0</span>
+<span class="kw">impl</span> <span class="ident">ExitStatus</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">0</span> <span class="op">==</span> <span class="number">0</span>
     }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">code</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">i32</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Some</span>(<span class=
-"self">self</span>.<span class="number">0</span> <span class=
-"kw">as</span> <span class="ident">i32</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">code</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">i32</span>)
     }
 }
 
-<span class="kw">impl</span> <span class=
-"ident">From</span><span class="op">&lt;</span><span class=
-"ident">c</span>::<span class="ident">DWORD</span><span class=
-"op">&gt;</span> <span class="kw">for</span> <span class=
-"ident">ExitStatus</span> {
-    <span class="kw">fn</span> <span class=
-"ident">from</span>(<span class="ident">u</span>: <span class=
-"ident">c</span>::<span class="ident">DWORD</span>) <span class=
-"op">-&gt;</span> <span class="ident">ExitStatus</span> {
-        <span class="ident">ExitStatus</span>(<span class=
-"ident">u</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">c</span>::<span class="ident">DWORD</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ExitStatus</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">u</span>: <span class="ident">c</span>::<span class="ident">DWORD</span>) <span class="op">-&gt;</span> <span class="ident">ExitStatus</span> {
+        <span class="ident">ExitStatus</span>(<span class="ident">u</span>)
     }
 }
 
-<span class="kw">impl</span> <span class=
-"ident">fmt</span>::<span class="ident">Display</span> <span class=
-"kw">for</span> <span class="ident">ExitStatus</span> {
-    <span class="kw">fn</span> <span class=
-"ident">fmt</span>(<span class="kw-2">&</span><span class=
-"self">self</span>, <span class="ident">f</span>: <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">fmt</span>::<span class=
-"ident">Formatter</span>) <span class=
-"op">-&gt;</span> <span class="ident">fmt</span>::<span class=
-"prelude-ty">Result</span> {
-        <span class="macro">write</span><span class=
-"macro">!</span>(<span class="ident">f</span>, <span class=
-"string">"exit code: {}"</span>, <span class=
-"self">self</span>.<span class="number">0</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ExitStatus</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;exit code: {}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>)
     }
 }
 
-<span class="kw">fn</span> <span class=
-"ident">zeroed_startupinfo</span>() <span class=
-"op">-&gt;</span> <span class="ident">c</span>::<span class=
-"ident">STARTUPINFO</span> {
-    <span class="ident">c</span>::<span class=
-"ident">STARTUPINFO</span> {
-        <span class="ident">cb</span>: <span class=
-"number">0</span>,
-        <span class="ident">lpReserved</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-        <span class="ident">lpDesktop</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-        <span class="ident">lpTitle</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-        <span class="ident">dwX</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwY</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwXSize</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwYSize</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwXCountChars</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwYCountCharts</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwFillAttribute</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwFlags</span>: <span class=
-"number">0</span>,
-        <span class="ident">wShowWindow</span>: <span class=
-"number">0</span>,
-        <span class="ident">cbReserved2</span>: <span class=
-"number">0</span>,
-        <span class="ident">lpReserved2</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-        <span class="ident">hStdInput</span>: <span class=
-"ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>,
-        <span class="ident">hStdOutput</span>: <span class=
-"ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>,
-        <span class="ident">hStdError</span>: <span class=
-"ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>,
+<span class="kw">fn</span> <span class="ident">zeroed_startupinfo</span>() <span class="op">-&gt;</span> <span class="ident">c</span>::<span class="ident">STARTUPINFO</span> {
+    <span class="ident">c</span>::<span class="ident">STARTUPINFO</span> {
+        <span class="ident">cb</span>: <span class="number">0</span>,
+        <span class="ident">lpReserved</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+        <span class="ident">lpDesktop</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+        <span class="ident">lpTitle</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+        <span class="ident">dwX</span>: <span class="number">0</span>,
+        <span class="ident">dwY</span>: <span class="number">0</span>,
+        <span class="ident">dwXSize</span>: <span class="number">0</span>,
+        <span class="ident">dwYSize</span>: <span class="number">0</span>,
+        <span class="ident">dwXCountChars</span>: <span class="number">0</span>,
+        <span class="ident">dwYCountCharts</span>: <span class="number">0</span>,
+        <span class="ident">dwFillAttribute</span>: <span class="number">0</span>,
+        <span class="ident">dwFlags</span>: <span class="number">0</span>,
+        <span class="ident">wShowWindow</span>: <span class="number">0</span>,
+        <span class="ident">cbReserved2</span>: <span class="number">0</span>,
+        <span class="ident">lpReserved2</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+        <span class="ident">hStdInput</span>: <span class="ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>,
+        <span class="ident">hStdOutput</span>: <span class="ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>,
+        <span class="ident">hStdError</span>: <span class="ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span>,
     }
 }
 
-<span class="kw">fn</span> <span class=
-"ident">zeroed_process_information</span>() <span class=
-"op">-&gt;</span> <span class="ident">c</span>::<span class=
-"ident">PROCESS_INFORMATION</span> {
-    <span class="ident">c</span>::<span class=
-"ident">PROCESS_INFORMATION</span> {
-        <span class="ident">hProcess</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-        <span class="ident">hThread</span>: <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>(),
-        <span class="ident">dwProcessId</span>: <span class=
-"number">0</span>,
-        <span class="ident">dwThreadId</span>: <span class=
-"number">0</span>
+<span class="kw">fn</span> <span class="ident">zeroed_process_information</span>() <span class="op">-&gt;</span> <span class="ident">c</span>::<span class="ident">PROCESS_INFORMATION</span> {
+    <span class="ident">c</span>::<span class="ident">PROCESS_INFORMATION</span> {
+        <span class="ident">hProcess</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+        <span class="ident">hThread</span>: <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+        <span class="ident">dwProcessId</span>: <span class="number">0</span>,
+        <span class="ident">dwThreadId</span>: <span class="number">0</span>
     }
 }
 
-<span class=
-"comment">// Produces a wide string *without terminating null*; returns an error if</span>
-<span class=
-"comment">// `prog` or any of the `args` contain a nul.</span>
-<span class="kw">fn</span> <span class=
-"ident">make_command_line</span>(<span class=
-"ident">prog</span>: <span class="kw-2">&</span><span class=
-"ident">OsStr</span>, <span class="ident">args</span>: <span class=
-"kw-2">&</span>[<span class="ident">OsString</span>]) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">Vec</span><span class="op">&lt;</span><span class=
-"ident">u16</span><span class="op">&gt;&gt;</span> {
-    <span class=
-"comment">// Encode the command and arguments in a command line string such</span>
-    <span class=
-"comment">// that the spawned process may recover them using CommandLineToArgvW.</span>
-    <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">cmd</span>: <span class=
-"ident">Vec</span><span class="op">&lt;</span><span class=
-"ident">u16</span><span class="op">&gt;</span> <span class=
-"op">=</span> <span class="ident">Vec</span>::<span class=
-"ident">new</span>();
-    <span class="ident">append_arg</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">cmd</span>, <span class="ident">prog</span>)<span class=
-"question-mark">?</span>;
-    <span class="kw">for</span> <span class=
-"ident">arg</span> <span class="kw">in</span> <span class=
-"ident">args</span> {
-        <span class="ident">cmd</span>.<span class=
-"ident">push</span>(<span class="string">' '</span> <span class=
-"kw">as</span> <span class="ident">u16</span>);
-        <span class="ident">append_arg</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">cmd</span>, <span class="ident">arg</span>)<span class=
-"question-mark">?</span>;
+<span class="comment">// Produces a wide string *without terminating null*; returns an error if</span>
+<span class="comment">// `prog` or any of the `args` contain a nul.</span>
+<span class="kw">fn</span> <span class="ident">make_command_line</span>(<span class="ident">prog</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="ident">OsString</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;&gt;</span> {
+    <span class="comment">// Encode the command and arguments in a command line string such</span>
+    <span class="comment">// that the spawned process may recover them using CommandLineToArgvW.</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmd</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+    <span class="ident">append_arg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cmd</span>, <span class="ident">prog</span>)<span class="question-mark">?</span>;
+    <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">args</span> {
+        <span class="ident">cmd</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span> <span class="kw">as</span> <span class="ident">u16</span>);
+        <span class="ident">append_arg</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cmd</span>, <span class="ident">arg</span>)<span class="question-mark">?</span>;
     }
-    <span class="kw">return</span> <span class=
-"prelude-val">Ok</span>(<span class="ident">cmd</span>);
+    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">cmd</span>);
 
-    <span class="kw">fn</span> <span class=
-"ident">append_arg</span>(<span class=
-"ident">cmd</span>: <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u16</span><span class=
-"op">&gt;</span>, <span class="ident">arg</span>: <span class=
-"kw-2">&</span><span class="ident">OsStr</span>) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class=
-"op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class=
-"comment">// If an argument has 0 characters then we need to quote it to ensure</span>
-        <span class=
-"comment">// that it actually gets passed through on the command line or otherwise</span>
-        <span class=
-"comment">// it will be dropped entirely when parsed on the other end.</span>
-        <span class="ident">ensure_no_nuls</span>(<span class=
-"ident">arg</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class=
-"ident">arg_bytes</span> <span class="op">=</span> <span class=
-"kw-2">&</span><span class="ident">arg</span>.<span class=
-"ident">as_inner</span>().<span class=
-"ident">inner</span>.<span class="ident">as_inner</span>();
-        <span class="kw">let</span> <span class=
-"ident">quote</span> <span class="op">=</span> <span class=
-"ident">arg_bytes</span>.<span class=
-"ident">iter</span>().<span class="ident">any</span>(<span class=
-"op">|</span><span class="ident">c</span><span class=
-"op">|</span> <span class="kw-2">*</span><span class=
-"ident">c</span> <span class="op">==</span> <span class=
-"string">b' '</span> <span class="op">||</span> <span class=
-"kw-2">*</span><span class="ident">c</span> <span class=
-"op">==</span> <span class="string">b'\t'</span>)
-            <span class="op">||</span> <span class=
-"ident">arg_bytes</span>.<span class="ident">is_empty</span>();
-        <span class="kw">if</span> <span class=
-"ident">quote</span> {
-            <span class="ident">cmd</span>.<span class=
-"ident">push</span>(<span class="string">'"'</span> <span class=
-"kw">as</span> <span class="ident">u16</span>);
+    <span class="kw">fn</span> <span class="ident">append_arg</span>(<span class="ident">cmd</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="comment">// If an argument has 0 characters then we need to quote it to ensure</span>
+        <span class="comment">// that it actually gets passed through on the command line or otherwise</span>
+        <span class="comment">// it will be dropped entirely when parsed on the other end.</span>
+        <span class="ident">ensure_no_nuls</span>(<span class="ident">arg</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">arg_bytes</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">as_inner</span>().<span class="ident">inner</span>.<span class="ident">as_inner</span>();
+        <span class="kw">let</span> <span class="ident">quote</span> <span class="op">=</span> <span class="ident">arg_bytes</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">c</span> <span class="op">==</span> <span class="string">b&#39; &#39;</span> <span class="op">||</span> <span class="kw-2">*</span><span class="ident">c</span> <span class="op">==</span> <span class="string">b&#39;\t&#39;</span>)
+            <span class="op">||</span> <span class="ident">arg_bytes</span>.<span class="ident">is_empty</span>();
+        <span class="kw">if</span> <span class="ident">quote</span> {
+            <span class="ident">cmd</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>);
         }
 
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">iter</span> <span class=
-"op">=</span> <span class="ident">arg</span>.<span class=
-"ident">encode_wide</span>();
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class=
-"ident">backslashes</span>: <span class=
-"ident">usize</span> <span class="op">=</span> <span class=
-"number">0</span>;
-        <span class="kw">while</span> <span class=
-"kw">let</span> <span class="prelude-val">Some</span>(<span class=
-"ident">x</span>) <span class="op">=</span> <span class=
-"ident">iter</span>.<span class="ident">next</span>() {
-            <span class="kw">if</span> <span class=
-"ident">x</span> <span class="op">==</span> <span class=
-"string">'\\'</span> <span class="kw">as</span> <span class=
-"ident">u16</span> {
-                <span class="ident">backslashes</span> <span class=
-"op">+=</span> <span class="number">1</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">arg</span>.<span class="ident">encode_wide</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">backslashes</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
+            <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="string">&#39;\\&#39;</span> <span class="kw">as</span> <span class="ident">u16</span> {
+                <span class="ident">backslashes</span> <span class="op">+=</span> <span class="number">1</span>;
             } <span class="kw">else</span> {
-                <span class="kw">if</span> <span class=
-"ident">x</span> <span class="op">==</span> <span class=
-"string">'"'</span> <span class="kw">as</span> <span class=
-"ident">u16</span> {
-                    <span class=
-"comment">// Add n+1 backslashes to total 2n+1 before internal '"'.</span>
-                    <span class="kw">for</span> _ <span class=
-"kw">in</span> <span class="number">0</span>..(<span class=
-"ident">backslashes</span><span class="op">+</span><span class=
-"number">1</span>) {
-                        <span class="ident">cmd</span>.<span class=
-"ident">push</span>(<span class="string">'\\'</span> <span class=
-"kw">as</span> <span class="ident">u16</span>);
+                <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="string">&#39;&quot;&#39;</span> <span class="kw">as</span> <span class="ident">u16</span> {
+                    <span class="comment">// Add n+1 backslashes to total 2n+1 before internal &#39;&quot;&#39;.</span>
+                    <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..(<span class="ident">backslashes</span><span class="op">+</span><span class="number">1</span>) {
+                        <span class="ident">cmd</span>.<span class="ident">push</span>(<span class="string">&#39;\\&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>);
                     }
                 }
-                <span class="ident">backslashes</span> <span class=
-"op">=</span> <span class="number">0</span>;
+                <span class="ident">backslashes</span> <span class="op">=</span> <span class="number">0</span>;
             }
-            <span class="ident">cmd</span>.<span class=
-"ident">push</span>(<span class="ident">x</span>);
+            <span class="ident">cmd</span>.<span class="ident">push</span>(<span class="ident">x</span>);
         }
 
-        <span class="kw">if</span> <span class=
-"ident">quote</span> {
-            <span class=
-"comment">// Add n backslashes to total 2n before ending '"'.</span>
-            <span class="kw">for</span> _ <span class=
-"kw">in</span> <span class="number">0</span>..<span class=
-"ident">backslashes</span> {
-                <span class="ident">cmd</span>.<span class=
-"ident">push</span>(<span class="string">'\\'</span> <span class=
-"kw">as</span> <span class="ident">u16</span>);
+        <span class="kw">if</span> <span class="ident">quote</span> {
+            <span class="comment">// Add n backslashes to total 2n before ending &#39;&quot;&#39;.</span>
+            <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..<span class="ident">backslashes</span> {
+                <span class="ident">cmd</span>.<span class="ident">push</span>(<span class="string">&#39;\\&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>);
             }
-            <span class="ident">cmd</span>.<span class=
-"ident">push</span>(<span class="string">'"'</span> <span class=
-"kw">as</span> <span class="ident">u16</span>);
+            <span class="ident">cmd</span>.<span class="ident">push</span>(<span class="string">&#39;&quot;&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>);
         }
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">fn</span> <span class=
-"ident">make_envp</span>(<span class=
-"ident">env</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"kw-2">&</span><span class="ident">collections</span>::<span class=
-"ident">HashMap</span><span class="op">&lt;</span><span class=
-"ident">OsString</span>, <span class=
-"ident">OsString</span><span class="op">&gt;&gt;</span>)
-             <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span>(<span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">c_void</span>, <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u16</span><span class=
-"op">&gt;</span>)<span class="op">&gt;</span> {
-    <span class=
-"comment">// On Windows we pass an "environment block" which is not a char**, but</span>
-    <span class=
-"comment">// rather a concatenation of null-terminated k=v\0 sequences, with a final</span>
+<span class="kw">fn</span> <span class="ident">make_envp</span>(<span class="ident">env</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">collections</span>::<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">OsString</span>, <span class="ident">OsString</span><span class="op">&gt;&gt;</span>)
+             <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
+    <span class="comment">// On Windows we pass an &quot;environment block&quot; which is not a char**, but</span>
+    <span class="comment">// rather a concatenation of null-terminated k=v\0 sequences, with a final</span>
     <span class="comment">// \0 to terminate.</span>
     <span class="kw">match</span> <span class="ident">env</span> {
-        <span class="prelude-val">Some</span>(<span class=
-"ident">env</span>) <span class="op">=&gt;</span> {
-            <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">blk</span> <span class=
-"op">=</span> <span class="ident">Vec</span>::<span class=
-"ident">new</span>();
+        <span class="prelude-val">Some</span>(<span class="ident">env</span>) <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">blk</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-            <span class="kw">for</span> <span class=
-"ident">pair</span> <span class="kw">in</span> <span class=
-"ident">env</span> {
-                <span class="ident">blk</span>.<span class=
-"ident">extend</span>(<span class=
-"ident">ensure_no_nuls</span>(<span class=
-"ident">pair</span>.<span class="number">0</span>)<span class=
-"question-mark">?</span>.<span class="ident">encode_wide</span>());
-                <span class="ident">blk</span>.<span class=
-"ident">push</span>(<span class="string">'='</span> <span class=
-"kw">as</span> <span class="ident">u16</span>);
-                <span class="ident">blk</span>.<span class=
-"ident">extend</span>(<span class=
-"ident">ensure_no_nuls</span>(<span class=
-"ident">pair</span>.<span class="number">1</span>)<span class=
-"question-mark">?</span>.<span class="ident">encode_wide</span>());
-                <span class="ident">blk</span>.<span class=
-"ident">push</span>(<span class="number">0</span>);
+            <span class="kw">for</span> <span class="ident">pair</span> <span class="kw">in</span> <span class="ident">env</span> {
+                <span class="ident">blk</span>.<span class="ident">extend</span>(<span class="ident">ensure_no_nuls</span>(<span class="ident">pair</span>.<span class="number">0</span>)<span class="question-mark">?</span>.<span class="ident">encode_wide</span>());
+                <span class="ident">blk</span>.<span class="ident">push</span>(<span class="string">&#39;=&#39;</span> <span class="kw">as</span> <span class="ident">u16</span>);
+                <span class="ident">blk</span>.<span class="ident">extend</span>(<span class="ident">ensure_no_nuls</span>(<span class="ident">pair</span>.<span class="number">1</span>)<span class="question-mark">?</span>.<span class="ident">encode_wide</span>());
+                <span class="ident">blk</span>.<span class="ident">push</span>(<span class="number">0</span>);
             }
-            <span class="ident">blk</span>.<span class=
-"ident">push</span>(<span class="number">0</span>);
-            <span class="prelude-val">Ok</span>((<span class=
-"ident">blk</span>.<span class=
-"ident">as_mut_ptr</span>() <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">c_void</span>, <span class="ident">blk</span>))
+            <span class="ident">blk</span>.<span class="ident">push</span>(<span class="number">0</span>);
+            <span class="prelude-val">Ok</span>((<span class="ident">blk</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">blk</span>))
         }
-        _ <span class="op">=&gt;</span> <span class=
-"prelude-val">Ok</span>((<span class=
-"ident">ptr</span>::<span class=
-"ident">null_mut</span>(), <span class=
-"ident">Vec</span>::<span class="ident">new</span>()))
+        _ <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">Vec</span>::<span class="ident">new</span>()))
     }
 }
 
-<span class="kw">fn</span> <span class=
-"ident">make_dirp</span>(<span class="ident">d</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"kw-2">&</span><span class="ident">OsString</span><span class=
-"op">&gt;</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span>(<span class=
-"kw-2">*</span><span class="kw">const</span> <span class=
-"ident">u16</span>, <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u16</span><span class=
-"op">&gt;</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">make_dirp</span>(<span class="ident">d</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">OsString</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u16</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
 
     <span class="kw">match</span> <span class="ident">d</span> {
-        <span class="prelude-val">Some</span>(<span class=
-"ident">dir</span>) <span class="op">=&gt;</span> {
-            <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">dir_str</span>: <span class=
-"ident">Vec</span><span class="op">&lt;</span><span class=
-"ident">u16</span><span class="op">&gt;</span> <span class=
-"op">=</span> <span class=
-"ident">ensure_no_nuls</span>(<span class="ident">dir</span>)<span class="question-mark">?</span>.<span class="ident">encode_wide</span>().<span class="ident">collect</span>();
-            <span class="ident">dir_str</span>.<span class=
-"ident">push</span>(<span class="number">0</span>);
-            <span class="prelude-val">Ok</span>((<span class=
-"ident">dir_str</span>.<span class=
-"ident">as_ptr</span>(), <span class="ident">dir_str</span>))
+        <span class="prelude-val">Some</span>(<span class="ident">dir</span>) <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dir_str</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ensure_no_nuls</span>(<span class="ident">dir</span>)<span class="question-mark">?</span>.<span class="ident">encode_wide</span>().<span class="ident">collect</span>();
+            <span class="ident">dir_str</span>.<span class="ident">push</span>(<span class="number">0</span>);
+            <span class="prelude-val">Ok</span>((<span class="ident">dir_str</span>.<span class="ident">as_ptr</span>(), <span class="ident">dir_str</span>))
         },
-        <span class="prelude-val">None</span> <span class=
-"op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class=
-"ident">ptr</span>::<span class="ident">null</span>(), <span class=
-"ident">Vec</span>::<span class="ident">new</span>()))
+        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">ptr</span>::<span class="ident">null</span>(), <span class="ident">Vec</span>::<span class="ident">new</span>()))
     }
 }
 
-<span class="attribute">#[<span class=
-"ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class=
-"ident">ffi</span>::{<span class="ident">OsStr</span>, <span class=
-"ident">OsString</span>};
-    <span class="kw">use</span> <span class=
-"kw">super</span>::<span class="ident">make_command_line</span>;
+    <span class="kw">use</span> <span class="ident">ffi</span>::{<span class="ident">OsStr</span>, <span class="ident">OsString</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">make_command_line</span>;
 
-    <span class="attribute">#[<span class=
-"ident">test</span>]</span>
-    <span class="kw">fn</span> <span class=
-"ident">test_make_command_line</span>() {
-        <span class="kw">fn</span> <span class=
-"ident">test_wrapper</span>(<span class=
-"ident">prog</span>: <span class="kw-2">&</span><span class=
-"ident">str</span>, <span class="ident">args</span>: <span class=
-"kw-2">&</span>[<span class="kw-2">&</span><span class=
-"ident">str</span>]) <span class="op">-&gt;</span> <span class=
-"ident">String</span> {
-            <span class="kw">let</span> <span class=
-"ident">command_line</span> <span class="op">=</span> <span class=
-"kw-2">&</span><span class=
-"ident">make_command_line</span>(<span class=
-"ident">OsStr</span>::<span class="ident">new</span>(<span class=
-"ident">prog</span>),
-                                                  <span class=
-"kw-2">&</span><span class="ident">args</span>.<span class=
-"ident">iter</span>()
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_make_command_line</span>() {
+        <span class="kw">fn</span> <span class="ident">test_wrapper</span>(<span class="ident">prog</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">args</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) <span class="op">-&gt;</span> <span class="ident">String</span> {
+            <span class="kw">let</span> <span class="ident">command_line</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">make_command_line</span>(<span class="ident">OsStr</span>::<span class="ident">new</span>(<span class="ident">prog</span>),
+                                                  <span class="kw-2">&amp;</span><span class="ident">args</span>.<span class="ident">iter</span>()
                                                        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">a</span><span class="op">|</span> <span class="ident">OsString</span>::<span class="ident">from</span>(<span class="ident">a</span>))
                                                        .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;&gt;</span>())
-                                    .<span class=
-"ident">unwrap</span>();
-            <span class="ident">String</span>::<span class=
-"ident">from_utf16</span>(<span class=
-"ident">command_line</span>).<span class="ident">unwrap</span>()
+                                    .<span class="ident">unwrap</span>();
+            <span class="ident">String</span>::<span class="ident">from_utf16</span>(<span class="ident">command_line</span>).<span class="ident">unwrap</span>()
         }
 
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(
-            <span class="ident">test_wrapper</span>(<span class=
-"string">"prog"</span>, <span class="kw-2">&</span>[<span class=
-"string">"aaa"</span>, <span class=
-"string">"bbb"</span>, <span class="string">"ccc"</span>]),
-            <span class="string">"prog aaa bbb ccc"</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">test_wrapper</span>(<span class="string">&quot;prog&quot;</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;aaa&quot;</span>, <span class="string">&quot;bbb&quot;</span>, <span class="string">&quot;ccc&quot;</span>]),
+            <span class="string">&quot;prog aaa bbb ccc&quot;</span>
         );
 
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(
-            <span class="ident">test_wrapper</span>(<span class=
-"string">"C:\\Program Files\\blah\\blah.exe"</span>, <span class=
-"kw-2">&</span>[<span class="string">"aaa"</span>]),
-            <span class=
-"string">"\"C:\\Program Files\\blah\\blah.exe\" aaa"</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">test_wrapper</span>(<span class="string">&quot;C:\\Program Files\\blah\\blah.exe&quot;</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;aaa&quot;</span>]),
+            <span class="string">&quot;\&quot;C:\\Program Files\\blah\\blah.exe\&quot; aaa&quot;</span>
         );
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(
-            <span class="ident">test_wrapper</span>(<span class=
-"string">"C:\\Program Files\\test"</span>, <span class=
-"kw-2">&</span>[<span class="string">"aa\"bb"</span>]),
-            <span class=
-"string">"\"C:\\Program Files\\test\" aa\\\"bb"</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">test_wrapper</span>(<span class="string">&quot;C:\\Program Files\\test&quot;</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;aa\&quot;bb&quot;</span>]),
+            <span class="string">&quot;\&quot;C:\\Program Files\\test\&quot; aa\\\&quot;bb&quot;</span>
         );
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(
-            <span class="ident">test_wrapper</span>(<span class=
-"string">"echo"</span>, <span class="kw-2">&</span>[<span class=
-"string">"a b c"</span>]),
-            <span class="string">"echo \"a b c\""</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">test_wrapper</span>(<span class="string">&quot;echo&quot;</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;a b c&quot;</span>]),
+            <span class="string">&quot;echo \&quot;a b c\&quot;&quot;</span>
         );
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(
-            <span class="ident">test_wrapper</span>(<span class=
-"string">"echo"</span>, <span class="kw-2">&</span>[<span class=
-"string">"\" \\\" \\"</span>, <span class="string">"\\"</span>]),
-            <span class=
-"string">"echo \"\\\" \\\\\\\" \\\\\" \\"</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">test_wrapper</span>(<span class="string">&quot;echo&quot;</span>, <span class="kw-2">&amp;</span>[<span class="string">&quot;\&quot; \\\&quot; \\&quot;</span>, <span class="string">&quot;\\&quot;</span>]),
+            <span class="string">&quot;echo \&quot;\\\&quot; \\\\\\\&quot; \\\\\&quot; \\&quot;</span>
         );
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(
-            <span class="ident">test_wrapper</span>(<span class=
-"string">"\u{03c0}\u{042f}\u{97f3}\u{00e6}\u{221e}"</span>, <span class="kw-2">&</span>[]),
-            <span class=
-"string">"\u{03c0}\u{042f}\u{97f3}\u{00e6}\u{221e}"</span>
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">test_wrapper</span>(<span class="string">&quot;\u{03c0}\u{042f}\u{97f3}\u{00e6}\u{221e}&quot;</span>, <span class="kw-2">&amp;</span>[]),
+            <span class="string">&quot;\u{03c0}\u{042f}\u{97f3}\u{00e6}\u{221e}&quot;</span>
         );
     }
 }
-</pre></section>
-<section id='search' class="content hidden"></section>
-<section class="footer"></section>
-<aside id="help" class="hidden">
-<div>
-<h1 class="hidden">Help</h1>
-<div class="shortcuts">
-<h2>Keyboard Shortcuts</h2>
-<dl>
-<dt>?</dt>
-<dd>Show this help dialog</dd>
-<dt>S</dt>
-<dd>Focus the search field</dd>
-<dt>&amp;larrb;</dt>
-<dd>Move up in search results</dd>
-<dt>&amp;rarrb;</dt>
-<dd>Move down in search results</dd>
-<dt>⏎</dt>
-<dd>Go to active search result</dd>
-<dt>+</dt>
-<dd>Collapse/expand all sections</dd>
-</dl>
-</div>
-<div class="infos">
-<h2>Search Tricks</h2>
-<p>Prefix searches with a type followed by a colon (e.g.
-<code>fn:</code>) to restrict the search to a given type.</p>
-<p>Accepted types are: <code>fn</code>, <code>mod</code>,
-<code>struct</code>, <code>enum</code>, <code>trait</code>,
-<code>type</code>, <code>macro</code>, and <code>const</code>.</p>
-<p>Search functions by type signature (e.g. <code>vec -&gt;
-usize</code> or <code>* -&gt; vec</code>)</p>
-</div>
-</div>
-</aside>
-<script>
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
         window.rootPath = "../../../../";
         window.currentCrate = "std";
-</script> 
-<script src="../../../../jquery.js"></script> 
-<script src="../../../../main.js"></script> 
-<script defer src="../../../../search-index.js"></script>
+    </script>
+    <script src="../../../../jquery.js"></script>
+    <script src="../../../../main.js"></script>
+    <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

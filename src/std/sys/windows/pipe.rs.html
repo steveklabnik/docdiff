@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="generator" content=
-"HTML Tidy for HTML5 for Windows version 5.5.12">
-<meta charset="utf-8">
-<meta name="viewport" content=
-"width=device-width, initial-scale=1.0">
-<meta name="generator" content="rustdoc">
-<meta name="description" content=
-"Source to the Rust file `src\libstd\sys\windows\pipe.rs`.">
-<meta name="keywords" content="rust, rustlang, rust-lang">
-<title>pipe.rs.html -- source</title>
-<link rel="stylesheet" type="text/css" href=
-"../../../../normalize.css">
-<link rel="stylesheet" type="text/css" href=
-"../../../../rustdoc.css">
-<link rel="stylesheet" type="text/css" href="../../../../main.css">
-<link rel="shortcut icon" href=
-"https://doc.rust-lang.org/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src\libstd\sys\windows\pipe.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>pipe.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
+
+    <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
+    
 </head>
 <body class="rustdoc">
-<!--[if lte IE 8]>
+    <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
         things.
     </div>
     <![endif]-->
-<nav class="sidebar"><a href='../../../../std/index.html'><img src=
-'https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt=
-'logo' width='100'></a></nav>
-<nav class="sub">
-<form class="search-form js-only">
-<div class="search-container"><input class="search-input" name=
-"search" autocomplete="off" placeholder=
-"Click or press ‘S’ to search, ‘?’ for more options…" type=
-"search"></div>
-</form>
-</nav>
-<section id='main' class="content source">
-<pre class="line-numbers"><span id="1">  1</span>
+
+    
+
+    <nav class="sidebar">
+        <a href='../../../../std/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -394,889 +399,423 @@
 <span id="354">354</span>
 <span id="355">355</span>
 <span id="356">356</span>
-</pre>
-<pre class="rust">
-<span class=
-"comment">// Copyright 2015 The Rust Project Developers. See the COPYRIGHT</span>
-<span class=
-"comment">// file at the top-level directory of this distribution and at</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2015 The Rust Project Developers. See the COPYRIGHT</span>
+<span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
-<span class=
-"comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
-<span class=
-"comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
-<span class=
-"comment">// option. This file may not be copied, modified, or distributed</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="kw">use</span> <span class=
-"ident">os</span>::<span class="ident">windows</span>::<span class=
-"ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">os</span>::<span class="ident">windows</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class=
-"ident">ffi</span>::<span class="ident">OsStr</span>;
+<span class="kw">use</span> <span class="ident">ffi</span>::<span class="ident">OsStr</span>;
 <span class="kw">use</span> <span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">mem</span>;
-<span class="kw">use</span> <span class=
-"ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">path</span>::<span class="ident">Path</span>;
 <span class="kw">use</span> <span class="ident">ptr</span>;
-<span class="kw">use</span> <span class=
-"ident">rand</span>::{<span class="self">self</span>, <span class=
-"ident">Rng</span>};
+<span class="kw">use</span> <span class="ident">rand</span>::{<span class="self">self</span>, <span class="ident">Rng</span>};
 <span class="kw">use</span> <span class="ident">slice</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">c</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">fs</span>::{<span class=
-"ident">File</span>, <span class="ident">OpenOptions</span>};
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">handle</span>::<span class=
-"ident">Handle</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">c</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">OpenOptions</span>};
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">handle</span>::<span class="ident">Handle</span>;
 
-<span class=
-"comment">////////////////////////////////////////////////////////////////////////////////</span>
+<span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 <span class="comment">// Anonymous pipes</span>
-<span class=
-"comment">////////////////////////////////////////////////////////////////////////////////</span>
+<span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
-<span class="kw">pub</span> <span class=
-"kw">struct</span> <span class="ident">AnonPipe</span> {
-    <span class="ident">inner</span>: <span class=
-"ident">Handle</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AnonPipe</span> {
+    <span class="ident">inner</span>: <span class="ident">Handle</span>,
 }
 
-<span class="kw">pub</span> <span class=
-"kw">struct</span> <span class="ident">Pipes</span> {
-    <span class="kw">pub</span> <span class=
-"ident">ours</span>: <span class="ident">AnonPipe</span>,
-    <span class="kw">pub</span> <span class=
-"ident">theirs</span>: <span class="ident">AnonPipe</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pipes</span> {
+    <span class="kw">pub</span> <span class="ident">ours</span>: <span class="ident">AnonPipe</span>,
+    <span class="kw">pub</span> <span class="ident">theirs</span>: <span class="ident">AnonPipe</span>,
 }
 
-<span class=
-"doccomment">/// Although this looks similar to `anon_pipe` in the Unix module it's actually</span>
-<span class=
-"doccomment">/// subtly different. Here we'll return two pipes in the `Pipes` return value,</span>
-<span class=
-"doccomment">/// but one is intended for "us" where as the other is intended for "someone</span>
-<span class="doccomment">/// else".</span>
+<span class="doccomment">/// Although this looks similar to `anon_pipe` in the Unix module it&#39;s actually</span>
+<span class="doccomment">/// subtly different. Here we&#39;ll return two pipes in the `Pipes` return value,</span>
+<span class="doccomment">/// but one is intended for &quot;us&quot; where as the other is intended for &quot;someone</span>
+<span class="doccomment">/// else&quot;.</span>
 <span class="doccomment">///</span>
-<span class=
-"doccomment">/// Currently the only use case for this function is pipes for stdio on</span>
-<span class=
-"doccomment">/// processes in the standard library, so "ours" is the one that'll stay in our</span>
-<span class=
-"doccomment">/// process whereas "theirs" will be inherited to a child.</span>
+<span class="doccomment">/// Currently the only use case for this function is pipes for stdio on</span>
+<span class="doccomment">/// processes in the standard library, so &quot;ours&quot; is the one that&#39;ll stay in our</span>
+<span class="doccomment">/// process whereas &quot;theirs&quot; will be inherited to a child.</span>
 <span class="doccomment">///</span>
-<span class=
-"doccomment">/// The ours/theirs pipes are *not* specifically readable or writable. Each</span>
-<span class=
-"doccomment">/// one only supports a read or a write, but which is which depends on the</span>
-<span class=
-"doccomment">/// boolean flag given. If `ours_readable` is true then `ours` is readable where</span>
-<span class=
-"doccomment">/// `theirs` is writable. Conversely if `ours_readable` is false then `ours` is</span>
-<span class=
-"doccomment">/// writable where `theirs` is readable.</span>
+<span class="doccomment">/// The ours/theirs pipes are *not* specifically readable or writable. Each</span>
+<span class="doccomment">/// one only supports a read or a write, but which is which depends on the</span>
+<span class="doccomment">/// boolean flag given. If `ours_readable` is true then `ours` is readable where</span>
+<span class="doccomment">/// `theirs` is writable. Conversely if `ours_readable` is false then `ours` is</span>
+<span class="doccomment">/// writable where `theirs` is readable.</span>
 <span class="doccomment">///</span>
-<span class=
-"doccomment">/// Also note that the `ours` pipe is always a handle opened up in overlapped</span>
-<span class=
-"doccomment">/// mode. This means that technically speaking it should only ever be used</span>
-<span class=
-"doccomment">/// with `OVERLAPPED` instances, but also works out ok if it's only ever used</span>
-<span class=
-"doccomment">/// once at a time (which we do indeed guarantee).</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class=
-"ident">anon_pipe</span>(<span class=
-"ident">ours_readable</span>: <span class=
-"ident">bool</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">Pipes</span><span class="op">&gt;</span> {
-    <span class=
-"comment">// Note that we specifically do *not* use `CreatePipe` here because</span>
-    <span class=
-"comment">// unfortunately the anonymous pipes returned do not support overlapped</span>
-    <span class=
-"comment">// operations. Instead, we create a "hopefully unique" name and create a</span>
-    <span class=
-"comment">// named pipe which has overlapped operations enabled.</span>
+<span class="doccomment">/// Also note that the `ours` pipe is always a handle opened up in overlapped</span>
+<span class="doccomment">/// mode. This means that technically speaking it should only ever be used</span>
+<span class="doccomment">/// with `OVERLAPPED` instances, but also works out ok if it&#39;s only ever used</span>
+<span class="doccomment">/// once at a time (which we do indeed guarantee).</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">anon_pipe</span>(<span class="ident">ours_readable</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Pipes</span><span class="op">&gt;</span> {
+    <span class="comment">// Note that we specifically do *not* use `CreatePipe` here because</span>
+    <span class="comment">// unfortunately the anonymous pipes returned do not support overlapped</span>
+    <span class="comment">// operations. Instead, we create a &quot;hopefully unique&quot; name and create a</span>
+    <span class="comment">// named pipe which has overlapped operations enabled.</span>
     <span class="comment">//</span>
-    <span class=
-"comment">// Once we do this, we connect do it as usual via `CreateFileW`, and then</span>
-    <span class=
-"comment">// we return those reader/writer halves. Note that the `ours` pipe return</span>
-    <span class=
-"comment">// value is always the named pipe, whereas `theirs` is just the normal file.</span>
-    <span class=
-"comment">// This should hopefully shield us from child processes which assume their</span>
-    <span class=
-"comment">// stdout is a named pipe, which would indeed be odd!</span>
+    <span class="comment">// Once we do this, we connect do it as usual via `CreateFileW`, and then</span>
+    <span class="comment">// we return those reader/writer halves. Note that the `ours` pipe return</span>
+    <span class="comment">// value is always the named pipe, whereas `theirs` is just the normal file.</span>
+    <span class="comment">// This should hopefully shield us from child processes which assume their</span>
+    <span class="comment">// stdout is a named pipe, which would indeed be odd!</span>
     <span class="kw">unsafe</span> {
-        <span class="kw">let</span> <span class=
-"ident">ours</span>;
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">name</span>;
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">tries</span> <span class=
-"op">=</span> <span class="number">0</span>;
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class=
-"ident">reject_remote_clients_flag</span> <span class=
-"op">=</span> <span class="ident">c</span>::<span class=
-"ident">PIPE_REJECT_REMOTE_CLIENTS</span>;
+        <span class="kw">let</span> <span class="ident">ours</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">name</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tries</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reject_remote_clients_flag</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">PIPE_REJECT_REMOTE_CLIENTS</span>;
         <span class="kw">loop</span> {
-            <span class="ident">tries</span> <span class=
-"op">+=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class=
-"ident">key</span>: <span class="ident">u64</span> <span class=
-"op">=</span> <span class="ident">rand</span>::<span class=
-"ident">thread_rng</span>().<span class="ident">gen</span>();
-            <span class="ident">name</span> <span class=
-"op">=</span> <span class="macro">format</span><span class=
-"macro">!</span>(<span class=
-"string">r"\\.\pipe\__rust_anonymous_pipe1__.{}.{}"</span>,
-                           <span class=
-"ident">c</span>::<span class="ident">GetCurrentProcessId</span>(),
+            <span class="ident">tries</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="kw">let</span> <span class="ident">key</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>().<span class="ident">gen</span>();
+            <span class="ident">name</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">r&quot;\\.\pipe\__rust_anonymous_pipe1__.{}.{}&quot;</span>,
+                           <span class="ident">c</span>::<span class="ident">GetCurrentProcessId</span>(),
                            <span class="ident">key</span>);
-            <span class="kw">let</span> <span class=
-"ident">wide_name</span> <span class="op">=</span> <span class=
-"ident">OsStr</span>::<span class="ident">new</span>(<span class=
-"kw-2">&</span><span class="ident">name</span>)
-                                  .<span class=
-"ident">encode_wide</span>()
-                                  .<span class=
-"ident">chain</span>(<span class=
-"prelude-val">Some</span>(<span class="number">0</span>))
-                                  .<span class=
-"ident">collect</span>::<span class="op">&lt;</span><span class=
-"ident">Vec</span><span class="op">&lt;</span>_<span class=
-"op">&gt;&gt;</span>();
-            <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">flags</span> <span class=
-"op">=</span> <span class="ident">c</span>::<span class=
-"ident">FILE_FLAG_FIRST_PIPE_INSTANCE</span> <span class=
-"op">|</span>
-                <span class="ident">c</span>::<span class=
-"ident">FILE_FLAG_OVERLAPPED</span>;
-            <span class="kw">if</span> <span class=
-"ident">ours_readable</span> {
-                <span class="ident">flags</span> <span class=
-"op">|=</span> <span class="ident">c</span>::<span class=
-"ident">PIPE_ACCESS_INBOUND</span>;
+            <span class="kw">let</span> <span class="ident">wide_name</span> <span class="op">=</span> <span class="ident">OsStr</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>)
+                                  .<span class="ident">encode_wide</span>()
+                                  .<span class="ident">chain</span>(<span class="prelude-val">Some</span>(<span class="number">0</span>))
+                                  .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">FILE_FLAG_FIRST_PIPE_INSTANCE</span> <span class="op">|</span>
+                <span class="ident">c</span>::<span class="ident">FILE_FLAG_OVERLAPPED</span>;
+            <span class="kw">if</span> <span class="ident">ours_readable</span> {
+                <span class="ident">flags</span> <span class="op">|=</span> <span class="ident">c</span>::<span class="ident">PIPE_ACCESS_INBOUND</span>;
             } <span class="kw">else</span> {
-                <span class="ident">flags</span> <span class=
-"op">|=</span> <span class="ident">c</span>::<span class=
-"ident">PIPE_ACCESS_OUTBOUND</span>;
+                <span class="ident">flags</span> <span class="op">|=</span> <span class="ident">c</span>::<span class="ident">PIPE_ACCESS_OUTBOUND</span>;
             }
 
-            <span class="kw">let</span> <span class=
-"ident">handle</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class=
-"ident">CreateNamedPipeW</span>(<span class=
-"ident">wide_name</span>.<span class="ident">as_ptr</span>(),
-                                             <span class=
-"ident">flags</span>,
-                                             <span class=
-"ident">c</span>::<span class=
-"ident">PIPE_TYPE_BYTE</span> <span class="op">|</span>
-                                             <span class=
-"ident">c</span>::<span class=
-"ident">PIPE_READMODE_BYTE</span> <span class="op">|</span>
-                                             <span class=
-"ident">c</span>::<span class="ident">PIPE_WAIT</span> <span class=
-"op">|</span>
-                                             <span class=
-"ident">reject_remote_clients_flag</span>,
-                                             <span class=
-"number">1</span>,
-                                             <span class=
-"number">4096</span>,
-                                             <span class=
-"number">4096</span>,
-                                             <span class=
-"number">0</span>,
-                                             <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>());
+            <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">CreateNamedPipeW</span>(<span class="ident">wide_name</span>.<span class="ident">as_ptr</span>(),
+                                             <span class="ident">flags</span>,
+                                             <span class="ident">c</span>::<span class="ident">PIPE_TYPE_BYTE</span> <span class="op">|</span>
+                                             <span class="ident">c</span>::<span class="ident">PIPE_READMODE_BYTE</span> <span class="op">|</span>
+                                             <span class="ident">c</span>::<span class="ident">PIPE_WAIT</span> <span class="op">|</span>
+                                             <span class="ident">reject_remote_clients_flag</span>,
+                                             <span class="number">1</span>,
+                                             <span class="number">4096</span>,
+                                             <span class="number">4096</span>,
+                                             <span class="number">0</span>,
+                                             <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
 
-            <span class=
-"comment">// We pass the FILE_FLAG_FIRST_PIPE_INSTANCE flag above, and we're</span>
-            <span class=
-"comment">// also just doing a best effort at selecting a unique name. If</span>
-            <span class=
-"comment">// ERROR_ACCESS_DENIED is returned then it could mean that we</span>
-            <span class=
-"comment">// accidentally conflicted with an already existing pipe, so we try</span>
+            <span class="comment">// We pass the FILE_FLAG_FIRST_PIPE_INSTANCE flag above, and we&#39;re</span>
+            <span class="comment">// also just doing a best effort at selecting a unique name. If</span>
+            <span class="comment">// ERROR_ACCESS_DENIED is returned then it could mean that we</span>
+            <span class="comment">// accidentally conflicted with an already existing pipe, so we try</span>
             <span class="comment">// again.</span>
             <span class="comment">//</span>
-            <span class=
-"comment">// Don't try again too much though as this could also perhaps be a</span>
+            <span class="comment">// Don&#39;t try again too much though as this could also perhaps be a</span>
             <span class="comment">// legit error.</span>
-            <span class=
-"comment">// If ERROR_INVALID_PARAMETER is returned, this probably means we're</span>
-            <span class=
-"comment">// running on pre-Vista version where PIPE_REJECT_REMOTE_CLIENTS is</span>
-            <span class=
-"comment">// not supported, so we continue retrying without it. This implies</span>
-            <span class=
-"comment">// reduced security on Windows versions older than Vista by allowing</span>
-            <span class=
-"comment">// connections to this pipe from remote machines.</span>
-            <span class=
-"comment">// Proper fix would increase the number of FFI imports and introduce</span>
-            <span class=
-"comment">// significant amount of Windows XP specific code with no clean</span>
+            <span class="comment">// If ERROR_INVALID_PARAMETER is returned, this probably means we&#39;re</span>
+            <span class="comment">// running on pre-Vista version where PIPE_REJECT_REMOTE_CLIENTS is</span>
+            <span class="comment">// not supported, so we continue retrying without it. This implies</span>
+            <span class="comment">// reduced security on Windows versions older than Vista by allowing</span>
+            <span class="comment">// connections to this pipe from remote machines.</span>
+            <span class="comment">// Proper fix would increase the number of FFI imports and introduce</span>
+            <span class="comment">// significant amount of Windows XP specific code with no clean</span>
             <span class="comment">// testing strategy</span>
-            <span class=
-"comment">// for more info see https://github.com/rust-lang/rust/pull/37677</span>
-            <span class="kw">if</span> <span class=
-"ident">handle</span> <span class="op">==</span> <span class=
-"ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span> {
-                <span class="kw">let</span> <span class=
-"ident">err</span> <span class="op">=</span> <span class=
-"ident">io</span>::<span class="ident">Error</span>::<span class=
-"ident">last_os_error</span>();
-                <span class="kw">let</span> <span class=
-"ident">raw_os_err</span> <span class="op">=</span> <span class=
-"ident">err</span>.<span class="ident">raw_os_error</span>();
-                <span class="kw">if</span> <span class=
-"ident">tries</span> <span class="op">&lt;</span> <span class=
-"number">10</span> {
-                    <span class="kw">if</span> <span class=
-"ident">raw_os_err</span> <span class="op">==</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">c</span>::<span class="ident">ERROR_ACCESS_DENIED</span> <span class="kw">as</span> <span class="ident">i32</span>) {
+            <span class="comment">// for more info see https://github.com/rust-lang/rust/pull/37677</span>
+            <span class="kw">if</span> <span class="ident">handle</span> <span class="op">==</span> <span class="ident">c</span>::<span class="ident">INVALID_HANDLE_VALUE</span> {
+                <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>();
+                <span class="kw">let</span> <span class="ident">raw_os_err</span> <span class="op">=</span> <span class="ident">err</span>.<span class="ident">raw_os_error</span>();
+                <span class="kw">if</span> <span class="ident">tries</span> <span class="op">&lt;</span> <span class="number">10</span> {
+                    <span class="kw">if</span> <span class="ident">raw_os_err</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>::<span class="ident">ERROR_ACCESS_DENIED</span> <span class="kw">as</span> <span class="ident">i32</span>) {
                         <span class="kw">continue</span>
-                    } <span class="kw">else</span> <span class=
-"kw">if</span> <span class=
-"ident">reject_remote_clients_flag</span> <span class=
-"op">!=</span> <span class="number">0</span> <span class=
-"op">&amp;&</span>
-                        <span class=
-"ident">raw_os_err</span> <span class="op">==</span> <span class=
-"prelude-val">Some</span>(<span class=
-"ident">c</span>::<span class="ident">ERROR_INVALID_PARAMETER</span> <span class="kw">as</span> <span class="ident">i32</span>) {
-                        <span class=
-"ident">reject_remote_clients_flag</span> <span class=
-"op">=</span> <span class="number">0</span>;
-                        <span class=
-"ident">tries</span> <span class="op">-=</span> <span class=
-"number">1</span>;
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">reject_remote_clients_flag</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span>
+                        <span class="ident">raw_os_err</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>::<span class="ident">ERROR_INVALID_PARAMETER</span> <span class="kw">as</span> <span class="ident">i32</span>) {
+                        <span class="ident">reject_remote_clients_flag</span> <span class="op">=</span> <span class="number">0</span>;
+                        <span class="ident">tries</span> <span class="op">-=</span> <span class="number">1</span>;
                         <span class="kw">continue</span>
                     }
                 }
-                <span class="kw">return</span> <span class=
-"prelude-val">Err</span>(<span class="ident">err</span>)
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>)
             }
-            <span class="ident">ours</span> <span class=
-"op">=</span> <span class="ident">Handle</span>::<span class=
-"ident">new</span>(<span class="ident">handle</span>);
+            <span class="ident">ours</span> <span class="op">=</span> <span class="ident">Handle</span>::<span class="ident">new</span>(<span class="ident">handle</span>);
             <span class="kw">break</span>
         }
 
-        <span class=
-"comment">// Connect to the named pipe we just created. This handle is going to be</span>
-        <span class=
-"comment">// returned in `theirs`, so if `ours` is readable we want this to be</span>
-        <span class=
-"comment">// writable, otherwise if `ours` is writable we want this to be</span>
+        <span class="comment">// Connect to the named pipe we just created. This handle is going to be</span>
+        <span class="comment">// returned in `theirs`, so if `ours` is readable we want this to be</span>
+        <span class="comment">// writable, otherwise if `ours` is writable we want this to be</span>
         <span class="comment">// readable.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// Additionally we don't enable overlapped mode on this because most</span>
-        <span class=
-"comment">// client processes aren't enabled to work with that.</span>
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">opts</span> <span class=
-"op">=</span> <span class="ident">OpenOptions</span>::<span class=
-"ident">new</span>();
-        <span class="ident">opts</span>.<span class=
-"ident">write</span>(<span class="ident">ours_readable</span>);
-        <span class="ident">opts</span>.<span class=
-"ident">read</span>(<span class="op">!</span><span class=
-"ident">ours_readable</span>);
-        <span class="ident">opts</span>.<span class=
-"ident">share_mode</span>(<span class="number">0</span>);
-        <span class="kw">let</span> <span class=
-"ident">theirs</span> <span class="op">=</span> <span class=
-"ident">File</span>::<span class="ident">open</span>(<span class=
-"ident">Path</span>::<span class="ident">new</span>(<span class=
-"kw-2">&</span><span class="ident">name</span>), <span class=
-"kw-2">&</span><span class="ident">opts</span>)<span class=
-"question-mark">?</span>;
-        <span class="kw">let</span> <span class=
-"ident">theirs</span> <span class="op">=</span> <span class=
-"ident">AnonPipe</span> { <span class=
-"ident">inner</span>: <span class=
-"ident">theirs</span>.<span class="ident">into_handle</span>() };
+        <span class="comment">// Additionally we don&#39;t enable overlapped mode on this because most</span>
+        <span class="comment">// client processes aren&#39;t enabled to work with that.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">opts</span> <span class="op">=</span> <span class="ident">OpenOptions</span>::<span class="ident">new</span>();
+        <span class="ident">opts</span>.<span class="ident">write</span>(<span class="ident">ours_readable</span>);
+        <span class="ident">opts</span>.<span class="ident">read</span>(<span class="op">!</span><span class="ident">ours_readable</span>);
+        <span class="ident">opts</span>.<span class="ident">share_mode</span>(<span class="number">0</span>);
+        <span class="kw">let</span> <span class="ident">theirs</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">Path</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>), <span class="kw-2">&amp;</span><span class="ident">opts</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">theirs</span> <span class="op">=</span> <span class="ident">AnonPipe</span> { <span class="ident">inner</span>: <span class="ident">theirs</span>.<span class="ident">into_handle</span>() };
 
-        <span class="prelude-val">Ok</span>(<span class=
-"ident">Pipes</span> {
-            <span class="ident">ours</span>: <span class=
-"ident">AnonPipe</span> { <span class=
-"ident">inner</span>: <span class="ident">ours</span> },
-            <span class="ident">theirs</span>: <span class=
-"ident">AnonPipe</span> { <span class=
-"ident">inner</span>: <span class=
-"ident">theirs</span>.<span class="ident">into_handle</span>() },
+        <span class="prelude-val">Ok</span>(<span class="ident">Pipes</span> {
+            <span class="ident">ours</span>: <span class="ident">AnonPipe</span> { <span class="ident">inner</span>: <span class="ident">ours</span> },
+            <span class="ident">theirs</span>: <span class="ident">AnonPipe</span> { <span class="ident">inner</span>: <span class="ident">theirs</span>.<span class="ident">into_handle</span>() },
         })
     }
 }
 
 <span class="kw">impl</span> <span class="ident">AnonPipe</span> {
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">handle</span>(<span class=
-"kw-2">&</span><span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="kw-2">&</span><span class=
-"ident">Handle</span> { <span class="kw-2">&</span><span class=
-"self">self</span>.<span class="ident">inner</span> }
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">into_handle</span>(<span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">Handle</span> { <span class="self">self</span>.<span class=
-"ident">inner</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Handle</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_handle</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Handle</span> { <span class="self">self</span>.<span class="ident">inner</span> }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">read</span>(<span class=
-"kw-2">&</span><span class="self">self</span>, <span class=
-"ident">buf</span>: <span class="kw-2">&</span><span class=
-"kw-2">mut</span> [<span class="ident">u8</span>]) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class=
-"ident">inner</span>.<span class="ident">read</span>(<span class=
-"ident">buf</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">read_to_end</span>(<span class=
-"kw-2">&</span><span class="self">self</span>, <span class=
-"ident">buf</span>: <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u8</span><span class=
-"op">&gt;</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class=
-"ident">inner</span>.<span class=
-"ident">read_to_end</span>(<span class="ident">buf</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">read_to_end</span>(<span class="ident">buf</span>)
     }
 
-    <span class="kw">pub</span> <span class=
-"kw">fn</span> <span class="ident">write</span>(<span class=
-"kw-2">&</span><span class="self">self</span>, <span class=
-"ident">buf</span>: <span class="kw-2">&</span>[<span class=
-"ident">u8</span>]) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class=
-"ident">inner</span>.<span class="ident">write</span>(<span class=
-"ident">buf</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">write</span>(<span class="ident">buf</span>)
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class=
-"ident">read2</span>(<span class="ident">p1</span>: <span class=
-"ident">AnonPipe</span>,
-             <span class="ident">v1</span>: <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">Vec</span><span class="op">&lt;</span><span class=
-"ident">u8</span><span class="op">&gt;</span>,
-             <span class="ident">p2</span>: <span class=
-"ident">AnonPipe</span>,
-             <span class="ident">v2</span>: <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"ident">Vec</span><span class="op">&lt;</span><span class=
-"ident">u8</span><span class="op">&gt;</span>) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class=
-"op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class=
-"ident">p1</span> <span class="op">=</span> <span class=
-"ident">p1</span>.<span class="ident">into_handle</span>();
-    <span class="kw">let</span> <span class=
-"ident">p2</span> <span class="op">=</span> <span class=
-"ident">p2</span>.<span class="ident">into_handle</span>();
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read2</span>(<span class="ident">p1</span>: <span class="ident">AnonPipe</span>,
+             <span class="ident">v1</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+             <span class="ident">p2</span>: <span class="ident">AnonPipe</span>,
+             <span class="ident">v2</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">p1</span> <span class="op">=</span> <span class="ident">p1</span>.<span class="ident">into_handle</span>();
+    <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="ident">p2</span>.<span class="ident">into_handle</span>();
 
-    <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">p1</span> <span class=
-"op">=</span> <span class="ident">AsyncPipe</span>::<span class=
-"ident">new</span>(<span class="ident">p1</span>, <span class=
-"ident">v1</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">p2</span> <span class=
-"op">=</span> <span class="ident">AsyncPipe</span>::<span class=
-"ident">new</span>(<span class="ident">p2</span>, <span class=
-"ident">v2</span>)<span class="question-mark">?</span>;
-    <span class="kw">let</span> <span class=
-"ident">objs</span> <span class="op">=</span> [<span class=
-"ident">p1</span>.<span class="ident">event</span>.<span class=
-"ident">raw</span>(), <span class="ident">p2</span>.<span class=
-"ident">event</span>.<span class="ident">raw</span>()];
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p1</span> <span class="op">=</span> <span class="ident">AsyncPipe</span>::<span class="ident">new</span>(<span class="ident">p1</span>, <span class="ident">v1</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p2</span> <span class="op">=</span> <span class="ident">AsyncPipe</span>::<span class="ident">new</span>(<span class="ident">p2</span>, <span class="ident">v2</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">objs</span> <span class="op">=</span> [<span class="ident">p1</span>.<span class="ident">event</span>.<span class="ident">raw</span>(), <span class="ident">p2</span>.<span class="ident">event</span>.<span class="ident">raw</span>()];
 
-    <span class=
-"comment">// In a loop we wait for either pipe's scheduled read operation to complete.</span>
-    <span class=
-"comment">// If the operation completes with 0 bytes, that means EOF was reached, in</span>
-    <span class=
-"comment">// which case we just finish out the other pipe entirely.</span>
+    <span class="comment">// In a loop we wait for either pipe&#39;s scheduled read operation to complete.</span>
+    <span class="comment">// If the operation completes with 0 bytes, that means EOF was reached, in</span>
+    <span class="comment">// which case we just finish out the other pipe entirely.</span>
     <span class="comment">//</span>
-    <span class=
-"comment">// Note that overlapped I/O is in general super unsafe because we have to</span>
-    <span class=
-"comment">// be careful to ensure that all pointers in play are valid for the entire</span>
-    <span class=
-"comment">// duration of the I/O operation (where tons of operations can also fail).</span>
-    <span class=
-"comment">// The destructor for `AsyncPipe` ends up taking care of most of this.</span>
+    <span class="comment">// Note that overlapped I/O is in general super unsafe because we have to</span>
+    <span class="comment">// be careful to ensure that all pointers in play are valid for the entire</span>
+    <span class="comment">// duration of the I/O operation (where tons of operations can also fail).</span>
+    <span class="comment">// The destructor for `AsyncPipe` ends up taking care of most of this.</span>
     <span class="kw">loop</span> {
-        <span class="kw">let</span> <span class=
-"ident">res</span> <span class="op">=</span> <span class=
-"kw">unsafe</span> {
-            <span class="ident">c</span>::<span class=
-"ident">WaitForMultipleObjects</span>(<span class=
-"number">2</span>, <span class="ident">objs</span>.<span class=
-"ident">as_ptr</span>(), <span class="ident">c</span>::<span class=
-"ident">FALSE</span>, <span class="ident">c</span>::<span class=
-"ident">INFINITE</span>)
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="ident">c</span>::<span class="ident">WaitForMultipleObjects</span>(<span class="number">2</span>, <span class="ident">objs</span>.<span class="ident">as_ptr</span>(), <span class="ident">c</span>::<span class="ident">FALSE</span>, <span class="ident">c</span>::<span class="ident">INFINITE</span>)
         };
-        <span class="kw">if</span> <span class=
-"ident">res</span> <span class="op">==</span> <span class=
-"ident">c</span>::<span class="ident">WAIT_OBJECT_0</span> {
-            <span class="kw">if</span> <span class=
-"op">!</span><span class="ident">p1</span>.<span class=
-"ident">result</span>()<span class=
-"question-mark">?</span> <span class="op">||</span> <span class=
-"op">!</span><span class="ident">p1</span>.<span class=
-"ident">schedule_read</span>()<span class=
-"question-mark">?</span> {
-                <span class="kw">return</span> <span class=
-"ident">p2</span>.<span class="ident">finish</span>()
+        <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="ident">c</span>::<span class="ident">WAIT_OBJECT_0</span> {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">p1</span>.<span class="ident">result</span>()<span class="question-mark">?</span> <span class="op">||</span> <span class="op">!</span><span class="ident">p1</span>.<span class="ident">schedule_read</span>()<span class="question-mark">?</span> {
+                <span class="kw">return</span> <span class="ident">p2</span>.<span class="ident">finish</span>()
             }
-        } <span class="kw">else</span> <span class=
-"kw">if</span> <span class="ident">res</span> <span class=
-"op">==</span> <span class="ident">c</span>::<span class=
-"ident">WAIT_OBJECT_0</span> <span class="op">+</span> <span class=
-"number">1</span> {
-            <span class="kw">if</span> <span class=
-"op">!</span><span class="ident">p2</span>.<span class=
-"ident">result</span>()<span class=
-"question-mark">?</span> <span class="op">||</span> <span class=
-"op">!</span><span class="ident">p2</span>.<span class=
-"ident">schedule_read</span>()<span class=
-"question-mark">?</span> {
-                <span class="kw">return</span> <span class=
-"ident">p1</span>.<span class="ident">finish</span>()
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="ident">c</span>::<span class="ident">WAIT_OBJECT_0</span> <span class="op">+</span> <span class="number">1</span> {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">p2</span>.<span class="ident">result</span>()<span class="question-mark">?</span> <span class="op">||</span> <span class="op">!</span><span class="ident">p2</span>.<span class="ident">schedule_read</span>()<span class="question-mark">?</span> {
+                <span class="kw">return</span> <span class="ident">p1</span>.<span class="ident">finish</span>()
             }
         } <span class="kw">else</span> {
-            <span class="kw">return</span> <span class=
-"prelude-val">Err</span>(<span class=
-"ident">io</span>::<span class="ident">Error</span>::<span class=
-"ident">last_os_error</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>())
         }
     }
 }
 
-<span class="kw">struct</span> <span class=
-"ident">AsyncPipe</span><span class="op">&lt;</span><span class=
-"lifetime">'a</span><span class="op">&gt;</span> {
-    <span class="ident">pipe</span>: <span class=
-"ident">Handle</span>,
-    <span class="ident">event</span>: <span class=
-"ident">Handle</span>,
-    <span class="ident">overlapped</span>: <span class=
-"ident">Box</span><span class="op">&lt;</span><span class=
-"ident">c</span>::<span class="ident">OVERLAPPED</span><span class=
-"op">&gt;</span>, <span class=
-"comment">// needs a stable address</span>
-    <span class="ident">dst</span>: <span class=
-"kw-2">&</span><span class="lifetime">'a</span> <span class=
-"kw-2">mut</span> <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u8</span><span class=
-"op">&gt;</span>,
-    <span class="ident">state</span>: <span class=
-"ident">State</span>,
+<span class="kw">struct</span> <span class="ident">AsyncPipe</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">pipe</span>: <span class="ident">Handle</span>,
+    <span class="ident">event</span>: <span class="ident">Handle</span>,
+    <span class="ident">overlapped</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">c</span>::<span class="ident">OVERLAPPED</span><span class="op">&gt;</span>, <span class="comment">// needs a stable address</span>
+    <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="ident">state</span>: <span class="ident">State</span>,
 }
 
-<span class="attribute">#[<span class=
-"ident">derive</span>(<span class=
-"ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">enum</span> <span class="ident">State</span> {
     <span class="ident">NotReading</span>,
     <span class="ident">Reading</span>,
-    <span class="ident">Read</span>(<span class=
-"ident">usize</span>),
+    <span class="ident">Read</span>(<span class="ident">usize</span>),
 }
 
-<span class="kw">impl</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> <span class="ident">AsyncPipe</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> {
-    <span class="kw">fn</span> <span class=
-"ident">new</span>(<span class="ident">pipe</span>: <span class=
-"ident">Handle</span>, <span class="ident">dst</span>: <span class=
-"kw-2">&</span><span class="lifetime">'a</span> <span class=
-"kw-2">mut</span> <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u8</span><span class=
-"op">&gt;</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">AsyncPipe</span><span class="op">&lt;</span><span class=
-"lifetime">'a</span><span class="op">&gt;&gt;</span> {
-        <span class=
-"comment">// Create an event which we'll use to coordinate our overlapped</span>
-        <span class=
-"comment">// opreations, this event will be used in WaitForMultipleObjects</span>
-        <span class=
-"comment">// and passed as part of the OVERLAPPED handle.</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsyncPipe</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">pipe</span>: <span class="ident">Handle</span>, <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AsyncPipe</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="comment">// Create an event which we&#39;ll use to coordinate our overlapped</span>
+        <span class="comment">// opreations, this event will be used in WaitForMultipleObjects</span>
+        <span class="comment">// and passed as part of the OVERLAPPED handle.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// Note that we do a somewhat clever thing here by flagging the</span>
-        <span class=
-"comment">// event as being manually reset and setting it initially to the</span>
-        <span class=
-"comment">// signaled state. This means that we'll naturally fall through the</span>
-        <span class=
-"comment">// WaitForMultipleObjects call above for pipes created initially,</span>
-        <span class=
-"comment">// and the only time an even will go back to "unset" will be once an</span>
-        <span class=
-"comment">// I/O operation is successfully scheduled (what we want).</span>
-        <span class="kw">let</span> <span class=
-"ident">event</span> <span class="op">=</span> <span class=
-"ident">Handle</span>::<span class=
-"ident">new_event</span>(<span class=
-"bool-val">true</span>, <span class=
-"bool-val">true</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class=
-"ident">overlapped</span>: <span class=
-"ident">Box</span><span class="op">&lt;</span><span class=
-"ident">c</span>::<span class="ident">OVERLAPPED</span><span class=
-"op">&gt;</span> <span class="op">=</span> <span class=
-"kw">unsafe</span> {
-            <span class="ident">Box</span>::<span class=
-"ident">new</span>(<span class="ident">mem</span>::<span class=
-"ident">zeroed</span>())
+        <span class="comment">// Note that we do a somewhat clever thing here by flagging the</span>
+        <span class="comment">// event as being manually reset and setting it initially to the</span>
+        <span class="comment">// signaled state. This means that we&#39;ll naturally fall through the</span>
+        <span class="comment">// WaitForMultipleObjects call above for pipes created initially,</span>
+        <span class="comment">// and the only time an even will go back to &quot;unset&quot; will be once an</span>
+        <span class="comment">// I/O operation is successfully scheduled (what we want).</span>
+        <span class="kw">let</span> <span class="ident">event</span> <span class="op">=</span> <span class="ident">Handle</span>::<span class="ident">new_event</span>(<span class="bool-val">true</span>, <span class="bool-val">true</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">overlapped</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">c</span>::<span class="ident">OVERLAPPED</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">mem</span>::<span class="ident">zeroed</span>())
         };
-        <span class="ident">overlapped</span>.<span class=
-"ident">hEvent</span> <span class="op">=</span> <span class=
-"ident">event</span>.<span class="ident">raw</span>();
-        <span class="prelude-val">Ok</span>(<span class=
-"ident">AsyncPipe</span> {
-            <span class="ident">pipe</span>: <span class=
-"ident">pipe</span>,
-            <span class="ident">overlapped</span>: <span class=
-"ident">overlapped</span>,
-            <span class="ident">event</span>: <span class=
-"ident">event</span>,
-            <span class="ident">dst</span>: <span class=
-"ident">dst</span>,
-            <span class="ident">state</span>: <span class=
-"ident">State</span>::<span class="ident">NotReading</span>,
+        <span class="ident">overlapped</span>.<span class="ident">hEvent</span> <span class="op">=</span> <span class="ident">event</span>.<span class="ident">raw</span>();
+        <span class="prelude-val">Ok</span>(<span class="ident">AsyncPipe</span> {
+            <span class="ident">pipe</span>: <span class="ident">pipe</span>,
+            <span class="ident">overlapped</span>: <span class="ident">overlapped</span>,
+            <span class="ident">event</span>: <span class="ident">event</span>,
+            <span class="ident">dst</span>: <span class="ident">dst</span>,
+            <span class="ident">state</span>: <span class="ident">State</span>::<span class="ident">NotReading</span>,
         })
     }
 
-    <span class=
-"doccomment">/// Executes an overlapped read operation.</span>
+    <span class="doccomment">/// Executes an overlapped read operation.</span>
     <span class="doccomment">///</span>
-    <span class=
-"doccomment">/// Must not currently be reading, and returns whether the pipe is currently</span>
-    <span class=
-"doccomment">/// at EOF or not. If the pipe is not at EOF then `result()` must be called</span>
-    <span class=
-"doccomment">/// to complete the read later on (may block), but if the pipe is at EOF</span>
-    <span class=
-"doccomment">/// then `result()` should not be called as it will just block forever.</span>
-    <span class="kw">fn</span> <span class=
-"ident">schedule_read</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>) <span class="op">-&gt;</span> <span class=
-"ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">bool</span><span class="op">&gt;</span> {
-        <span class="macro">assert_eq</span><span class=
-"macro">!</span>(<span class="self">self</span>.<span class=
-"ident">state</span>, <span class=
-"ident">State</span>::<span class="ident">NotReading</span>);
-        <span class="kw">let</span> <span class=
-"ident">amt</span> <span class="op">=</span> <span class=
-"kw">unsafe</span> {
-            <span class="kw">let</span> <span class=
-"ident">slice</span> <span class="op">=</span> <span class=
-"ident">slice_to_end</span>(<span class=
-"self">self</span>.<span class="ident">dst</span>);
-            <span class="self">self</span>.<span class=
-"ident">pipe</span>.<span class=
-"ident">read_overlapped</span>(<span class=
-"ident">slice</span>, <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="kw-2">*</span><span class=
-"self">self</span>.<span class=
-"ident">overlapped</span>)<span class="question-mark">?</span>
+    <span class="doccomment">/// Must not currently be reading, and returns whether the pipe is currently</span>
+    <span class="doccomment">/// at EOF or not. If the pipe is not at EOF then `result()` must be called</span>
+    <span class="doccomment">/// to complete the read later on (may block), but if the pipe is at EOF</span>
+    <span class="doccomment">/// then `result()` should not be called as it will just block forever.</span>
+    <span class="kw">fn</span> <span class="ident">schedule_read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">state</span>, <span class="ident">State</span>::<span class="ident">NotReading</span>);
+        <span class="kw">let</span> <span class="ident">amt</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">slice_to_end</span>(<span class="self">self</span>.<span class="ident">dst</span>);
+            <span class="self">self</span>.<span class="ident">pipe</span>.<span class="ident">read_overlapped</span>(<span class="ident">slice</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">overlapped</span>)<span class="question-mark">?</span>
         };
 
-        <span class=
-"comment">// If this read finished immediately then our overlapped event will</span>
-        <span class=
-"comment">// remain signaled (it was signaled coming in here) and we'll progress</span>
+        <span class="comment">// If this read finished immediately then our overlapped event will</span>
+        <span class="comment">// remain signaled (it was signaled coming in here) and we&#39;ll progress</span>
         <span class="comment">// down to the method below.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// Otherwise the I/O operation is scheduled and the system set our event</span>
-        <span class=
-"comment">// to not signaled, so we flag ourselves into the reading state and move</span>
+        <span class="comment">// Otherwise the I/O operation is scheduled and the system set our event</span>
+        <span class="comment">// to not signaled, so we flag ourselves into the reading state and move</span>
         <span class="comment">// on.</span>
-        <span class="self">self</span>.<span class=
-"ident">state</span> <span class="op">=</span> <span class=
-"kw">match</span> <span class="ident">amt</span> {
-            <span class="prelude-val">Some</span>(<span class=
-"number">0</span>) <span class="op">=&gt;</span> <span class=
-"kw">return</span> <span class="prelude-val">Ok</span>(<span class=
-"bool-val">false</span>),
-            <span class="prelude-val">Some</span>(<span class=
-"ident">amt</span>) <span class="op">=&gt;</span> <span class=
-"ident">State</span>::<span class="ident">Read</span>(<span class=
-"ident">amt</span>),
-            <span class="prelude-val">None</span> <span class=
-"op">=&gt;</span> <span class="ident">State</span>::<span class=
-"ident">Reading</span>,
+        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">amt</span> {
+            <span class="prelude-val">Some</span>(<span class="number">0</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">amt</span>) <span class="op">=&gt;</span> <span class="ident">State</span>::<span class="ident">Read</span>(<span class="ident">amt</span>),
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">State</span>::<span class="ident">Reading</span>,
         };
-        <span class="prelude-val">Ok</span>(<span class=
-"bool-val">true</span>)
+        <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
     }
 
-    <span class=
-"doccomment">/// Wait for the result of the overlapped operation previously executed.</span>
+    <span class="doccomment">/// Wait for the result of the overlapped operation previously executed.</span>
     <span class="doccomment">///</span>
-    <span class=
-"doccomment">/// Takes a parameter `wait` which indicates if this pipe is currently being</span>
-    <span class=
-"doccomment">/// read whether the function should block waiting for the read to complete.</span>
+    <span class="doccomment">/// Takes a parameter `wait` which indicates if this pipe is currently being</span>
+    <span class="doccomment">/// read whether the function should block waiting for the read to complete.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Return values:</span>
     <span class="doccomment">///</span>
-    <span class=
-"doccomment">/// * `true` - finished any pending read and the pipe is not at EOF (keep</span>
+    <span class="doccomment">/// * `true` - finished any pending read and the pipe is not at EOF (keep</span>
     <span class="doccomment">///            going)</span>
-    <span class=
-"doccomment">/// * `false` - finished any pending read and pipe is at EOF (stop issuing</span>
+    <span class="doccomment">/// * `false` - finished any pending read and pipe is at EOF (stop issuing</span>
     <span class="doccomment">///             reads)</span>
-    <span class="kw">fn</span> <span class=
-"ident">result</span>(<span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class="op">&lt;</span><span class=
-"ident">bool</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class=
-"ident">amt</span> <span class="op">=</span> <span class=
-"kw">match</span> <span class="self">self</span>.<span class=
-"ident">state</span> {
-            <span class="ident">State</span>::<span class=
-"ident">NotReading</span> <span class=
-"op">=&gt;</span> <span class="kw">return</span> <span class=
-"prelude-val">Ok</span>(<span class="bool-val">true</span>),
-            <span class="ident">State</span>::<span class=
-"ident">Reading</span> <span class="op">=&gt;</span> {
-                <span class="self">self</span>.<span class=
-"ident">pipe</span>.<span class=
-"ident">overlapped_result</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"kw-2">*</span><span class="self">self</span>.<span class=
-"ident">overlapped</span>, <span class=
-"bool-val">true</span>)<span class="question-mark">?</span>
+    <span class="kw">fn</span> <span class="ident">result</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">amt</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
+            <span class="ident">State</span>::<span class="ident">NotReading</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
+            <span class="ident">State</span>::<span class="ident">Reading</span> <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">pipe</span>.<span class="ident">overlapped_result</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">overlapped</span>, <span class="bool-val">true</span>)<span class="question-mark">?</span>
             }
-            <span class="ident">State</span>::<span class=
-"ident">Read</span>(<span class="ident">amt</span>) <span class=
-"op">=&gt;</span> <span class="ident">amt</span>,
+            <span class="ident">State</span>::<span class="ident">Read</span>(<span class="ident">amt</span>) <span class="op">=&gt;</span> <span class="ident">amt</span>,
         };
-        <span class="self">self</span>.<span class=
-"ident">state</span> <span class="op">=</span> <span class=
-"ident">State</span>::<span class="ident">NotReading</span>;
+        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">NotReading</span>;
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class=
-"ident">len</span> <span class="op">=</span> <span class=
-"self">self</span>.<span class="ident">dst</span>.<span class=
-"ident">len</span>();
-            <span class="self">self</span>.<span class=
-"ident">dst</span>.<span class="ident">set_len</span>(<span class=
-"ident">len</span> <span class="op">+</span> <span class=
-"ident">amt</span>);
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dst</span>.<span class="ident">len</span>();
+            <span class="self">self</span>.<span class="ident">dst</span>.<span class="ident">set_len</span>(<span class="ident">len</span> <span class="op">+</span> <span class="ident">amt</span>);
         }
-        <span class="prelude-val">Ok</span>(<span class=
-"ident">amt</span> <span class="op">!=</span> <span class=
-"number">0</span>)
+        <span class="prelude-val">Ok</span>(<span class="ident">amt</span> <span class="op">!=</span> <span class="number">0</span>)
     }
 
-    <span class=
-"doccomment">/// Finishes out reading this pipe entirely.</span>
+    <span class="doccomment">/// Finishes out reading this pipe entirely.</span>
     <span class="doccomment">///</span>
-    <span class=
-"doccomment">/// Waits for any pending and schedule read, and then calls `read_to_end`</span>
-    <span class=
-"doccomment">/// if necessary to read all the remaining information.</span>
-    <span class="kw">fn</span> <span class=
-"ident">finish</span>(<span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="self">self</span>) <span class=
-"op">-&gt;</span> <span class="ident">io</span>::<span class=
-"prelude-ty">Result</span><span class=
-"op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">while</span> <span class=
-"self">self</span>.<span class="ident">result</span>()<span class=
-"question-mark">?</span> <span class=
-"op">&amp;&</span> <span class="self">self</span>.<span class=
-"ident">schedule_read</span>()<span class=
-"question-mark">?</span> {
+    <span class="doccomment">/// Waits for any pending and schedule read, and then calls `read_to_end`</span>
+    <span class="doccomment">/// if necessary to read all the remaining information.</span>
+    <span class="kw">fn</span> <span class="ident">finish</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">while</span> <span class="self">self</span>.<span class="ident">result</span>()<span class="question-mark">?</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">schedule_read</span>()<span class="question-mark">?</span> {
             <span class="comment">// ...</span>
         }
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> <span class="ident">Drop</span> <span class=
-"kw">for</span> <span class="ident">AsyncPipe</span><span class=
-"op">&lt;</span><span class="lifetime">'a</span><span class=
-"op">&gt;</span> {
-    <span class="kw">fn</span> <span class=
-"ident">drop</span>(<span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">match</span> <span class=
-"self">self</span>.<span class="ident">state</span> {
-            <span class="ident">State</span>::<span class=
-"ident">Reading</span> <span class="op">=&gt;</span> {}
-            _ <span class="op">=&gt;</span> <span class=
-"kw">return</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">AsyncPipe</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
+            <span class="ident">State</span>::<span class="ident">Reading</span> <span class="op">=&gt;</span> {}
+            _ <span class="op">=&gt;</span> <span class="kw">return</span>,
         }
 
-        <span class=
-"comment">// If we have a pending read operation, then we have to make sure that</span>
-        <span class=
-"comment">// it's *done* before we actually drop this type. The kernel requires</span>
-        <span class=
-"comment">// that the `OVERLAPPED` and buffer pointers are valid for the entire</span>
+        <span class="comment">// If we have a pending read operation, then we have to make sure that</span>
+        <span class="comment">// it&#39;s *done* before we actually drop this type. The kernel requires</span>
+        <span class="comment">// that the `OVERLAPPED` and buffer pointers are valid for the entire</span>
         <span class="comment">// I/O operation.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// To do that, we call `CancelIo` to cancel any pending operation, and</span>
-        <span class=
-"comment">// if that succeeds we wait for the overlapped result.</span>
+        <span class="comment">// To do that, we call `CancelIo` to cancel any pending operation, and</span>
+        <span class="comment">// if that succeeds we wait for the overlapped result.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// If anything here fails, there's not really much we can do, so we leak</span>
-        <span class=
-"comment">// the buffer/OVERLAPPED pointers to ensure we're at least memory safe.</span>
-        <span class="kw">if</span> <span class=
-"self">self</span>.<span class="ident">pipe</span>.<span class=
-"ident">cancel_io</span>().<span class=
-"ident">is_err</span>() <span class="op">||</span> <span class=
-"self">self</span>.<span class="ident">result</span>().<span class=
-"ident">is_err</span>() {
-            <span class="kw">let</span> <span class=
-"ident">buf</span> <span class="op">=</span> <span class=
-"ident">mem</span>::<span class="ident">replace</span>(<span class=
-"self">self</span>.<span class="ident">dst</span>, <span class=
-"ident">Vec</span>::<span class="ident">new</span>());
-            <span class="kw">let</span> <span class=
-"ident">overlapped</span> <span class="op">=</span> <span class=
-"ident">Box</span>::<span class="ident">new</span>(<span class=
-"kw">unsafe</span> { <span class="ident">mem</span>::<span class=
-"ident">zeroed</span>() });
-            <span class="kw">let</span> <span class=
-"ident">overlapped</span> <span class="op">=</span> <span class=
-"ident">mem</span>::<span class="ident">replace</span>(<span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"self">self</span>.<span class=
-"ident">overlapped</span>, <span class="ident">overlapped</span>);
-            <span class="ident">mem</span>::<span class=
-"ident">forget</span>((<span class="ident">buf</span>, <span class=
-"ident">overlapped</span>));
+        <span class="comment">// If anything here fails, there&#39;s not really much we can do, so we leak</span>
+        <span class="comment">// the buffer/OVERLAPPED pointers to ensure we&#39;re at least memory safe.</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pipe</span>.<span class="ident">cancel_io</span>().<span class="ident">is_err</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">result</span>().<span class="ident">is_err</span>() {
+            <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="self">self</span>.<span class="ident">dst</span>, <span class="ident">Vec</span>::<span class="ident">new</span>());
+            <span class="kw">let</span> <span class="ident">overlapped</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() });
+            <span class="kw">let</span> <span class="ident">overlapped</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">overlapped</span>, <span class="ident">overlapped</span>);
+            <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">buf</span>, <span class="ident">overlapped</span>));
         }
     }
 }
 
-<span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class="ident">slice_to_end</span>(<span class=
-"ident">v</span>: <span class="kw-2">&</span><span class=
-"kw-2">mut</span> <span class="ident">Vec</span><span class=
-"op">&lt;</span><span class="ident">u8</span><span class=
-"op">&gt;</span>) <span class="op">-&gt;</span> <span class=
-"kw-2">&</span><span class="kw-2">mut</span> [<span class=
-"ident">u8</span>] {
-    <span class="kw">if</span> <span class=
-"ident">v</span>.<span class="ident">capacity</span>() <span class=
-"op">==</span> <span class="number">0</span> {
-        <span class="ident">v</span>.<span class=
-"ident">reserve</span>(<span class="number">16</span>);
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">slice_to_end</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
+    <span class="kw">if</span> <span class="ident">v</span>.<span class="ident">capacity</span>() <span class="op">==</span> <span class="number">0</span> {
+        <span class="ident">v</span>.<span class="ident">reserve</span>(<span class="number">16</span>);
     }
-    <span class="kw">if</span> <span class=
-"ident">v</span>.<span class="ident">capacity</span>() <span class=
-"op">==</span> <span class="ident">v</span>.<span class=
-"ident">len</span>() {
-        <span class="ident">v</span>.<span class=
-"ident">reserve</span>(<span class="number">1</span>);
+    <span class="kw">if</span> <span class="ident">v</span>.<span class="ident">capacity</span>() <span class="op">==</span> <span class="ident">v</span>.<span class="ident">len</span>() {
+        <span class="ident">v</span>.<span class="ident">reserve</span>(<span class="number">1</span>);
     }
-    <span class="ident">slice</span>::<span class=
-"ident">from_raw_parts_mut</span>(<span class=
-"ident">v</span>.<span class=
-"ident">as_mut_ptr</span>().<span class=
-"ident">offset</span>(<span class="ident">v</span>.<span class=
-"ident">len</span>() <span class="kw">as</span> <span class=
-"ident">isize</span>),
-                              <span class=
-"ident">v</span>.<span class="ident">capacity</span>() <span class=
-"op">-</span> <span class="ident">v</span>.<span class=
-"ident">len</span>())
+    <span class="ident">slice</span>::<span class="ident">from_raw_parts_mut</span>(<span class="ident">v</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">offset</span>(<span class="ident">v</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">isize</span>),
+                              <span class="ident">v</span>.<span class="ident">capacity</span>() <span class="op">-</span> <span class="ident">v</span>.<span class="ident">len</span>())
 }
-</pre></section>
-<section id='search' class="content hidden"></section>
-<section class="footer"></section>
-<aside id="help" class="hidden">
-<div>
-<h1 class="hidden">Help</h1>
-<div class="shortcuts">
-<h2>Keyboard Shortcuts</h2>
-<dl>
-<dt>?</dt>
-<dd>Show this help dialog</dd>
-<dt>S</dt>
-<dd>Focus the search field</dd>
-<dt>&amp;larrb;</dt>
-<dd>Move up in search results</dd>
-<dt>&amp;rarrb;</dt>
-<dd>Move down in search results</dd>
-<dt>⏎</dt>
-<dd>Go to active search result</dd>
-<dt>+</dt>
-<dd>Collapse/expand all sections</dd>
-</dl>
-</div>
-<div class="infos">
-<h2>Search Tricks</h2>
-<p>Prefix searches with a type followed by a colon (e.g.
-<code>fn:</code>) to restrict the search to a given type.</p>
-<p>Accepted types are: <code>fn</code>, <code>mod</code>,
-<code>struct</code>, <code>enum</code>, <code>trait</code>,
-<code>type</code>, <code>macro</code>, and <code>const</code>.</p>
-<p>Search functions by type signature (e.g. <code>vec -&gt;
-usize</code> or <code>* -&gt; vec</code>)</p>
-</div>
-</div>
-</aside>
-<script>
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
         window.rootPath = "../../../../";
         window.currentCrate = "std";
-</script> 
-<script src="../../../../jquery.js"></script> 
-<script src="../../../../main.js"></script> 
-<script defer src="../../../../search-index.js"></script>
+    </script>
+    <script src="../../../../jquery.js"></script>
+    <script src="../../../../main.js"></script>
+    <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

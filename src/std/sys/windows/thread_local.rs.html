@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="generator" content=
-"HTML Tidy for HTML5 for Windows version 5.5.12">
-<meta charset="utf-8">
-<meta name="viewport" content=
-"width=device-width, initial-scale=1.0">
-<meta name="generator" content="rustdoc">
-<meta name="description" content=
-"Source to the Rust file `src\libstd\sys\windows\thread_local.rs`.">
-<meta name="keywords" content="rust, rustlang, rust-lang">
-<title>thread_local.rs.html -- source</title>
-<link rel="stylesheet" type="text/css" href=
-"../../../../normalize.css">
-<link rel="stylesheet" type="text/css" href=
-"../../../../rustdoc.css">
-<link rel="stylesheet" type="text/css" href="../../../../main.css">
-<link rel="shortcut icon" href=
-"https://doc.rust-lang.org/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src\libstd\sys\windows\thread_local.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>thread_local.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
+
+    <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
+    
 </head>
 <body class="rustdoc">
-<!--[if lte IE 8]>
+    <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
         things.
     </div>
     <![endif]-->
-<nav class="sidebar"><a href='../../../../std/index.html'><img src=
-'https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt=
-'logo' width='100'></a></nav>
-<nav class="sub">
-<form class="search-form js-only">
-<div class="search-container"><input class="search-input" name=
-"search" autocomplete="off" placeholder=
-"Click or press ‘S’ to search, ‘?’ for more options…" type=
-"search"></div>
-</form>
-</nav>
-<section id='main' class="content source">
-<pre class="line-numbers"><span id="1">  1</span>
+
+    
+
+    <nav class="sidebar">
+        <a href='../../../../std/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -321,641 +326,350 @@
 <span id="281">281</span>
 <span id="282">282</span>
 <span id="283">283</span>
-</pre>
-<pre class="rust">
-<span class=
-"comment">// Copyright 2014 The Rust Project Developers. See the COPYRIGHT</span>
-<span class=
-"comment">// file at the top-level directory of this distribution and at</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2014 The Rust Project Developers. See the COPYRIGHT</span>
+<span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
-<span class=
-"comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
-<span class=
-"comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
-<span class=
-"comment">// option. This file may not be copied, modified, or distributed</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
 <span class="kw">use</span> <span class="ident">ptr</span>;
-<span class="kw">use</span> <span class=
-"ident">sys</span>::<span class="ident">c</span>;
-<span class="kw">use</span> <span class=
-"ident">sys_common</span>::<span class=
-"ident">mutex</span>::<span class="ident">Mutex</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">c</span>;
+<span class="kw">use</span> <span class="ident">sys_common</span>::<span class="ident">mutex</span>::<span class="ident">Mutex</span>;
 <span class="kw">use</span> <span class="ident">sys_common</span>;
 
-<span class="kw">pub</span> <span class=
-"kw">type</span> <span class="ident">Key</span> <span class=
-"op">=</span> <span class="ident">c</span>::<span class=
-"ident">DWORD</span>;
-<span class="kw">pub</span> <span class=
-"kw">type</span> <span class="ident">Dtor</span> <span class=
-"op">=</span> <span class="kw">unsafe</span> <span class=
-"kw">extern</span> <span class="kw">fn</span>(<span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">u8</span>);
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Key</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">DWORD</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Dtor</span> <span class="op">=</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>);
 
-<span class=
-"comment">// Turns out, like pretty much everything, Windows is pretty close the</span>
-<span class=
-"comment">// functionality that Unix provides, but slightly different! In the case of</span>
-<span class=
-"comment">// TLS, Windows does not provide an API to provide a destructor for a TLS</span>
-<span class=
-"comment">// variable. This ends up being pretty crucial to this implementation, so we</span>
+<span class="comment">// Turns out, like pretty much everything, Windows is pretty close the</span>
+<span class="comment">// functionality that Unix provides, but slightly different! In the case of</span>
+<span class="comment">// TLS, Windows does not provide an API to provide a destructor for a TLS</span>
+<span class="comment">// variable. This ends up being pretty crucial to this implementation, so we</span>
 <span class="comment">// need a way around this.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// The solution here ended up being a little obscure, but fear not, the</span>
-<span class=
-"comment">// internet has informed me [1][2] that this solution is not unique (no way</span>
-<span class=
-"comment">// I could have thought of it as well!). The key idea is to insert some hook</span>
-<span class=
-"comment">// somewhere to run arbitrary code on thread termination. With this in place</span>
-<span class=
-"comment">// we'll be able to run anything we like, including all TLS destructors!</span>
+<span class="comment">// The solution here ended up being a little obscure, but fear not, the</span>
+<span class="comment">// internet has informed me [1][2] that this solution is not unique (no way</span>
+<span class="comment">// I could have thought of it as well!). The key idea is to insert some hook</span>
+<span class="comment">// somewhere to run arbitrary code on thread termination. With this in place</span>
+<span class="comment">// we&#39;ll be able to run anything we like, including all TLS destructors!</span>
 <span class="comment">//</span>
-<span class=
-"comment">// To accomplish this feat, we perform a number of threads, all contained</span>
+<span class="comment">// To accomplish this feat, we perform a number of threads, all contained</span>
 <span class="comment">// within this module:</span>
 <span class="comment">//</span>
-<span class=
-"comment">// * All TLS destructors are tracked by *us*, not the windows runtime. This</span>
-<span class=
-"comment">//   means that we have a global list of destructors for each TLS key that</span>
+<span class="comment">// * All TLS destructors are tracked by *us*, not the windows runtime. This</span>
+<span class="comment">//   means that we have a global list of destructors for each TLS key that</span>
 <span class="comment">//   we know about.</span>
-<span class=
-"comment">// * When a TLS key is destroyed, we're sure to remove it from the dtor list</span>
-<span class="comment">//   if it's in there.</span>
-<span class=
-"comment">// * When a thread exits, we run over the entire list and run dtors for all</span>
-<span class=
-"comment">//   non-null keys. This attempts to match Unix semantics in this regard.</span>
+<span class="comment">// * When a TLS key is destroyed, we&#39;re sure to remove it from the dtor list</span>
+<span class="comment">//   if it&#39;s in there.</span>
+<span class="comment">// * When a thread exits, we run over the entire list and run dtors for all</span>
+<span class="comment">//   non-null keys. This attempts to match Unix semantics in this regard.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// This ends up having the overhead of using a global list, having some</span>
-<span class=
-"comment">// locks here and there, and in general just adding some more code bloat. We</span>
-<span class=
-"comment">// attempt to optimize runtime by forgetting keys that don't have</span>
-<span class=
-"comment">// destructors, but this only gets us so far.</span>
+<span class="comment">// This ends up having the overhead of using a global list, having some</span>
+<span class="comment">// locks here and there, and in general just adding some more code bloat. We</span>
+<span class="comment">// attempt to optimize runtime by forgetting keys that don&#39;t have</span>
+<span class="comment">// destructors, but this only gets us so far.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// For more details and nitty-gritty, see the code sections below!</span>
+<span class="comment">// For more details and nitty-gritty, see the code sections below!</span>
 <span class="comment">//</span>
-<span class=
-"comment">// [1]: http://www.codeproject.com/Articles/8113/Thread-Local-Storage-The-C-Way</span>
-<span class=
-"comment">// [2]: https://github.com/ChromiumWebApps/chromium/blob/master/base</span>
-<span class=
-"comment">//                        /threading/thread_local_storage_win.cc#L42</span>
+<span class="comment">// [1]: http://www.codeproject.com/Articles/8113/Thread-Local-Storage-The-C-Way</span>
+<span class="comment">// [2]: https://github.com/ChromiumWebApps/chromium/blob/master/base</span>
+<span class="comment">//                        /threading/thread_local_storage_win.cc#L42</span>
 
-<span class=
-"comment">// NB these are specifically not types from `std::sync` as they currently rely</span>
-<span class=
-"comment">// on poisoning and this module needs to operate at a lower level than requiring</span>
-<span class=
-"comment">// the thread infrastructure to be in place (useful on the borders of</span>
+<span class="comment">// NB these are specifically not types from `std::sync` as they currently rely</span>
+<span class="comment">// on poisoning and this module needs to operate at a lower level than requiring</span>
+<span class="comment">// the thread infrastructure to be in place (useful on the borders of</span>
 <span class="comment">// initialization/destruction).</span>
-<span class="kw">static</span> <span class=
-"ident">DTOR_LOCK</span>: <span class=
-"ident">Mutex</span> <span class="op">=</span> <span class=
-"ident">Mutex</span>::<span class="ident">new</span>();
-<span class="kw">static</span> <span class=
-"kw-2">mut</span> <span class="ident">DTORS</span>: <span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">Vec</span><span class="op">&lt;</span>(<span class=
-"ident">Key</span>, <span class="ident">Dtor</span>)<span class=
-"op">&gt;</span> <span class="op">=</span> <span class=
-"ident">ptr</span>::<span class="ident">null_mut</span>();
+<span class="kw">static</span> <span class="ident">DTOR_LOCK</span>: <span class="ident">Mutex</span> <span class="op">=</span> <span class="ident">Mutex</span>::<span class="ident">new</span>();
+<span class="kw">static</span> <span class="kw-2">mut</span> <span class="ident">DTORS</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Key</span>, <span class="ident">Dtor</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>();
 
-<span class=
-"comment">// -------------------------------------------------------------------------</span>
+<span class="comment">// -------------------------------------------------------------------------</span>
 <span class="comment">// Native bindings</span>
 <span class="comment">//</span>
-<span class=
-"comment">// This section is just raw bindings to the native functions that Windows</span>
-<span class=
-"comment">// provides, There's a few extra calls to deal with destructors.</span>
+<span class="comment">// This section is just raw bindings to the native functions that Windows</span>
+<span class="comment">// provides, There&#39;s a few extra calls to deal with destructors.</span>
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class=
-"kw">unsafe</span> <span class="kw">fn</span> <span class=
-"ident">create</span>(<span class="ident">dtor</span>: <span class=
-"prelude-ty">Option</span><span class="op">&lt;</span><span class=
-"ident">Dtor</span><span class="op">&gt;</span>) <span class=
-"op">-&gt;</span> <span class="ident">Key</span> {
-    <span class="kw">let</span> <span class=
-"ident">key</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class="ident">TlsAlloc</span>();
-    <span class="macro">assert</span><span class=
-"macro">!</span>(<span class="ident">key</span> <span class=
-"op">!=</span> <span class="ident">c</span>::<span class=
-"ident">TLS_OUT_OF_INDEXES</span>);
-    <span class="kw">if</span> <span class=
-"kw">let</span> <span class="prelude-val">Some</span>(<span class=
-"ident">f</span>) <span class="op">=</span> <span class=
-"ident">dtor</span> {
-        <span class="ident">register_dtor</span>(<span class=
-"ident">key</span>, <span class="ident">f</span>);
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">dtor</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Dtor</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Key</span> {
+    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">TlsAlloc</span>();
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">key</span> <span class="op">!=</span> <span class="ident">c</span>::<span class="ident">TLS_OUT_OF_INDEXES</span>);
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">f</span>) <span class="op">=</span> <span class="ident">dtor</span> {
+        <span class="ident">register_dtor</span>(<span class="ident">key</span>, <span class="ident">f</span>);
     }
     <span class="kw">return</span> <span class="ident">key</span>;
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class=
-"kw">unsafe</span> <span class="kw">fn</span> <span class=
-"ident">set</span>(<span class="ident">key</span>: <span class=
-"ident">Key</span>, <span class="ident">value</span>: <span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">u8</span>) {
-    <span class="kw">let</span> <span class=
-"ident">r</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class=
-"ident">TlsSetValue</span>(<span class=
-"ident">key</span>, <span class="ident">value</span> <span class=
-"kw">as</span> <span class="ident">c</span>::<span class=
-"ident">LPVOID</span>);
-    <span class="macro">debug_assert</span><span class=
-"macro">!</span>(<span class="ident">r</span> <span class=
-"op">!=</span> <span class="number">0</span>);
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">value</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) {
+    <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">TlsSetValue</span>(<span class="ident">key</span>, <span class="ident">value</span> <span class="kw">as</span> <span class="ident">c</span>::<span class="ident">LPVOID</span>);
+    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">r</span> <span class="op">!=</span> <span class="number">0</span>);
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class=
-"kw">unsafe</span> <span class="kw">fn</span> <span class=
-"ident">get</span>(<span class="ident">key</span>: <span class=
-"ident">Key</span>) <span class="op">-&gt;</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">u8</span> {
-    <span class="ident">c</span>::<span class=
-"ident">TlsGetValue</span>(<span class=
-"ident">key</span>) <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> <span class=
-"ident">u8</span>
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span> {
+    <span class="ident">c</span>::<span class="ident">TlsGetValue</span>(<span class="ident">key</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class=
-"kw">unsafe</span> <span class="kw">fn</span> <span class=
-"ident">destroy</span>(<span class="ident">key</span>: <span class=
-"ident">Key</span>) {
-    <span class="kw">if</span> <span class=
-"ident">unregister_dtor</span>(<span class="ident">key</span>) {
-        <span class=
-"comment">// FIXME: Currently if a key has a destructor associated with it we</span>
-        <span class=
-"comment">// can't actually ever unregister it. If we were to</span>
-        <span class=
-"comment">// unregister it, then any key destruction would have to be</span>
-        <span class=
-"comment">// serialized with respect to actually running destructors.</span>
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">destroy</span>(<span class="ident">key</span>: <span class="ident">Key</span>) {
+    <span class="kw">if</span> <span class="ident">unregister_dtor</span>(<span class="ident">key</span>) {
+        <span class="comment">// FIXME: Currently if a key has a destructor associated with it we</span>
+        <span class="comment">// can&#39;t actually ever unregister it. If we were to</span>
+        <span class="comment">// unregister it, then any key destruction would have to be</span>
+        <span class="comment">// serialized with respect to actually running destructors.</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// We want to avoid a race where right before run_dtors runs</span>
-        <span class=
-"comment">// some destructors TlsFree is called. Allowing the call to</span>
-        <span class=
-"comment">// TlsFree would imply that the caller understands that *all</span>
-        <span class=
-"comment">// known threads* are not exiting, which is quite a difficult</span>
+        <span class="comment">// We want to avoid a race where right before run_dtors runs</span>
+        <span class="comment">// some destructors TlsFree is called. Allowing the call to</span>
+        <span class="comment">// TlsFree would imply that the caller understands that *all</span>
+        <span class="comment">// known threads* are not exiting, which is quite a difficult</span>
         <span class="comment">// thing to know!</span>
         <span class="comment">//</span>
-        <span class=
-"comment">// For now we just leak all keys with dtors to "fix" this.</span>
-        <span class=
-"comment">// Note that source [2] above shows precedent for this sort</span>
+        <span class="comment">// For now we just leak all keys with dtors to &quot;fix&quot; this.</span>
+        <span class="comment">// Note that source [2] above shows precedent for this sort</span>
         <span class="comment">// of strategy.</span>
     } <span class="kw">else</span> {
-        <span class="kw">let</span> <span class=
-"ident">r</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class="ident">TlsFree</span>(<span class=
-"ident">key</span>);
-        <span class="macro">debug_assert</span><span class=
-"macro">!</span>(<span class="ident">r</span> <span class=
-"op">!=</span> <span class="number">0</span>);
+        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">TlsFree</span>(<span class="ident">key</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">r</span> <span class="op">!=</span> <span class="number">0</span>);
     }
 }
 
-<span class=
-"comment">// -------------------------------------------------------------------------</span>
+<span class="comment">// -------------------------------------------------------------------------</span>
 <span class="comment">// Dtor registration</span>
 <span class="comment">//</span>
-<span class=
-"comment">// These functions are associated with registering and unregistering</span>
-<span class=
-"comment">// destructors. They're pretty simple, they just push onto a vector and scan</span>
+<span class="comment">// These functions are associated with registering and unregistering</span>
+<span class="comment">// destructors. They&#39;re pretty simple, they just push onto a vector and scan</span>
 <span class="comment">// a vector currently.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// FIXME: This could probably be at least a little faster with a BTree.</span>
+<span class="comment">// FIXME: This could probably be at least a little faster with a BTree.</span>
 
-<span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class="ident">init_dtors</span>() {
-    <span class="kw">if</span> <span class=
-"op">!</span><span class="ident">DTORS</span>.<span class=
-"ident">is_null</span>() { <span class="kw">return</span> }
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init_dtors</span>() {
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">DTORS</span>.<span class="ident">is_null</span>() { <span class="kw">return</span> }
 
-    <span class="kw">let</span> <span class=
-"ident">dtors</span> <span class="op">=</span> <span class=
-"kw">box</span> <span class="ident">Vec</span>::<span class=
-"op">&lt;</span>(<span class="ident">Key</span>, <span class=
-"ident">Dtor</span>)<span class="op">&gt;</span>::<span class=
-"ident">new</span>();
+    <span class="kw">let</span> <span class="ident">dtors</span> <span class="op">=</span> <span class="kw">box</span> <span class="ident">Vec</span>::<span class="op">&lt;</span>(<span class="ident">Key</span>, <span class="ident">Dtor</span>)<span class="op">&gt;</span>::<span class="ident">new</span>();
 
-    <span class="kw">let</span> <span class=
-"ident">res</span> <span class="op">=</span> <span class=
-"ident">sys_common</span>::<span class=
-"ident">at_exit</span>(<span class="kw">move</span><span class=
-"op">||</span> {
-        <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">lock</span>();
-        <span class="kw">let</span> <span class=
-"ident">dtors</span> <span class="op">=</span> <span class=
-"ident">DTORS</span>;
-        <span class="ident">DTORS</span> <span class=
-"op">=</span> <span class="number">1</span> <span class=
-"kw">as</span> <span class="kw-2">*</span><span class=
-"kw-2">mut</span> _;
-        <span class="ident">Box</span>::<span class=
-"ident">from_raw</span>(<span class="ident">dtors</span>);
-        <span class="macro">assert</span><span class=
-"macro">!</span>(<span class="ident">DTORS</span> <span class=
-"kw">as</span> <span class="ident">usize</span> <span class=
-"op">==</span> <span class="number">1</span>); <span class=
-"comment">// can't re-init after destructing</span>
-        <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">unlock</span>();
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">sys_common</span>::<span class="ident">at_exit</span>(<span class="kw">move</span><span class="op">||</span> {
+        <span class="ident">DTOR_LOCK</span>.<span class="ident">lock</span>();
+        <span class="kw">let</span> <span class="ident">dtors</span> <span class="op">=</span> <span class="ident">DTORS</span>;
+        <span class="ident">DTORS</span> <span class="op">=</span> <span class="number">1</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _;
+        <span class="ident">Box</span>::<span class="ident">from_raw</span>(<span class="ident">dtors</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">DTORS</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">==</span> <span class="number">1</span>); <span class="comment">// can&#39;t re-init after destructing</span>
+        <span class="ident">DTOR_LOCK</span>.<span class="ident">unlock</span>();
     });
-    <span class="kw">if</span> <span class=
-"ident">res</span>.<span class="ident">is_ok</span>() {
-        <span class="ident">DTORS</span> <span class=
-"op">=</span> <span class="ident">Box</span>::<span class=
-"ident">into_raw</span>(<span class="ident">dtors</span>);
+    <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">is_ok</span>() {
+        <span class="ident">DTORS</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">dtors</span>);
     } <span class="kw">else</span> {
-        <span class="ident">DTORS</span> <span class=
-"op">=</span> <span class="number">1</span> <span class=
-"kw">as</span> <span class="kw-2">*</span><span class=
-"kw-2">mut</span> _;
+        <span class="ident">DTORS</span> <span class="op">=</span> <span class="number">1</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _;
     }
 }
 
-<span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class=
-"ident">register_dtor</span>(<span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">dtor</span>: <span class="ident">Dtor</span>) {
-    <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">lock</span>();
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">register_dtor</span>(<span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">dtor</span>: <span class="ident">Dtor</span>) {
+    <span class="ident">DTOR_LOCK</span>.<span class="ident">lock</span>();
     <span class="ident">init_dtors</span>();
-    <span class="macro">assert</span><span class=
-"macro">!</span>(<span class="ident">DTORS</span> <span class=
-"kw">as</span> <span class="ident">usize</span> <span class=
-"op">!=</span> <span class="number">0</span>);
-    <span class="macro">assert</span><span class=
-"macro">!</span>(<span class="ident">DTORS</span> <span class=
-"kw">as</span> <span class="ident">usize</span> <span class=
-"op">!=</span> <span class="number">1</span>,
-            <span class=
-"string">"cannot create new TLS keys after the main thread has exited"</span>);
-    (<span class="kw-2">*</span><span class=
-"ident">DTORS</span>).<span class="ident">push</span>((<span class=
-"ident">key</span>, <span class="ident">dtor</span>));
-    <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">unlock</span>();
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">DTORS</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">!=</span> <span class="number">0</span>);
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">DTORS</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">!=</span> <span class="number">1</span>,
+            <span class="string">&quot;cannot create new TLS keys after the main thread has exited&quot;</span>);
+    (<span class="kw-2">*</span><span class="ident">DTORS</span>).<span class="ident">push</span>((<span class="ident">key</span>, <span class="ident">dtor</span>));
+    <span class="ident">DTOR_LOCK</span>.<span class="ident">unlock</span>();
 }
 
-<span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class=
-"ident">unregister_dtor</span>(<span class=
-"ident">key</span>: <span class="ident">Key</span>) <span class=
-"op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">lock</span>();
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unregister_dtor</span>(<span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="ident">DTOR_LOCK</span>.<span class="ident">lock</span>();
     <span class="ident">init_dtors</span>();
-    <span class="macro">assert</span><span class=
-"macro">!</span>(<span class="ident">DTORS</span> <span class=
-"kw">as</span> <span class="ident">usize</span> <span class=
-"op">!=</span> <span class="number">0</span>);
-    <span class="macro">assert</span><span class=
-"macro">!</span>(<span class="ident">DTORS</span> <span class=
-"kw">as</span> <span class="ident">usize</span> <span class=
-"op">!=</span> <span class="number">1</span>,
-            <span class=
-"string">"cannot unregister destructors after the main thread has exited"</span>);
-    <span class="kw">let</span> <span class=
-"ident">ret</span> <span class="op">=</span> {
-        <span class="kw">let</span> <span class=
-"ident">dtors</span> <span class="op">=</span> <span class=
-"kw-2">&</span><span class="kw-2">mut</span> <span class=
-"kw-2">*</span><span class="ident">DTORS</span>;
-        <span class="kw">let</span> <span class=
-"ident">before</span> <span class="op">=</span> <span class=
-"ident">dtors</span>.<span class="ident">len</span>();
-        <span class="ident">dtors</span>.<span class=
-"ident">retain</span>(<span class="op">|</span><span class=
-"kw-2">&</span>(<span class="ident">k</span>, _)<span class=
-"op">|</span> <span class="ident">k</span> <span class=
-"op">!=</span> <span class="ident">key</span>);
-        <span class="ident">dtors</span>.<span class=
-"ident">len</span>() <span class="op">!=</span> <span class=
-"ident">before</span>
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">DTORS</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">!=</span> <span class="number">0</span>);
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">DTORS</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">!=</span> <span class="number">1</span>,
+            <span class="string">&quot;cannot unregister destructors after the main thread has exited&quot;</span>);
+    <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> {
+        <span class="kw">let</span> <span class="ident">dtors</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">DTORS</span>;
+        <span class="kw">let</span> <span class="ident">before</span> <span class="op">=</span> <span class="ident">dtors</span>.<span class="ident">len</span>();
+        <span class="ident">dtors</span>.<span class="ident">retain</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">k</span>, _)<span class="op">|</span> <span class="ident">k</span> <span class="op">!=</span> <span class="ident">key</span>);
+        <span class="ident">dtors</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="ident">before</span>
     };
-    <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">unlock</span>();
+    <span class="ident">DTOR_LOCK</span>.<span class="ident">unlock</span>();
     <span class="ident">ret</span>
 }
 
-<span class=
-"comment">// -------------------------------------------------------------------------</span>
+<span class="comment">// -------------------------------------------------------------------------</span>
 <span class="comment">// Where the Magic (TM) Happens</span>
 <span class="comment">//</span>
-<span class=
-"comment">// If you're looking at this code, and wondering "what is this doing?",</span>
-<span class=
-"comment">// you're not alone! I'll try to break this down step by step:</span>
+<span class="comment">// If you&#39;re looking at this code, and wondering &quot;what is this doing?&quot;,</span>
+<span class="comment">// you&#39;re not alone! I&#39;ll try to break this down step by step:</span>
 <span class="comment">//</span>
-<span class="comment">// # What's up with CRT$XLB?</span>
+<span class="comment">// # What&#39;s up with CRT$XLB?</span>
 <span class="comment">//</span>
-<span class=
-"comment">// For anything about TLS destructors to work on Windows, we have to be able</span>
-<span class=
-"comment">// to run *something* when a thread exits. To do so, we place a very special</span>
-<span class=
-"comment">// static in a very special location. If this is encoded in just the right</span>
-<span class=
-"comment">// way, the kernel's loader is apparently nice enough to run some function</span>
-<span class=
-"comment">// of ours whenever a thread exits! How nice of the kernel!</span>
+<span class="comment">// For anything about TLS destructors to work on Windows, we have to be able</span>
+<span class="comment">// to run *something* when a thread exits. To do so, we place a very special</span>
+<span class="comment">// static in a very special location. If this is encoded in just the right</span>
+<span class="comment">// way, the kernel&#39;s loader is apparently nice enough to run some function</span>
+<span class="comment">// of ours whenever a thread exits! How nice of the kernel!</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Lots of detailed information can be found in source [1] above, but the</span>
-<span class=
-"comment">// gist of it is that this is leveraging a feature of Microsoft's PE format</span>
-<span class=
-"comment">// (executable format) which is not actually used by any compilers today.</span>
-<span class=
-"comment">// This apparently translates to any callbacks in the ".CRT$XLB" section</span>
+<span class="comment">// Lots of detailed information can be found in source [1] above, but the</span>
+<span class="comment">// gist of it is that this is leveraging a feature of Microsoft&#39;s PE format</span>
+<span class="comment">// (executable format) which is not actually used by any compilers today.</span>
+<span class="comment">// This apparently translates to any callbacks in the &quot;.CRT$XLB&quot; section</span>
 <span class="comment">// being run on certain events.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// So after all that, we use the compiler's #[link_section] feature to place</span>
-<span class=
-"comment">// a callback pointer into the magic section so it ends up being called.</span>
+<span class="comment">// So after all that, we use the compiler&#39;s #[link_section] feature to place</span>
+<span class="comment">// a callback pointer into the magic section so it ends up being called.</span>
 <span class="comment">//</span>
-<span class="comment">// # What's up with this callback?</span>
+<span class="comment">// # What&#39;s up with this callback?</span>
 <span class="comment">//</span>
-<span class=
-"comment">// The callback specified receives a number of parameters from... someone!</span>
-<span class=
-"comment">// (the kernel? the runtime? I'm not quite sure!) There are a few events that</span>
-<span class=
-"comment">// this gets invoked for, but we're currently only interested on when a</span>
-<span class=
-"comment">// thread or a process "detaches" (exits). The process part happens for the</span>
-<span class=
-"comment">// last thread and the thread part happens for any normal thread.</span>
+<span class="comment">// The callback specified receives a number of parameters from... someone!</span>
+<span class="comment">// (the kernel? the runtime? I&#39;m not quite sure!) There are a few events that</span>
+<span class="comment">// this gets invoked for, but we&#39;re currently only interested on when a</span>
+<span class="comment">// thread or a process &quot;detaches&quot; (exits). The process part happens for the</span>
+<span class="comment">// last thread and the thread part happens for any normal thread.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// # Ok, what's up with running all these destructors?</span>
+<span class="comment">// # Ok, what&#39;s up with running all these destructors?</span>
 <span class="comment">//</span>
-<span class=
-"comment">// This will likely need to be improved over time, but this function</span>
-<span class=
-"comment">// attempts a "poor man's" destructor callback system. To do this we clone a</span>
-<span class=
-"comment">// local copy of the dtor list to start out with. This is our fudgy attempt</span>
-<span class=
-"comment">// to not hold the lock while destructors run and not worry about the list</span>
-<span class="comment">// changing while we're looking at it.</span>
+<span class="comment">// This will likely need to be improved over time, but this function</span>
+<span class="comment">// attempts a &quot;poor man&#39;s&quot; destructor callback system. To do this we clone a</span>
+<span class="comment">// local copy of the dtor list to start out with. This is our fudgy attempt</span>
+<span class="comment">// to not hold the lock while destructors run and not worry about the list</span>
+<span class="comment">// changing while we&#39;re looking at it.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Once we've got a list of what to run, we iterate over all keys, check</span>
-<span class=
-"comment">// their values, and then run destructors if the values turn out to be non</span>
-<span class=
-"comment">// null (setting them to null just beforehand). We do this a few times in a</span>
-<span class=
-"comment">// loop to basically match Unix semantics. If we don't reach a fixed point</span>
-<span class=
-"comment">// after a short while then we just inevitably leak something most likely.</span>
+<span class="comment">// Once we&#39;ve got a list of what to run, we iterate over all keys, check</span>
+<span class="comment">// their values, and then run destructors if the values turn out to be non</span>
+<span class="comment">// null (setting them to null just beforehand). We do this a few times in a</span>
+<span class="comment">// loop to basically match Unix semantics. If we don&#39;t reach a fixed point</span>
+<span class="comment">// after a short while then we just inevitably leak something most likely.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// # The article mentions weird stuff about "/INCLUDE"?</span>
+<span class="comment">// # The article mentions weird stuff about &quot;/INCLUDE&quot;?</span>
 <span class="comment">//</span>
-<span class=
-"comment">// It sure does! Specifically we're talking about this quote:</span>
+<span class="comment">// It sure does! Specifically we&#39;re talking about this quote:</span>
 <span class="comment">//</span>
-<span class=
-"comment">//      The Microsoft run-time library facilitates this process by defining a</span>
-<span class=
-"comment">//      memory image of the TLS Directory and giving it the special name</span>
-<span class=
-"comment">//      “__tls_used” (Intel x86 platforms) or “_tls_used” (other platforms). The</span>
-<span class=
-"comment">//      linker looks for this memory image and uses the data there to create the</span>
-<span class=
-"comment">//      TLS Directory. Other compilers that support TLS and work with the</span>
-<span class=
-"comment">//      Microsoft linker must use this same technique.</span>
+<span class="comment">//      The Microsoft run-time library facilitates this process by defining a</span>
+<span class="comment">//      memory image of the TLS Directory and giving it the special name</span>
+<span class="comment">//      “__tls_used” (Intel x86 platforms) or “_tls_used” (other platforms). The</span>
+<span class="comment">//      linker looks for this memory image and uses the data there to create the</span>
+<span class="comment">//      TLS Directory. Other compilers that support TLS and work with the</span>
+<span class="comment">//      Microsoft linker must use this same technique.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// Basically what this means is that if we want support for our TLS</span>
-<span class=
-"comment">// destructors/our hook being called then we need to make sure the linker does</span>
-<span class=
-"comment">// not omit this symbol. Otherwise it will omit it and our callback won't be</span>
+<span class="comment">// Basically what this means is that if we want support for our TLS</span>
+<span class="comment">// destructors/our hook being called then we need to make sure the linker does</span>
+<span class="comment">// not omit this symbol. Otherwise it will omit it and our callback won&#39;t be</span>
 <span class="comment">// wired up.</span>
 <span class="comment">//</span>
-<span class=
-"comment">// We don't actually use the `/INCLUDE` linker flag here like the article</span>
-<span class=
-"comment">// mentions because the Rust compiler doesn't propagate linker flags, but</span>
-<span class=
-"comment">// instead we use a shim function which performs a volatile 1-byte load from</span>
-<span class=
-"comment">// the address of the symbol to ensure it sticks around.</span>
+<span class="comment">// We don&#39;t actually use the `/INCLUDE` linker flag here like the article</span>
+<span class="comment">// mentions because the Rust compiler doesn&#39;t propagate linker flags, but</span>
+<span class="comment">// instead we use a shim function which performs a volatile 1-byte load from</span>
+<span class="comment">// the address of the symbol to ensure it sticks around.</span>
 
-<span class="attribute">#[<span class=
-"ident">link_section</span> <span class="op">=</span> <span class=
-"string">".CRT$XLB"</span>]</span>
-<span class="attribute">#[<span class=
-"ident">linkage</span> <span class="op">=</span> <span class=
-"string">"external"</span>]</span>
-<span class="attribute">#[<span class=
-"ident">allow</span>(<span class=
-"ident">dead_code</span>, <span class=
-"ident">unused_variables</span>)]</span>
-<span class="kw">pub</span> <span class=
-"kw">static</span> <span class=
-"ident">p_thread_callback</span>: <span class=
-"kw">unsafe</span> <span class="kw">extern</span> <span class=
-"string">"system"</span> <span class="kw">fn</span>(<span class=
-"ident">c</span>::<span class="ident">LPVOID</span>, <span class=
-"ident">c</span>::<span class="ident">DWORD</span>,
+<span class="attribute">#[<span class="ident">link_section</span> <span class="op">=</span> <span class="string">&quot;.CRT$XLB&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">linkage</span> <span class="op">=</span> <span class="string">&quot;external&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">unused_variables</span>)]</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">p_thread_callback</span>: <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;system&quot;</span> <span class="kw">fn</span>(<span class="ident">c</span>::<span class="ident">LPVOID</span>, <span class="ident">c</span>::<span class="ident">DWORD</span>,
                                                         <span class="ident">c</span>::<span class="ident">LPVOID</span>) <span class="op">=</span>
         <span class="ident">on_tls_callback</span>;
 
-<span class="attribute">#[<span class=
-"ident">allow</span>(<span class=
-"ident">dead_code</span>, <span class=
-"ident">unused_variables</span>)]</span>
-<span class="kw">unsafe</span> <span class=
-"kw">extern</span> <span class=
-"string">"system"</span> <span class="kw">fn</span> <span class=
-"ident">on_tls_callback</span>(<span class=
-"ident">h</span>: <span class="ident">c</span>::<span class=
-"ident">LPVOID</span>,
-                                          <span class=
-"ident">dwReason</span>: <span class="ident">c</span>::<span class=
-"ident">DWORD</span>,
-                                          <span class=
-"ident">pv</span>: <span class="ident">c</span>::<span class=
-"ident">LPVOID</span>) {
-    <span class="kw">if</span> <span class=
-"ident">dwReason</span> <span class="op">==</span> <span class=
-"ident">c</span>::<span class=
-"ident">DLL_THREAD_DETACH</span> <span class=
-"op">||</span> <span class="ident">dwReason</span> <span class=
-"op">==</span> <span class="ident">c</span>::<span class=
-"ident">DLL_PROCESS_DETACH</span> {
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">unused_variables</span>)]</span>
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;system&quot;</span> <span class="kw">fn</span> <span class="ident">on_tls_callback</span>(<span class="ident">h</span>: <span class="ident">c</span>::<span class="ident">LPVOID</span>,
+                                          <span class="ident">dwReason</span>: <span class="ident">c</span>::<span class="ident">DWORD</span>,
+                                          <span class="ident">pv</span>: <span class="ident">c</span>::<span class="ident">LPVOID</span>) {
+    <span class="kw">if</span> <span class="ident">dwReason</span> <span class="op">==</span> <span class="ident">c</span>::<span class="ident">DLL_THREAD_DETACH</span> <span class="op">||</span> <span class="ident">dwReason</span> <span class="op">==</span> <span class="ident">c</span>::<span class="ident">DLL_PROCESS_DETACH</span> {
         <span class="ident">run_dtors</span>();
     }
 
-    <span class=
-"comment">// See comments above for what this is doing. Note that we don't need this</span>
-    <span class=
-"comment">// trickery on GNU windows, just on MSVC.</span>
+    <span class="comment">// See comments above for what this is doing. Note that we don&#39;t need this</span>
+    <span class="comment">// trickery on GNU windows, just on MSVC.</span>
     <span class="ident">reference_tls_used</span>();
-    <span class="attribute">#[<span class=
-"ident">cfg</span>(<span class=
-"ident">target_env</span> <span class="op">=</span> <span class=
-"string">"msvc"</span>)]</span>
-    <span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class="ident">reference_tls_used</span>() {
-        <span class="kw">extern</span> { <span class=
-"kw">static</span> <span class=
-"ident">_tls_used</span>: <span class="ident">u8</span>; }
-        ::<span class="ident">intrinsics</span>::<span class=
-"ident">volatile_load</span>(<span class=
-"kw-2">&</span><span class="ident">_tls_used</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_env</span> <span class="op">=</span> <span class="string">&quot;msvc&quot;</span>)]</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">reference_tls_used</span>() {
+        <span class="kw">extern</span> { <span class="kw">static</span> <span class="ident">_tls_used</span>: <span class="ident">u8</span>; }
+        ::<span class="ident">intrinsics</span>::<span class="ident">volatile_load</span>(<span class="kw-2">&amp;</span><span class="ident">_tls_used</span>);
     }
-    <span class="attribute">#[<span class=
-"ident">cfg</span>(<span class="ident">not</span>(<span class=
-"ident">target_env</span> <span class="op">=</span> <span class=
-"string">"msvc"</span>))]</span>
-    <span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class="ident">reference_tls_used</span>() {}
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_env</span> <span class="op">=</span> <span class="string">&quot;msvc&quot;</span>))]</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">reference_tls_used</span>() {}
 }
 
-<span class="attribute">#[<span class=
-"ident">allow</span>(<span class=
-"ident">dead_code</span>)]</span> <span class=
-"comment">// actually called above</span>
-<span class="kw">unsafe</span> <span class=
-"kw">fn</span> <span class="ident">run_dtors</span>() {
-    <span class="kw">let</span> <span class=
-"kw-2">mut</span> <span class="ident">any_run</span> <span class=
-"op">=</span> <span class="bool-val">true</span>;
-    <span class="kw">for</span> _ <span class=
-"kw">in</span> <span class="number">0</span>..<span class=
-"number">5</span> {
-        <span class="kw">if</span> <span class=
-"op">!</span><span class="ident">any_run</span> { <span class=
-"kw">break</span> }
-        <span class="ident">any_run</span> <span class=
-"op">=</span> <span class="bool-val">false</span>;
-        <span class="kw">let</span> <span class=
-"ident">dtors</span> <span class="op">=</span> {
-            <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">lock</span>();
-            <span class="kw">let</span> <span class=
-"ident">ret</span> <span class="op">=</span> <span class=
-"kw">if</span> <span class="ident">DTORS</span> <span class=
-"kw">as</span> <span class="ident">usize</span> <span class=
-"op">&lt;=</span> <span class="number">1</span> {
-                <span class="ident">Vec</span>::<span class=
-"ident">new</span>()
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span> <span class="comment">// actually called above</span>
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">run_dtors</span>() {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">any_run</span> <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..<span class="number">5</span> {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">any_run</span> { <span class="kw">break</span> }
+        <span class="ident">any_run</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="kw">let</span> <span class="ident">dtors</span> <span class="op">=</span> {
+            <span class="ident">DTOR_LOCK</span>.<span class="ident">lock</span>();
+            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">DTORS</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&lt;=</span> <span class="number">1</span> {
+                <span class="ident">Vec</span>::<span class="ident">new</span>()
             } <span class="kw">else</span> {
-                (<span class="kw-2">*</span><span class=
-"ident">DTORS</span>).<span class=
-"ident">iter</span>().<span class="ident">map</span>(<span class=
-"op">|</span><span class="ident">s</span><span class=
-"op">|</span> <span class="kw-2">*</span><span class=
-"ident">s</span>).<span class="ident">collect</span>()
+                (<span class="kw-2">*</span><span class="ident">DTORS</span>).<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">s</span>).<span class="ident">collect</span>()
             };
-            <span class="ident">DTOR_LOCK</span>.<span class=
-"ident">unlock</span>();
+            <span class="ident">DTOR_LOCK</span>.<span class="ident">unlock</span>();
             <span class="ident">ret</span>
         };
-        <span class="kw">for</span> <span class=
-"kw-2">&</span>(<span class="ident">key</span>, <span class=
-"ident">dtor</span>) <span class="kw">in</span> <span class=
-"kw-2">&</span><span class="ident">dtors</span> {
-            <span class="kw">let</span> <span class=
-"ident">ptr</span> <span class="op">=</span> <span class=
-"ident">c</span>::<span class=
-"ident">TlsGetValue</span>(<span class="ident">key</span>);
-            <span class="kw">if</span> <span class=
-"op">!</span><span class="ident">ptr</span>.<span class=
-"ident">is_null</span>() {
-                <span class="ident">c</span>::<span class=
-"ident">TlsSetValue</span>(<span class=
-"ident">key</span>, <span class="ident">ptr</span>::<span class=
-"ident">null_mut</span>());
-                <span class="ident">dtor</span>(<span class=
-"ident">ptr</span> <span class="kw">as</span> <span class=
-"kw-2">*</span><span class="kw-2">mut</span> _);
-                <span class="ident">any_run</span> <span class=
-"op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">key</span>, <span class="ident">dtor</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">dtors</span> {
+            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">TlsGetValue</span>(<span class="ident">key</span>);
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>() {
+                <span class="ident">c</span>::<span class="ident">TlsSetValue</span>(<span class="ident">key</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
+                <span class="ident">dtor</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _);
+                <span class="ident">any_run</span> <span class="op">=</span> <span class="bool-val">true</span>;
             }
         }
     }
 }
-</pre></section>
-<section id='search' class="content hidden"></section>
-<section class="footer"></section>
-<aside id="help" class="hidden">
-<div>
-<h1 class="hidden">Help</h1>
-<div class="shortcuts">
-<h2>Keyboard Shortcuts</h2>
-<dl>
-<dt>?</dt>
-<dd>Show this help dialog</dd>
-<dt>S</dt>
-<dd>Focus the search field</dd>
-<dt>&amp;larrb;</dt>
-<dd>Move up in search results</dd>
-<dt>&amp;rarrb;</dt>
-<dd>Move down in search results</dd>
-<dt>⏎</dt>
-<dd>Go to active search result</dd>
-<dt>+</dt>
-<dd>Collapse/expand all sections</dd>
-</dl>
-</div>
-<div class="infos">
-<h2>Search Tricks</h2>
-<p>Prefix searches with a type followed by a colon (e.g.
-<code>fn:</code>) to restrict the search to a given type.</p>
-<p>Accepted types are: <code>fn</code>, <code>mod</code>,
-<code>struct</code>, <code>enum</code>, <code>trait</code>,
-<code>type</code>, <code>macro</code>, and <code>const</code>.</p>
-<p>Search functions by type signature (e.g. <code>vec -&gt;
-usize</code> or <code>* -&gt; vec</code>)</p>
-</div>
-</div>
-</aside>
-<script>
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
         window.rootPath = "../../../../";
         window.currentCrate = "std";
-</script> 
-<script src="../../../../jquery.js"></script> 
-<script src="../../../../main.js"></script> 
-<script defer src="../../../../search-index.js"></script>
+    </script>
+    <script src="../../../../jquery.js"></script>
+    <script src="../../../../main.js"></script>
+    <script defer src="../../../../search-index.js"></script>
 </body>
 </html>
